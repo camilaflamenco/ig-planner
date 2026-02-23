@@ -251,6 +251,8 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
   <input type="text" id="dbId" placeholder="10ca47eb27c980c98ed9f7016b79b6ea">
   <label>Propiedad de fecha</label>
   <input type="text" id="dateProp" value="Publication Date">
+  <label>Nombre de la página de Highlights <small style="font-weight:400;text-transform:none;color:#bbb">en tu database</small></label>
+  <input type="text" id="hlPageName" value="Highlights" placeholder="Highlights">
 
   <div class="section-title">👤 Perfil</div>
   <label>Handle (sin @)</label>
@@ -418,9 +420,10 @@ function loadFromStorage(key, fallback) {
 window.addEventListener('DOMContentLoaded', () => {
   const creds = loadFromStorage('ig_creds', null);
   if (creds) {
-    document.getElementById('token').value   = creds.token   || '';
-    document.getElementById('dbId').value    = creds.dbId    || '';
-    document.getElementById('dateProp').value= creds.dateP   || 'Publication Date';
+    document.getElementById('token').value    = creds.token    || '';
+    document.getElementById('dbId').value     = creds.dbId     || '';
+    document.getElementById('dateProp').value = creds.dateP    || 'Publication Date';
+    document.getElementById('hlPageName').value = creds.hlPageName || 'Highlights';
   }
   const prof = loadFromStorage('ig_profile', null);
   if (prof) {
@@ -539,10 +542,12 @@ function getTitle(page) {
 
 // ── NOTION API ──
 async function notionQuery(token, dbId) {
+  const hlPageName = document.getElementById('hlPageName')?.value.trim() || 
+                     loadFromStorage('ig_creds', {})?.hlPageName || 'Highlights';
   const res = await fetch('/.netlify/functions/notion', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ token, dbId, fetchBlocks: true, fetchHighlights: true })
+    body: JSON.stringify({ token, dbId, fetchBlocks: true, fetchHighlights: true, highlightsPageName: hlPageName })
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message||`Error ${res.status}`);
@@ -553,7 +558,8 @@ async function notionQuery(token, dbId) {
 document.getElementById('loadBtn').onclick = async () => {
   const token     = document.getElementById('token').value.trim();
   const dbId      = document.getElementById('dbId').value.trim().replace(/-/g,'');
-  const dateP     = document.getElementById('dateProp').value.trim();
+  const dateP        = document.getElementById('dateProp').value.trim();
+  const hlPageName   = document.getElementById('hlPageName').value.trim() || 'Highlights';
   const handle    = document.getElementById('cfgHandle').value.trim()||'handle';
   const name      = document.getElementById('cfgName').value.trim()||handle;
   const bio       = document.getElementById('cfgBio').value.trim();
@@ -585,7 +591,7 @@ document.getElementById('loadBtn').onclick = async () => {
     pinnedIds = [];
 
     // Save credentials and profile
-    saveToStorage('ig_creds',   { token, dbId, dateP });
+    saveToStorage('ig_creds', { token, dbId, dateP, hlPageName });
     saveToStorage('ig_profile', { handle, name, bio, website, avatar, published, followers, following });
     saveToStorage('ig_highlights', hlData);
     saveToStorage('ig_pinned', pinnedIds);
