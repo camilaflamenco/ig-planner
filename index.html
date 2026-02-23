@@ -56,8 +56,6 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 #loadBtn:hover { opacity:.8; }
 .hint { font-size:11px; color:#bbb; margin-top:14px; text-align:center; line-height:1.6; }
 .hint a { color:#8b6f5e; }
-
-/* avatar upload */
 .avatar-upload-row { display:flex; gap:8px; align-items:flex-start; margin-bottom:13px; }
 .avatar-upload-row input { margin-bottom:0; flex:1; }
 .avatar-upload-btn {
@@ -66,7 +64,6 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
   white-space:nowrap; transition:all .2s; color:#555;
 }
 .avatar-upload-btn:hover { border-color:#8b6f5e; color:#8b6f5e; }
-#avatarFileInput { display:none; }
 
 /* ── STATUS ── */
 #status { display:none; text-align:center; padding:20px; font-size:13px; color:#888; }
@@ -74,13 +71,23 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 @keyframes spin { to { transform:rotate(360deg); } }
 
 /* ── WIDGET ── */
-#widget { display:none; align-items:flex-start; gap:28px; flex-wrap:wrap; justify-content:center; }
+#widget { display:none; align-items:flex-start; justify-content:center; }
+
+/* ── TOP BUTTONS ── */
+.top-btns { display:flex; gap:8px; margin-bottom:14px; width:260px; }
+.top-btn {
+  flex:1; padding:8px 0; border-radius:10px; font-size:11px; font-weight:700;
+  cursor:pointer; border:1.5px solid #e4e4e4; background:#fff; color:#555;
+  transition:all .2s; text-align:center;
+}
+.top-btn:hover { border-color:#1a1a1a; color:#1a1a1a; }
+.top-btn.active { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
 
 /* ── PHONE ── */
 .phone-shell {
   width:260px; background:#fff; border-radius:42px;
   box-shadow: 0 0 0 9px #111, 0 28px 56px rgba(0,0,0,.28);
-  position:relative; overflow:hidden; flex-shrink:0;
+  position:relative; overflow:hidden;
 }
 .dynamic-island { position:absolute; top:10px; left:50%; transform:translateX(-50%); width:72px; height:20px; background:#111; border-radius:20px; z-index:20; }
 .screen { height:600px; overflow-y:scroll; overflow-x:hidden; scrollbar-width:none; }
@@ -107,15 +114,25 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .stat-num { font-size:14px; font-weight:800; display:block; color:#111; }
 .stat-lbl { font-size:10px; color:#555; }
 
-/* bio — smaller */
 .bio-ig { font-size:8.5px; line-height:1.3; color:#111; margin-bottom:4px; }
 .bio-ig strong { display:block; font-weight:700; font-size:9.5px; margin-bottom:1px; }
 .bio-ig a { color:#0095f6; text-decoration:none; }
 .bio-link { display:block; font-size:8.5px; color:#0095f6; font-weight:600; margin-bottom:6px; text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
-.action-row { display:flex; gap:6px; margin-bottom:10px; }
+.action-row { display:flex; gap:6px; margin-bottom:8px; }
 .btn-follow { flex:1; background:#0095f6; color:#fff; border:none; border-radius:8px; padding:6px 0; font-size:12px; font-weight:700; cursor:pointer; }
 .btn-msg    { flex:1; background:#efefef; color:#111; border:none; border-radius:8px; padding:6px 0; font-size:12px; font-weight:700; cursor:pointer; }
+
+/* similar accounts */
+.similar-wrap { margin-bottom:10px; }
+.similar-title { font-size:9px; font-weight:700; color:#111; display:flex; justify-content:space-between; margin-bottom:6px; }
+.similar-title span { color:#0095f6; font-weight:400; cursor:pointer; }
+.similar-row { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
+.similar-row::-webkit-scrollbar { display:none; }
+.sim-item { flex-shrink:0; text-align:center; width:56px; }
+.sim-av { width:38px; height:38px; border-radius:50%; margin:0 auto 3px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:#fff; }
+.sim-handle { font-size:8px; color:#111; margin-bottom:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sim-follow { background:#efefef; border:none; border-radius:5px; font-size:8px; font-weight:700; padding:3px 6px; cursor:pointer; color:#111; }
 
 .highlights-ig { display:flex; gap:10px; padding:0 0 10px; overflow-x:auto; scrollbar-width:none; }
 .highlights-ig::-webkit-scrollbar { display:none; }
@@ -124,18 +141,6 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .hl-inner-ig { width:100%; height:100%; border-radius:50%; background:#e8e0d8; display:flex; align-items:center; justify-content:center; border:2px solid #fff; overflow:hidden; }
 .hl-emoji { font-size:20px; }
 .hl-label-ig { font-size:9px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:52px; }
-
-/* similar accounts */
-.similar-wrap { margin-bottom:10px; }
-.similar-title { font-size:9px; font-weight:700; color:#111; display:flex; justify-content:space-between; margin-bottom:8px; }
-.similar-title span { color:#0095f6; font-weight:400; cursor:pointer; }
-.similar-row { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
-.similar-row::-webkit-scrollbar { display:none; }
-.sim-item { flex-shrink:0; text-align:center; width:58px; }
-.sim-av { width:40px; height:40px; border-radius:50%; margin:0 auto 3px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:#fff; }
-.sim-handle { font-size:8px; color:#111; margin-bottom:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.sim-follow { background:#efefef; border:none; border-radius:5px; font-size:8px; font-weight:700; padding:3px 8px; cursor:pointer; color:#111; }
-.sim-follow:hover { background:#dbdbdb; }
 
 /* 4-tab bar */
 .tabs { display:flex; border-top:1px solid #dbdbdb; border-bottom:1px solid #dbdbdb; margin-bottom:2px; }
@@ -149,9 +154,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 /* ── GRID ── */
 .ig-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
 .ig-cell { aspect-ratio:4/5; background:#e8e0d8; position:relative; overflow:hidden; cursor:pointer; }
-.ig-cell img { width:100%; height:100%; object-fit:cover; display:block; transition:opacity .2s; }
-
-/* hover overlay */
+.ig-cell img { width:100%; height:100%; object-fit:cover; display:block; }
 .ig-cell .overlay {
   position:absolute; inset:0;
   background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 50%);
@@ -160,49 +163,23 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 }
 .ig-cell:hover .overlay { opacity:1; }
 .overlay-date { font-size:8px; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.6); }
-
-/* carousel arrows */
 .cell-arrow {
   position:absolute; top:50%; transform:translateY(-50%);
   background:rgba(0,0,0,.45); border:none; border-radius:50%;
   width:20px; height:20px; display:flex; align-items:center; justify-content:center;
-  cursor:pointer; opacity:0; transition:opacity .2s; z-index:5; color:#fff; font-size:11px;
-  line-height:1;
+  cursor:pointer; opacity:0; transition:opacity .2s; z-index:5; color:#fff; font-size:11px; line-height:1;
 }
 .ig-cell:hover .cell-arrow { opacity:1; }
 .cell-arrow.prev { left:4px; }
 .cell-arrow.next { right:4px; }
 .cell-arrow:hover { background:rgba(0,0,0,.7); }
-
-/* carousel dot indicator */
-.cell-dots {
-  position:absolute; top:5px; left:0; right:0;
-  display:flex; justify-content:center; gap:3px; z-index:5;
-  opacity:0; transition:opacity .2s;
-}
+.cell-dots { position:absolute; top:5px; left:0; right:0; display:flex; justify-content:center; gap:3px; z-index:5; opacity:0; transition:opacity .2s; }
 .ig-cell:hover .cell-dots { opacity:1; }
 .cell-dot { width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,.5); }
 .cell-dot.active { background:#fff; }
-
-/* multiple images badge */
-.multi-badge {
-  position:absolute; top:5px; right:5px; z-index:4;
-  background:rgba(0,0,0,.5); border-radius:4px; padding:2px 4px;
-  display:flex; align-items:center; gap:2px;
-}
-.multi-badge svg { width:9px; height:9px; fill:#fff; }
-
+.multi-badge { position:absolute; top:5px; right:5px; z-index:4; background:rgba(0,0,0,.5); border-radius:4px; padding:2px 4px; }
+.multi-badge svg { width:9px; height:9px; fill:#fff; display:block; }
 .ig-cell.empty { background:#ece7e2; }
-
-/* ── TOP BUTTONS ── */
-.top-btns { display:flex; gap:8px; margin-bottom:14px; width:260px; }
-.top-btn {
-  flex:1; padding:8px 0; border-radius:10px; font-size:12px; font-weight:700;
-  cursor:pointer; border:1.5px solid #e4e4e4; background:#fff; color:#555;
-  transition:all .2s; text-align:center;
-}
-.top-btn:hover { border-color:#1a1a1a; color:#1a1a1a; }
-.top-btn.active { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
 
 /* ── PROFILE OVERLAY ── */
 #profileOverlay {
@@ -251,7 +228,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
   <div class="avatar-upload-row">
     <input type="text" id="cfgAvatar" placeholder="URL o subí desde galería →">
     <button class="avatar-upload-btn" onclick="document.getElementById('avatarFileInput').click()">📁 Galería</button>
-    <input type="file" id="avatarFileInput" accept="image/*">
+    <input type="file" id="avatarFileInput" accept="image/*" style="display:none">
   </div>
 
   <div class="section-title">📊 Estadísticas</div>
@@ -270,7 +247,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 </div>
 
 <!-- STATUS -->
-<div id="status"><div class="spinner"></div><span id="statusMsg">Cargando…</span></div>
+<div id="status"><div class="spinner"></div></div>
 
 <!-- WIDGET -->
 <div id="widget">
@@ -279,6 +256,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
       <button class="top-btn" onclick="openProfileEditor()">✏️ Editar perfil</button>
       <button class="top-btn" id="toggleBtn" onclick="toggleView()">📅 Ver programados</button>
     </div>
+
     <div class="phone-shell">
       <div class="dynamic-island"></div>
       <div class="screen">
@@ -296,10 +274,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
           <span class="ig-handle-text" id="igHandle">handle</span>
           <div class="ig-topbar-icons">
             <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <svg viewBox="0 0 24 24" onclick="openProfileEditor()" title="Editar perfil">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" onclick="openProfileEditor()" title="Editar perfil"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </div>
         </div>
 
@@ -316,17 +291,12 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
               <div class="stat"><span class="stat-num" id="igFollowing">—</span><span class="stat-lbl">following</span></div>
             </div>
           </div>
-          <div class="bio-ig">
-            <strong id="igName"></strong>
-            <span id="igBio"></span>
-          </div>
+          <div class="bio-ig"><strong id="igName"></strong><span id="igBio"></span></div>
           <a class="bio-link" id="igWebsite" href="#" target="_blank" style="display:none"></a>
           <div class="action-row">
             <button class="btn-follow">Follow</button>
             <button class="btn-msg">Message</button>
           </div>
-
-          <!-- Similar accounts -->
           <div class="similar-wrap">
             <div class="similar-title">Similar accounts <span>See all</span></div>
             <div class="similar-row">
@@ -335,27 +305,22 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
               <div class="sim-item"><div class="sim-av" style="background:linear-gradient(135deg,#d4fc79,#96e6a1)"><span>C</span></div><div class="sim-handle">creator</div><button class="sim-follow">Follow</button></div>
             </div>
           </div>
-
           <div class="highlights-ig" id="igHighlights"></div>
         </div>
 
         <div class="tabs">
-          <!-- Posts -->
           <div class="tab active">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx=".5"/><rect x="14" y="3" width="7" height="7" rx=".5"/><rect x="3" y="14" width="7" height="7" rx=".5"/><rect x="14" y="14" width="7" height="7" rx=".5"/></svg>
             <span>Posts</span>
           </div>
-          <!-- Reels -->
           <div class="tab">
             <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="12" cy="12" r="3"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="2" x2="9" y2="9"/><line x1="15" y1="2" x2="15" y2="9"/></svg>
             <span>Reels</span>
           </div>
-          <!-- Reposts / Collab -->
           <div class="tab">
             <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
             <span>Reposts</span>
           </div>
-          <!-- Tagged -->
           <div class="tab">
             <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7" stroke-linecap="round" stroke-width="2.5"/></svg>
             <span>Tagged</span>
@@ -375,7 +340,6 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
       <h3>✏️ Editar perfil</h3>
       <button class="close-btn" onclick="closeProfileEditor()">×</button>
     </div>
-
     <label>Handle (sin @)</label>
     <input type="text" id="editHandle">
     <label>Nombre para mostrar</label>
@@ -388,25 +352,25 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
     <div class="avatar-upload-row">
       <input type="text" id="editAvatar" placeholder="URL o subí desde galería →">
       <button class="avatar-upload-btn" onclick="document.getElementById('editAvatarFile').click()">📁 Galería</button>
-      <input type="file" id="editAvatarFile" accept="image/*">
+      <input type="file" id="editAvatarFile" accept="image/*" style="display:none">
     </div>
-
     <div class="stats-row">
       <div><label>Posts publicados</label><input type="text" id="editPublished"></div>
       <div><label>Seguidores</label><input type="text" id="editFollowers"></div>
       <div><label>Siguiendo</label><input type="text" id="editFollowing"></div>
     </div>
-
     <div class="section-title" style="margin-top:4px;">⭕ Highlights</div>
     <div id="editHlList"></div>
     <button class="add-hl-btn" id="editAddHlBtn">+ Agregar highlight</button>
-
     <button class="save-btn" onclick="saveProfileEditor()">Guardar cambios</button>
   </div>
 </div>
 
 <script>
 const NV = '2022-06-28';
+let allPages = [];
+let currentDateProp = '';
+let showingScheduled = false;
 
 // ── CLOCK ──
 function tick() {
@@ -416,42 +380,22 @@ function tick() {
 }
 tick(); setInterval(tick, 10000);
 
-// ── AVATAR FILE UPLOAD (config) ──
+// ── FILE UPLOADS ──
 document.getElementById('avatarFileInput').addEventListener('change', e => {
-  const file = e.target.files[0]; if (!file) return;
+  const f = e.target.files[0]; if (!f) return;
   const r = new FileReader();
   r.onload = ev => document.getElementById('cfgAvatar').value = ev.target.result;
-  r.readAsDataURL(file);
+  r.readAsDataURL(f);
 });
 document.getElementById('editAvatarFile').addEventListener('change', e => {
-  const file = e.target.files[0]; if (!file) return;
+  const f = e.target.files[0]; if (!f) return;
   const r = new FileReader();
   r.onload = ev => document.getElementById('editAvatar').value = ev.target.result;
-  r.readAsDataURL(file);
+  r.readAsDataURL(f);
 });
 
 // ── HIGHLIGHTS ──
-let allPages = [];
-let currentDateProp = '';
-let showingScheduled = false;
-
-function toggleView() {
-  showingScheduled = !showingScheduled;
-  const btn = document.getElementById('toggleBtn');
-  const today = new Date(); today.setHours(0,0,0,0);
-
-  if (showingScheduled) {
-    btn.textContent = '✅ Ver publicados';
-    btn.classList.add('active');
-    const scheduled = allPages.filter(p => new Date(getDate(p, currentDateProp)) > today);
-    renderGrid(scheduled, currentDateProp);
-  } else {
-    btn.textContent = '📅 Ver programados';
-    btn.classList.remove('active');
-    const published = allPages.filter(p => new Date(getDate(p, currentDateProp)) <= today);
-    renderGrid(published, currentDateProp);
-  }
-}
+let hlData = [
   { emoji:'⭐', label:'Highlights' },
   { emoji:'📸', label:'Feed' },
   { emoji:'🎯', label:'Goals' },
@@ -474,12 +418,12 @@ function buildHlRows(containerId, data) {
   list.querySelectorAll('.hl-remove').forEach(btn =>
     btn.addEventListener('click', () => { data.splice(+btn.dataset.i, 1); buildHlRows(containerId, data); }));
 }
-
 buildHlRows('hlList', hlData);
 document.getElementById('addHlBtn').onclick = () => {
-  hlData.push({ emoji:'✨', label:'Nuevo' }); buildHlRows('hlList', hlData); };
+  hlData.push({ emoji:'✨', label:'Nuevo' }); buildHlRows('hlList', hlData);
+};
 
-// ── BIO PARSER — links & @mentions in blue ──
+// ── BIO PARSER ──
 function parseBio(text) {
   if (!text) return '';
   return text
@@ -489,14 +433,10 @@ function parseBio(text) {
     .replace(/\n/g, '<br>');
 }
 
-// ── HELPERS ──
+// ── DATA HELPERS ──
 function fmtShort(d) {
   if (!d) return '';
   return new Date(d).toLocaleDateString('es-ES', { day:'numeric', month:'short' });
-}
-function fmtFull(d) {
-  if (!d) return '';
-  return new Date(d).toLocaleDateString('es-ES', { day:'numeric', month:'short', year:'2-digit' });
 }
 function getDate(page, prop) {
   const f = page.properties[prop];
@@ -507,12 +447,10 @@ function getDate(page, prop) {
 }
 function getAllImgs(page) {
   const imgs = [];
-  // cover first
   if (page.cover) {
     const u = page.cover.type === 'external' ? page.cover.external.url : page.cover.file?.url;
     if (u) imgs.push(u);
   }
-  // all files properties
   for (const k in page.properties) {
     const p = page.properties[k];
     if (p.type === 'files') {
@@ -522,10 +460,8 @@ function getAllImgs(page) {
       });
     }
   }
-  // image blocks fetched from API
-  if (page._imageBlocks?.length) {
+  if (page._imageBlocks?.length)
     page._imageBlocks.forEach(u => { if (!imgs.includes(u)) imgs.push(u); });
-  }
   return imgs;
 }
 function getTitle(page) {
@@ -535,6 +471,7 @@ function getTitle(page) {
   return '';
 }
 
+// ── NOTION API ──
 async function notionQuery(token, dbId) {
   const res = await fetch('/.netlify/functions/notion', {
     method: 'POST',
@@ -561,31 +498,52 @@ document.getElementById('loadBtn').onclick = async () => {
   const following = document.getElementById('cfgFollowing').value.trim() || '—';
 
   if (!token || !dbId) { alert('Ingresá el token y el database ID.'); return; }
-  showStatus('Conectando con Notion…');
+  showStatus(true);
 
   try {
-    const data  = await notionQuery(token, dbId);
+    const data = await notionQuery(token, dbId);
+
     allPages = (data.results || [])
       .filter(p => !!getDate(p, dateP))
       .sort((a,b) => new Date(getDate(b,dateP)) - new Date(getDate(a,dateP)));
     currentDateProp = dateP;
+    showingScheduled = false;
 
     const today = new Date(); today.setHours(0,0,0,0);
-    const published = allPages.filter(p => new Date(getDate(p, dateP)) <= today);
+    const publishedPages = allPages.filter(p => new Date(getDate(p, dateP)) <= today);
 
     applyProfile({ handle, name, bio, website, avatar, followers, following,
-      posts: published || published.length });
+      posts: published || publishedPages.length });
     renderHighlights(hlData);
-    renderGrid(published, dateP);
-    renderUpcoming(allPages, dateP);
+    renderGrid(publishedPages);
 
+    document.getElementById('toggleBtn').textContent = '📅 Ver programados';
+    document.getElementById('toggleBtn').classList.remove('active');
     document.getElementById('config').style.display = 'none';
     document.getElementById('status').style.display = 'none';
     document.getElementById('widget').style.display = 'flex';
+
   } catch(e) {
-    showStatus(`❌ ${e.message}`, true);
+    showStatus(false, e.message);
   }
 };
+
+// ── TOGGLE PUBLISHED / SCHEDULED ──
+function toggleView() {
+  showingScheduled = !showingScheduled;
+  const btn = document.getElementById('toggleBtn');
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  if (showingScheduled) {
+    btn.textContent = '✅ Ver publicados';
+    btn.classList.add('active');
+    renderGrid(allPages.filter(p => new Date(getDate(p, currentDateProp)) > today));
+  } else {
+    btn.textContent = '📅 Ver programados';
+    btn.classList.remove('active');
+    renderGrid(allPages.filter(p => new Date(getDate(p, currentDateProp)) <= today));
+  }
+}
 
 // ── APPLY PROFILE ──
 function applyProfile({ handle, name, bio, website, avatar, followers, following, posts }) {
@@ -595,7 +553,6 @@ function applyProfile({ handle, name, bio, website, avatar, followers, following
   document.getElementById('igFollowers').textContent = followers;
   document.getElementById('igFollowing').textContent = following;
   document.getElementById('postCount').textContent   = posts;
-
   const wEl = document.getElementById('igWebsite');
   if (website) {
     wEl.textContent = website.replace(/^https?:\/\//, '');
@@ -604,13 +561,10 @@ function applyProfile({ handle, name, bio, website, avatar, followers, following
   } else {
     wEl.style.display = 'none';
   }
-
   const inner = document.getElementById('avatarInner');
-  if (avatar) {
-    inner.innerHTML = `<img src="${avatar}" alt="">`;
-  } else {
-    inner.innerHTML = `<span class="avatar-letter">${handle[0].toUpperCase()}</span>`;
-  }
+  inner.innerHTML = avatar
+    ? `<img src="${avatar}" alt="">`
+    : `<span class="avatar-letter">${(handle[0]||'?').toUpperCase()}</span>`;
 }
 
 // ── HIGHLIGHTS ──
@@ -625,9 +579,9 @@ function renderHighlights(items) {
   });
 }
 
-// ── GRID WITH CAROUSEL ──
-function renderGrid(pages, dateP) {
-  const grid  = document.getElementById('igGrid');
+// ── GRID ──
+function renderGrid(pages) {
+  const grid = document.getElementById('igGrid');
   grid.innerHTML = '';
   const total = Math.max(pages.length, 9);
   const hues  = [25,200,140,310,50,170,260,35,100];
@@ -639,56 +593,46 @@ function renderGrid(pages, dateP) {
     if (i < pages.length) {
       const p    = pages[i];
       const imgs = getAllImgs(p);
-      const date = getDate(p, dateP);
-      let   idx  = 0;
+      const date = getDate(p, currentDateProp);
+      let idx = 0;
 
-      // image element
       const im = document.createElement('img');
       im.alt = ''; im.loading = 'lazy';
-      if (imgs.length) {
-        im.src = imgs[0];
-      } else {
-        im.style.display = 'none';
-        cell.style.background = `hsl(${hues[i%hues.length]},22%,82%)`;
-      }
+      if (imgs.length) { im.src = imgs[0]; }
+      else { im.style.display='none'; cell.style.background=`hsl(${hues[i%hues.length]},22%,82%)`; }
       cell.appendChild(im);
 
-      // dot indicators (only if multiple images)
       if (imgs.length > 1) {
         const dotsWrap = document.createElement('div');
         dotsWrap.className = 'cell-dots';
-        imgs.forEach((_, di) => {
+        imgs.forEach((_,di) => {
           const dot = document.createElement('div');
           dot.className = 'cell-dot' + (di===0?' active':'');
           dotsWrap.appendChild(dot);
         });
         cell.appendChild(dotsWrap);
 
-        // multi badge
         const badge = document.createElement('div');
         badge.className = 'multi-badge';
-        badge.innerHTML = `<svg viewBox="0 0 24 24"><path d="M2 4h15a2 2 0 0 1 2 2v13"/><rect x="0" y="6" width="17" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/></svg>`;
+        badge.innerHTML = `<svg viewBox="0 0 24 24"><rect x="0" y="6" width="17" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/><path d="M2 4h15a2 2 0 0 1 2 2v13" stroke="#fff" stroke-width="2" fill="none"/></svg>`;
         cell.appendChild(badge);
 
-        // arrows
         const prev = document.createElement('button');
         prev.className = 'cell-arrow prev'; prev.textContent = '‹';
         const next = document.createElement('button');
         next.className = 'cell-arrow next'; next.textContent = '›';
 
-        function goTo(newIdx) {
-          idx = (newIdx + imgs.length) % imgs.length;
+        function goTo(ni) {
+          idx = (ni + imgs.length) % imgs.length;
           im.src = imgs[idx];
-          dotsWrap.querySelectorAll('.cell-dot').forEach((d,di) =>
-            d.classList.toggle('active', di===idx));
+          dotsWrap.querySelectorAll('.cell-dot').forEach((d,di) => d.classList.toggle('active', di===idx));
         }
-        prev.onclick = e => { e.stopPropagation(); goTo(idx - 1); };
-        next.onclick = e => { e.stopPropagation(); goTo(idx + 1); };
+        prev.onclick = e => { e.stopPropagation(); goTo(idx-1); };
+        next.onclick = e => { e.stopPropagation(); goTo(idx+1); };
         cell.appendChild(prev);
         cell.appendChild(next);
       }
 
-      // hover overlay with date
       const ov = document.createElement('div');
       ov.className = 'overlay';
       ov.innerHTML = `<div class="overlay-date">${fmtShort(date)}</div>`;
@@ -697,19 +641,17 @@ function renderGrid(pages, dateP) {
     } else {
       cell.classList.add('empty');
     }
-
     grid.appendChild(cell);
   }
 }
 
-
-
-// ── PROFILE EDITOR OVERLAY ──
+// ── PROFILE EDITOR ──
 function openProfileEditor() {
   document.getElementById('editHandle').value    = document.getElementById('igHandle').textContent;
   document.getElementById('editName').value      = document.getElementById('igName').textContent;
   document.getElementById('editBio').value       = document.getElementById('igBio').innerText;
-  document.getElementById('editWebsite').value   = document.getElementById('igWebsite').href === '#' ? '' : document.getElementById('igWebsite').href;
+  const wEl = document.getElementById('igWebsite');
+  document.getElementById('editWebsite').value   = wEl.style.display==='none' ? '' : wEl.href;
   document.getElementById('editFollowers').value = document.getElementById('igFollowers').textContent;
   document.getElementById('editFollowing').value = document.getElementById('igFollowing').textContent;
   document.getElementById('editPublished').value = document.getElementById('postCount').textContent;
@@ -718,8 +660,8 @@ function openProfileEditor() {
 
   buildHlRows('editHlList', hlData);
   document.getElementById('editAddHlBtn').onclick = () => {
-    hlData.push({ emoji:'✨', label:'Nuevo' }); buildHlRows('editHlList', hlData); };
-
+    hlData.push({ emoji:'✨', label:'Nuevo' }); buildHlRows('editHlList', hlData);
+  };
   document.getElementById('profileOverlay').style.display = 'flex';
 }
 
@@ -742,13 +684,15 @@ function closeProfileEditor() {
   document.getElementById('profileOverlay').style.display = 'none';
 }
 
-function showStatus(msg, isErr) {
+function showStatus(loading, errMsg) {
   document.getElementById('config').style.display = 'none';
   const s = document.getElementById('status');
   s.style.display = 'block';
-  s.innerHTML = isErr
-    ? `<p style="color:#c0392b;font-size:13px">${msg}</p><button onclick="document.getElementById('status').style.display='none';document.getElementById('config').style.display='block';" style="margin-top:12px;padding:8px 16px;border:1px solid #ddd;border-radius:8px;cursor:pointer;font-size:12px">← Reintentar</button>`
-    : `<div class="spinner"></div><span>${msg}</span>`;
+  s.innerHTML = loading
+    ? `<div class="spinner"></div>`
+    : `<p style="color:#c0392b;font-size:13px">❌ ${errMsg}</p>
+       <button onclick="document.getElementById('status').style.display='none';document.getElementById('config').style.display='block';"
+         style="margin-top:12px;padding:8px 16px;border:1px solid #ddd;border-radius:8px;cursor:pointer;font-size:12px">← Reintentar</button>`;
 }
 </script>
 </body>
