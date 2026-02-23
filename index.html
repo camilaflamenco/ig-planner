@@ -17,7 +17,7 @@ body {
 /* ── CONFIG ── */
 #config {
   background:#fff; border-radius:16px; padding:28px;
-  max-width:400px; width:100%;
+  max-width:360px; width:100%;
   box-shadow: 0 4px 24px rgba(0,0,0,.08);
 }
 #config h2 { font-size:17px; font-weight:700; margin-bottom:4px; }
@@ -37,11 +37,6 @@ textarea { resize:vertical; min-height:56px; }
 input:focus, textarea:focus { border-color:#8b6f5e; }
 .stats-row { display:flex; gap:8px; }
 .stats-row > div { flex:1; }
-.hl-row { display:flex; gap:8px; margin-bottom:8px; align-items:center; }
-.hl-row input { margin-bottom:0; }
-.hl-row input:first-child { width:48px; flex-shrink:0; text-align:center; font-size:18px; padding:6px; }
-.hl-remove { background:none; border:none; color:#ccc; font-size:20px; cursor:pointer; padding:0 4px; flex-shrink:0; line-height:1; }
-.hl-remove:hover { color:#e74c3c; }
 .add-hl-btn {
   background:none; border:1.5px dashed #ddd; border-radius:8px;
   color:#aaa; font-size:12px; padding:7px; width:100%;
@@ -73,20 +68,22 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 /* ── WIDGET ── */
 #widget { display:none; align-items:flex-start; justify-content:center; }
 
-/* ── TOP BUTTONS ── */
-.top-btns { display:flex; gap:8px; margin-bottom:14px; width:260px; }
+/* ── TOP BUTTONS 2x2 ── */
+.top-btns {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:8px; margin-bottom:14px; width:260px;
+}
 .top-btn {
-  flex:1; padding:8px 0; border-radius:10px; font-size:11px; font-weight:700;
+  padding:8px 0; border-radius:10px; font-size:11px; font-weight:700;
   cursor:pointer; border:1.5px solid #e4e4e4; background:#fff; color:#555;
-  transition:all .2s; text-align:center;
+  transition:all .2s; text-align:center; white-space:nowrap;
 }
 .top-btn:hover { border-color:#1a1a1a; color:#1a1a1a; }
 .top-btn.active { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
 
-/* pin mode button hint */
 #pinHint {
   width:260px; text-align:center; font-size:10px; color:#8b6f5e;
-  margin-bottom:10px; display:none;
+  margin-top:-6px; margin-bottom:10px; display:none;
   background:#fff8f4; border-radius:8px; padding:6px;
 }
 
@@ -107,19 +104,14 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 
 .ig-topbar { padding:4px 14px 8px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:32px; background:#fff; z-index:9; }
 .ig-handle-text { font-size:16px; font-weight:800; letter-spacing:-.3px; }
-.ig-topbar-icons { display:flex; gap:14px; }
-.ig-topbar-icons svg { width:22px; height:22px; fill:none; stroke:#111; stroke-width:1.8; cursor:pointer; }
+.ig-topbar-icons { display:flex; gap:12px; align-items:center; }
 
 .profile-section { padding:8px 14px 0; }
 .profile-row { display:flex; align-items:center; gap:14px; margin-bottom:8px; }
-
-/* smaller avatar */
 .avatar-big { width:52px; height:52px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); padding:2px; }
 .avatar-inner { width:100%; height:100%; border-radius:50%; background:#fff; padding:2px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .avatar-inner img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
 .avatar-letter { font-size:18px; font-weight:700; color:#111; }
-
-/* smaller lighter stats */
 .stats-ig { display:flex; flex:1; justify-content:space-around; }
 .stat { text-align:center; }
 .stat-num { font-size:12px; font-weight:400; display:block; color:#111; }
@@ -137,15 +129,11 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .highlights-ig {
   display:flex; gap:10px; padding:0 0 10px;
   overflow-x:auto; scrollbar-width:none;
-  user-select:none; -webkit-user-select:none;
-  cursor:grab;
+  user-select:none; -webkit-user-select:none; cursor:grab;
 }
 .highlights-ig::-webkit-scrollbar { display:none; }
 .highlights-ig.dragging { cursor:grabbing; }
-.hl-item {
-  text-align:center; flex-shrink:0;
-  transition: transform .15s, opacity .15s;
-}
+.hl-item { text-align:center; flex-shrink:0; transition:transform .15s, opacity .15s; }
 .hl-item.dragging-item { opacity:.5; transform:scale(.95); }
 .hl-item.drag-over { transform:scale(1.08); }
 .hl-ring { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743); padding:2px; margin:0 auto 3px; }
@@ -174,8 +162,6 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 }
 .ig-cell:hover .overlay { opacity:1; }
 .overlay-date { font-size:8px; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.6); }
-
-/* carousel */
 .cell-arrow {
   position:absolute; top:50%; transform:translateY(-50%);
   background:rgba(0,0,0,.45); border:none; border-radius:50%;
@@ -193,8 +179,6 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .multi-badge { position:absolute; top:5px; right:5px; z-index:4; background:rgba(0,0,0,.5); border-radius:4px; padding:2px 4px; }
 .multi-badge svg { width:9px; height:9px; fill:#fff; display:block; }
 .ig-cell.empty { background:#ece7e2; }
-
-/* pin button — shows on hover */
 .pin-btn {
   position:absolute; bottom:5px; right:5px; z-index:6;
   background:rgba(0,0,0,.5); border:none; border-radius:50%;
@@ -205,18 +189,12 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .pin-btn svg { width:10px; height:10px; fill:#fff; }
 .pin-btn.pinned { opacity:1 !important; background:rgba(255,200,0,.85); }
 .pin-btn.pinned svg { fill:#111; }
-
-/* pin indicator badge */
 .pin-badge {
   position:absolute; top:4px; left:4px; z-index:6;
   background:rgba(255,200,0,.9); border-radius:50%;
   width:14px; height:14px; display:flex; align-items:center; justify-content:center;
   font-size:8px;
 }
-
-/* pin mode — cells pulsing border */
-.pin-mode .ig-cell:not(.empty):not(.pinned-cell) { outline:2px dashed rgba(139,111,94,.4); }
-.pin-mode .ig-cell.pinned-cell { outline:2px solid #f0c040; }
 
 /* ── PROFILE OVERLAY ── */
 #profileOverlay {
@@ -242,45 +220,13 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 <!-- CONFIG -->
 <div id="config">
   <h2>📱 IG Planner Widget</h2>
-  <p>Configurá el perfil y conectá tu database de Notion.</p>
-
-  <div class="section-title">🔌 Notion</div>
+  <p>Conectá tu database de Notion para ver tu feed.</p>
   <label>Integration Token</label>
   <input type="password" id="token" placeholder="ntn_xxxxxxxxxxxx">
   <label>Database ID</label>
   <input type="text" id="dbId" placeholder="10ca47eb27c980c98ed9f7016b79b6ea">
   <label>Propiedad de fecha</label>
   <input type="text" id="dateProp" value="Publication Date">
-  <label>Nombre de la página de Highlights <small style="font-weight:400;text-transform:none;color:#bbb">en tu database</small></label>
-  <input type="text" id="hlPageName" value="Highlights" placeholder="Highlights">
-
-  <div class="section-title">👤 Perfil</div>
-  <label>Handle (sin @)</label>
-  <input type="text" id="cfgHandle" placeholder="millieflame">
-  <label>Nombre para mostrar</label>
-  <input type="text" id="cfgName" placeholder="Millie Flame">
-  <label>Bio</label>
-  <textarea id="cfgBio" placeholder="Community Manager ✨&#10;@agencia · creando con intención"></textarea>
-  <label>Link web</label>
-  <input type="text" id="cfgWebsite" placeholder="https://millieflame.com">
-  <label>Foto de perfil</label>
-  <div class="avatar-upload-row">
-    <input type="text" id="cfgAvatar" placeholder="URL o subí desde galería →">
-    <button class="avatar-upload-btn" onclick="document.getElementById('avatarFileInput').click()">📁 Galería</button>
-    <input type="file" id="avatarFileInput" accept="image/*" style="display:none">
-  </div>
-
-  <div class="section-title">📊 Estadísticas</div>
-  <div class="stats-row">
-    <div><label>Posts publicados</label><input type="text" id="cfgPublished" placeholder="48"></div>
-    <div><label>Seguidores</label><input type="text" id="cfgFollowers" placeholder="2.4k"></div>
-    <div><label>Siguiendo</label><input type="text" id="cfgFollowing" placeholder="312"></div>
-  </div>
-
-  <div class="section-title">⭕ Highlights</div>
-  <div id="hlList"></div>
-  <button class="add-hl-btn" id="addHlBtn">+ Agregar highlight</button>
-
   <button id="loadBtn">Conectar y ver →</button>
   <p class="hint">El token se usa solo para llamar a Notion directamente.<br><a href="https://www.notion.so/my-integrations" target="_blank">Crear integración →</a></p>
 </div>
@@ -295,7 +241,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
       <button class="top-btn" onclick="openProfileEditor()">✏️ Editar perfil</button>
       <button class="top-btn" id="toggleBtn" onclick="toggleView()">📅 + Programados</button>
       <button class="top-btn" id="pinModeBtn" onclick="togglePinMode()">📌 Fijar</button>
-      <button class="top-btn" id="refreshBtn" onclick="refreshData()" title="Recargar posts desde Notion">↺</button>
+      <button class="top-btn" id="refreshBtn" onclick="refreshData()">↺ Refresh</button>
     </div>
     <div id="pinHint">Clic en una imagen para fijarla arriba · Máx. 3 · Clic en 📌 para terminar</div>
 
@@ -315,8 +261,15 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
         <div class="ig-topbar">
           <span class="ig-handle-text" id="igHandle">handle</span>
           <div class="ig-topbar-icons">
-            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <svg viewBox="0 0 24 24" onclick="openProfileEditor()" title="Editar perfil"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:#111;stroke-width:1.8;">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;cursor:pointer;" onclick="openProfileEditor()">
+              <circle cx="5" cy="12" r="1.5" fill="#111"/>
+              <circle cx="12" cy="12" r="1.5" fill="#111"/>
+              <circle cx="19" cy="12" r="1.5" fill="#111"/>
+            </svg>
           </div>
         </div>
 
@@ -375,13 +328,13 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
       <button class="close-btn" onclick="closeProfileEditor()">×</button>
     </div>
     <label>Handle (sin @)</label>
-    <input type="text" id="editHandle">
+    <input type="text" id="editHandle" placeholder="millieflame">
     <label>Nombre para mostrar</label>
-    <input type="text" id="editName">
+    <input type="text" id="editName" placeholder="Millie Flame">
     <label>Bio</label>
-    <textarea id="editBio"></textarea>
+    <textarea id="editBio" placeholder="Community Manager ✨&#10;@agencia · creando con intención"></textarea>
     <label>Link web</label>
-    <input type="text" id="editWebsite">
+    <input type="text" id="editWebsite" placeholder="https://millieflame.com">
     <label>Foto de perfil</label>
     <div class="avatar-upload-row">
       <input type="text" id="editAvatar" placeholder="URL o subí desde galería →">
@@ -389,13 +342,12 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
       <input type="file" id="editAvatarFile" accept="image/*" style="display:none">
     </div>
     <div class="stats-row">
-      <div><label>Posts publicados</label><input type="text" id="editPublished"></div>
-      <div><label>Seguidores</label><input type="text" id="editFollowers"></div>
-      <div><label>Siguiendo</label><input type="text" id="editFollowing"></div>
+      <div><label>Posts publicados</label><input type="text" id="editPublished" placeholder="48"></div>
+      <div><label>Seguidores</label><input type="text" id="editFollowers" placeholder="2.4k"></div>
+      <div><label>Siguiendo</label><input type="text" id="editFollowing" placeholder="312"></div>
     </div>
     <div class="section-title" style="margin-top:4px;">⭕ Highlights</div>
     <div id="editHlList"></div>
-    <button class="add-hl-btn" id="editAddHlBtn">+ Agregar highlight</button>
     <button class="save-btn" onclick="saveProfileEditor()">Guardar cambios</button>
   </div>
 </div>
@@ -406,45 +358,13 @@ let allPages = [];
 let currentDateProp = '';
 let showingScheduled = false;
 let pinMode = false;
-let pinnedIds = []; // ordered list of pinned page IDs (max 3)
+let pinnedIds = [];
 
-// ── STORAGE helpers ──
-function saveToStorage(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
-}
-function loadFromStorage(key, fallback) {
-  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch(e) { return fallback; }
-}
+// ── STORAGE ──
+function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+function load(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch(e) { return def; } }
 
-// ── RESTORE on page load ──
-window.addEventListener('DOMContentLoaded', () => {
-  const creds = loadFromStorage('ig_creds', null);
-  if (creds) {
-    document.getElementById('token').value    = creds.token    || '';
-    document.getElementById('dbId').value     = creds.dbId     || '';
-    document.getElementById('dateProp').value = creds.dateP    || 'Publication Date';
-    document.getElementById('hlPageName').value = creds.hlPageName || 'Highlights';
-  }
-  const prof = loadFromStorage('ig_profile', null);
-  if (prof) {
-    document.getElementById('cfgHandle').value    = prof.handle    || '';
-    document.getElementById('cfgName').value      = prof.name      || '';
-    document.getElementById('cfgBio').value       = prof.bio       || '';
-    document.getElementById('cfgWebsite').value   = prof.website   || '';
-    document.getElementById('cfgAvatar').value    = prof.avatar    || '';
-    document.getElementById('cfgPublished').value = prof.published || '';
-    document.getElementById('cfgFollowers').value = prof.followers || '';
-    document.getElementById('cfgFollowing').value = prof.following || '';
-  }
-  const savedHl = loadFromStorage('ig_highlights', null);
-  if (savedHl) { hlData = savedHl; buildHlRows('hlList', hlData); }
-  pinnedIds = loadFromStorage('ig_pinned', []);
-
-  // Auto-connect if credentials exist
-  if (creds?.token && creds?.dbId) {
-    setTimeout(() => document.getElementById('loadBtn').click(), 100);
-  }
-});
+// ── CLOCK ──
 function tick() {
   const n = new Date();
   document.getElementById('clockTime').textContent =
@@ -452,47 +372,58 @@ function tick() {
 }
 tick(); setInterval(tick, 10000);
 
-// ── FILE UPLOADS ──
-document.getElementById('avatarFileInput').addEventListener('change', e => {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = ev => document.getElementById('cfgAvatar').value = ev.target.result;
-  r.readAsDataURL(f);
-});
-document.getElementById('editAvatarFile').addEventListener('change', e => {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = ev => document.getElementById('editAvatar').value = ev.target.result;
-  r.readAsDataURL(f);
-});
+// ── HIGHLIGHTS — fixed 4 with image upload ──
+let hlData = load('ig_highlights', [
+  { label:'Story 1', img:null },
+  { label:'Story 2', img:null },
+  { label:'Story 3', img:null },
+  { label:'Story 4', img:null },
+]);
 
-// ── HIGHLIGHTS ──
-let hlData = [
-  { emoji:'⭐', label:'Highlights' },
-  { emoji:'📸', label:'Feed' },
-  { emoji:'🎯', label:'Goals' },
-];
-function buildHlRows(containerId, data) {
+function buildHlRows(containerId) {
   const list = document.getElementById(containerId);
+  if (!list) return;
   list.innerHTML = '';
-  data.forEach((hl, i) => {
+  hlData.forEach((hl, i) => {
     const row = document.createElement('div');
-    row.className = 'hl-row';
-    row.innerHTML = `
-      <input type="text" value="${hl.emoji}" maxlength="2" data-i="${i}" data-f="emoji">
-      <input type="text" value="${hl.label}" placeholder="Nombre" data-i="${i}" data-f="label">
-      <button class="hl-remove" data-i="${i}">×</button>`;
+    row.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:10px;';
+
+    const thumb = document.createElement('div');
+    thumb.style.cssText = 'width:36px;height:36px;border-radius:50%;flex-shrink:0;overflow:hidden;background:#e8e0d8;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #e4e4e4;';
+    thumb.innerHTML = hl.img
+      ? `<img src="${hl.img}" style="width:100%;height:100%;object-fit:cover;">`
+      : `<span style="font-size:16px">📷</span>`;
+
+    const inp = document.createElement('input');
+    inp.value = hl.label; inp.placeholder = 'Nombre';
+    inp.style.cssText = 'flex:1;margin-bottom:0;';
+    inp.addEventListener('input', () => { hlData[i].label = inp.value; });
+
+    const fileInp = document.createElement('input');
+    fileInp.type = 'file'; fileInp.accept = 'image/*'; fileInp.style.display = 'none';
+    fileInp.addEventListener('change', e => {
+      const f = e.target.files[0]; if (!f) return;
+      const r = new FileReader();
+      r.onload = ev => {
+        hlData[i].img = ev.target.result;
+        save('ig_highlights', hlData);
+        buildHlRows(containerId);
+        renderHighlights();
+      };
+      r.readAsDataURL(f);
+    });
+
+    const uploadBtn = document.createElement('button');
+    uploadBtn.className = 'avatar-upload-btn';
+    uploadBtn.textContent = '📁'; uploadBtn.title = 'Subir imagen';
+    uploadBtn.style.cssText = 'padding:6px 8px;';
+    uploadBtn.onclick = () => fileInp.click();
+    thumb.onclick = () => fileInp.click();
+
+    row.append(thumb, inp, uploadBtn, fileInp);
     list.appendChild(row);
   });
-  list.querySelectorAll('input').forEach(inp =>
-    inp.addEventListener('input', () => { data[+inp.dataset.i][inp.dataset.f] = inp.value; }));
-  list.querySelectorAll('.hl-remove').forEach(btn =>
-    btn.addEventListener('click', () => { data.splice(+btn.dataset.i,1); buildHlRows(containerId,data); }));
 }
-buildHlRows('hlList', hlData);
-document.getElementById('addHlBtn').onclick = () => {
-  hlData.push({ emoji:'✨', label:'Nuevo' }); buildHlRows('hlList', hlData);
-};
 
 // ── BIO PARSER ──
 function parseBio(text) {
@@ -530,7 +461,7 @@ function getAllImgs(page) {
     });
   }
   if (page._imageBlocks?.length)
-    page._imageBlocks.forEach(u => { if (!imgs.includes(u)) imgs.push(u); });
+    page._imageBlocks.forEach(b => { if (b.url && !imgs.includes(b.url)) imgs.push(b.url); });
   return imgs;
 }
 function getTitle(page) {
@@ -542,12 +473,10 @@ function getTitle(page) {
 
 // ── NOTION API ──
 async function notionQuery(token, dbId) {
-  const hlPageName = document.getElementById('hlPageName')?.value.trim() || 
-                     loadFromStorage('ig_creds', {})?.hlPageName || 'Highlights';
   const res = await fetch('/.netlify/functions/notion', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ token, dbId, fetchBlocks: true, fetchHighlights: true, highlightsPageName: hlPageName })
+    body: JSON.stringify({ token, dbId, fetchBlocks: true })
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message||`Error ${res.status}`);
@@ -556,52 +485,35 @@ async function notionQuery(token, dbId) {
 
 // ── CONNECT ──
 document.getElementById('loadBtn').onclick = async () => {
-  const token     = document.getElementById('token').value.trim();
-  const dbId      = document.getElementById('dbId').value.trim().replace(/-/g,'');
-  const dateP        = document.getElementById('dateProp').value.trim();
-  const hlPageName   = document.getElementById('hlPageName').value.trim() || 'Highlights';
-  const handle    = document.getElementById('cfgHandle').value.trim()||'handle';
-  const name      = document.getElementById('cfgName').value.trim()||handle;
-  const bio       = document.getElementById('cfgBio').value.trim();
-  const website   = document.getElementById('cfgWebsite').value.trim();
-  const avatar    = document.getElementById('cfgAvatar').value.trim();
-  const published = document.getElementById('cfgPublished').value.trim();
-  const followers = document.getElementById('cfgFollowers').value.trim()||'—';
-  const following = document.getElementById('cfgFollowing').value.trim()||'—';
-
+  const token = document.getElementById('token').value.trim();
+  const dbId  = document.getElementById('dbId').value.trim().replace(/-/g,'');
+  const dateP = document.getElementById('dateProp').value.trim();
   if (!token||!dbId) { alert('Ingresá el token y el database ID.'); return; }
   showStatus(true);
-
   try {
     const data = await notionQuery(token, dbId);
-
-    // Load highlights from Notion if available
-    if (data._highlights !== undefined) {
-      if (data._highlights && data._highlights.length > 0) {
-        hlData = data._highlights.map(h => ({ emoji: null, url: h.url, label: h.label }));
-        buildHlRows('hlList', hlData);
-        saveToStorage('ig_highlights', hlData);
-      }
-    }
     allPages = (data.results||[])
       .filter(p => !!getDate(p, dateP))
       .sort((a,b) => new Date(getDate(b,dateP)) - new Date(getDate(a,dateP)));
     currentDateProp = dateP;
     showingScheduled = false;
-    pinnedIds = [];
+    pinnedIds = load('ig_pinned', []);
 
-    // Save credentials and profile
-    saveToStorage('ig_creds', { token, dbId, dateP, hlPageName });
-    saveToStorage('ig_profile', { handle, name, bio, website, avatar, published, followers, following });
-    saveToStorage('ig_highlights', hlData);
-    saveToStorage('ig_pinned', pinnedIds);
+    save('ig_creds', { token, dbId, dateP });
 
-    const today = new Date(); today.setHours(0,0,0,0);
-    const publishedPages = allPages.filter(p => new Date(getDate(p,dateP)) <= today);
-
-    applyProfile({handle,name,bio,website,avatar,followers,following,
-      posts: published||publishedPages.length});
-    renderHighlights(hlData);
+    // Restore saved profile
+    const prof = load('ig_profile', {});
+    applyProfile({
+      handle:    prof.handle    || 'handle',
+      name:      prof.name      || prof.handle || 'handle',
+      bio:       prof.bio       || '',
+      website:   prof.website   || '',
+      avatar:    prof.avatar    || '',
+      followers: prof.followers || '—',
+      following: prof.following || '—',
+      posts:     prof.published || publishedCount(),
+    });
+    renderHighlights();
     renderGrid();
 
     document.getElementById('toggleBtn').textContent = '📅 + Programados';
@@ -614,9 +526,14 @@ document.getElementById('loadBtn').onclick = async () => {
   }
 };
 
+function publishedCount() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  return allPages.filter(p => new Date(getDate(p,currentDateProp)) <= today).length;
+}
+
 // ── REFRESH ──
 async function refreshData() {
-  const creds = loadFromStorage('ig_creds', null);
+  const creds = load('ig_creds', null);
   if (!creds?.token || !creds?.dbId) return;
   const btn = document.getElementById('refreshBtn');
   btn.textContent = '↻'; btn.style.opacity = '.5';
@@ -628,14 +545,14 @@ async function refreshData() {
     currentDateProp = creds.dateP;
     renderGrid();
   } catch(e) { alert('Error al recargar: ' + e.message); }
-  btn.textContent = '↺'; btn.style.opacity = '1';
+  btn.textContent = '↺ Refresh'; btn.style.opacity = '1';
 }
 
-// ── TOGGLE: published only ↔ published + scheduled ──
+// ── TOGGLE ──
 function toggleView() {
   showingScheduled = !showingScheduled;
   const btn = document.getElementById('toggleBtn');
-  btn.textContent   = showingScheduled ? '✅ Solo publicados' : '📅 + Programados';
+  btn.textContent = showingScheduled ? '✅ Solo publicados' : '📅 + Programados';
   btn.classList.toggle('active', showingScheduled);
   renderGrid();
 }
@@ -643,131 +560,20 @@ function toggleView() {
 // ── PIN MODE ──
 function togglePinMode() {
   pinMode = !pinMode;
-  const btn  = document.getElementById('pinModeBtn');
-  const hint = document.getElementById('pinHint');
+  const btn = document.getElementById('pinModeBtn');
   btn.classList.toggle('active', pinMode);
   btn.textContent = pinMode ? '📌 Listo' : '📌 Fijar';
-  hint.style.display = pinMode ? 'block' : 'none';
-  document.getElementById('igGrid').classList.toggle('pin-mode', pinMode);
+  document.getElementById('pinHint').style.display = pinMode ? 'block' : 'none';
 }
-
 function togglePin(pageId) {
   if (pinnedIds.includes(pageId)) {
     pinnedIds = pinnedIds.filter(id => id !== pageId);
   } else {
-    if (pinnedIds.length >= 3) {
-      alert('Máximo 3 posts fijados. Desancla uno primero.');
-      return;
-    }
+    if (pinnedIds.length >= 3) { alert('Máximo 3 posts fijados.'); return; }
     pinnedIds.push(pageId);
   }
+  save('ig_pinned', pinnedIds);
   renderGrid();
-}
-
-// ── RENDER GRID ──
-function renderGrid() {
-  const today = new Date(); today.setHours(0,0,0,0);
-
-  // Base pool: always published. If toggle on, add scheduled too.
-  let pool = allPages.filter(p => new Date(getDate(p, currentDateProp)) <= today);
-  if (showingScheduled) {
-    const scheduled = allPages.filter(p => new Date(getDate(p, currentDateProp)) > today);
-    pool = [...pool, ...scheduled];
-  }
-
-  // Pinned first (in pin order), then rest
-  const pinned  = pinnedIds.map(id => pool.find(p => p.id === id)).filter(Boolean);
-  const unpinned = pool.filter(p => !pinnedIds.includes(p.id));
-  const pages   = [...pinned, ...unpinned];
-
-  const grid  = document.getElementById('igGrid');
-  grid.innerHTML = '';
-  const total = Math.max(pages.length, 9);
-  const hues  = [25,200,140,310,50,170,260,35,100];
-
-  for (let i = 0; i < total; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'ig-cell';
-
-    if (i < pages.length) {
-      const p    = pages[i];
-      const imgs = getAllImgs(p);
-      const date = getDate(p, currentDateProp);
-      const isPinned = pinnedIds.includes(p.id);
-      const isScheduled = new Date(date) > today;
-      if (isPinned) cell.classList.add('pinned-cell');
-
-      // scheduled = slight opacity
-      if (isScheduled) cell.style.opacity = '0.65';
-
-      const im = document.createElement('img');
-      im.alt=''; im.loading='lazy';
-      if (imgs.length) { im.src = imgs[0]; }
-      else { im.style.display='none'; cell.style.background=`hsl(${hues[i%hues.length]},22%,82%)`; }
-      cell.appendChild(im);
-
-      // carousel
-      if (imgs.length > 1) {
-        let idx = 0;
-        const dotsWrap = document.createElement('div');
-        dotsWrap.className = 'cell-dots';
-        imgs.forEach((_,di) => {
-          const dot = document.createElement('div');
-          dot.className = 'cell-dot'+(di===0?' active':'');
-          dotsWrap.appendChild(dot);
-        });
-        cell.appendChild(dotsWrap);
-
-        const badge = document.createElement('div');
-        badge.className = 'multi-badge';
-        badge.innerHTML = `<svg viewBox="0 0 24 24"><rect x="0" y="6" width="17" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/><path d="M2 4h15a2 2 0 0 1 2 2v13" stroke="#fff" stroke-width="2" fill="none"/></svg>`;
-        cell.appendChild(badge);
-
-        const prev = document.createElement('button');
-        prev.className='cell-arrow prev'; prev.textContent='‹';
-        const next = document.createElement('button');
-        next.className='cell-arrow next'; next.textContent='›';
-
-        function goTo(ni) {
-          idx=(ni+imgs.length)%imgs.length; im.src=imgs[idx];
-          dotsWrap.querySelectorAll('.cell-dot').forEach((d,di)=>d.classList.toggle('active',di===idx));
-        }
-        prev.onclick = e => { e.stopPropagation(); goTo(idx-1); };
-        next.onclick = e => { e.stopPropagation(); goTo(idx+1); };
-        cell.appendChild(prev);
-        cell.appendChild(next);
-      }
-
-      // pin badge (shows position number if pinned)
-      if (isPinned) {
-        const pb = document.createElement('div');
-        pb.className = 'pin-badge';
-        pb.textContent = '📌';
-        cell.appendChild(pb);
-      }
-
-      // pin button
-      const pinBtn = document.createElement('button');
-      pinBtn.className = 'pin-btn' + (isPinned?' pinned':'');
-      pinBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2l2.5 6.5H21l-5.5 4 2 6.5L12 15l-5.5 4 2-6.5L3 8.5h6.5z"/></svg>`;
-      pinBtn.onclick = e => {
-        e.stopPropagation();
-        if (!pinMode && !isPinned) return; // only toggle in pinMode or to unpin
-        togglePin(p.id);
-      };
-      cell.appendChild(pinBtn);
-
-      // hover overlay
-      const ov = document.createElement('div');
-      ov.className = 'overlay';
-      ov.innerHTML = `<div class="overlay-date">${fmtShort(date)}${isScheduled?' 🕐':''}</div>`;
-      cell.appendChild(ov);
-
-    } else {
-      cell.classList.add('empty');
-    }
-    grid.appendChild(cell);
-  }
 }
 
 // ── APPLY PROFILE ──
@@ -783,145 +589,225 @@ function applyProfile({handle,name,bio,website,avatar,followers,following,posts}
     wEl.textContent = website.replace(/^https?:\/\//,'');
     wEl.href = website.startsWith('http') ? website : 'https://'+website;
     wEl.style.display = 'block';
-  } else { wEl.style.display='none'; }
+  } else { wEl.style.display = 'none'; }
   const inner = document.getElementById('avatarInner');
   inner.innerHTML = avatar
     ? `<img src="${avatar}" alt="">`
     : `<span class="avatar-letter">${(handle[0]||'?').toUpperCase()}</span>`;
 }
 
-function renderHighlights(items) {
+// ── HIGHLIGHTS ──
+function renderHighlights() {
   const wrap = document.getElementById('igHighlights');
   wrap.innerHTML = '';
-
-  items.forEach((hl, i) => {
+  hlData.forEach((hl, i) => {
     const el = document.createElement('div');
     el.className = 'hl-item';
     el.dataset.index = i;
-
-    const imgContent = hl.url
-      ? `<img src="${hl.url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="">`
-      : `<span class="hl-emoji">${hl.emoji || '✨'}</span>`;
-
     el.innerHTML = `
       <div class="hl-ring">
-        <div class="hl-inner-ig">${imgContent}</div>
+        <div class="hl-inner-ig">${hl.img
+          ? `<img src="${hl.img}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="">`
+          : `<span class="hl-emoji">📷</span>`}
+        </div>
       </div>
       <div class="hl-label-ig">${hl.label}</div>`;
     wrap.appendChild(el);
   });
 
-  // ── Drag to reorder (pointer events, works on touch + mouse) ──
-  let dragEl = null, dragIdx = -1, startX = 0, startScrollLeft = 0;
-
+  // Drag to reorder
+  let dragEl = null, dragIdx = -1;
   wrap.addEventListener('pointerdown', e => {
     const item = e.target.closest('.hl-item');
     if (!item) return;
-    dragEl  = item;
-    dragIdx = +item.dataset.index;
-    startX  = e.clientX;
-    startScrollLeft = wrap.scrollLeft;
+    dragEl = item; dragIdx = +item.dataset.index;
     item.classList.add('dragging-item');
     wrap.classList.add('dragging');
     wrap.setPointerCapture(e.pointerId);
     e.preventDefault();
   });
-
   wrap.addEventListener('pointermove', e => {
     if (!dragEl) return;
-    const dx = e.clientX - startX;
-
-    // Find which item we're hovering over
     const els = [...wrap.querySelectorAll('.hl-item:not(.dragging-item)')];
-    let overEl = null;
-    for (const el of els) {
-      const rect = el.getBoundingClientRect();
-      if (e.clientX >= rect.left && e.clientX <= rect.right) { overEl = el; break; }
-    }
     els.forEach(el => el.classList.remove('drag-over'));
-    if (overEl) overEl.classList.add('drag-over');
+    for (const el of els) {
+      const r = el.getBoundingClientRect();
+      if (e.clientX >= r.left && e.clientX <= r.right) { el.classList.add('drag-over'); break; }
+    }
   });
-
   wrap.addEventListener('pointerup', e => {
     if (!dragEl) return;
     const els = [...wrap.querySelectorAll('.hl-item:not(.dragging-item)')];
-    let overEl = null;
     for (const el of els) {
-      const rect = el.getBoundingClientRect();
-      if (e.clientX >= rect.left && e.clientX <= rect.right) { overEl = el; break; }
+      const r = el.getBoundingClientRect();
+      if (e.clientX >= r.left && e.clientX <= r.right) {
+        const toIdx = +el.dataset.index;
+        [hlData[dragIdx], hlData[toIdx]] = [hlData[toIdx], hlData[dragIdx]];
+        save('ig_highlights', hlData);
+        break;
+      }
     }
-
-    if (overEl) {
-      const toIdx = +overEl.dataset.index;
-      // Swap in hlData
-      [hlData[dragIdx], hlData[toIdx]] = [hlData[toIdx], hlData[dragIdx]];
-      saveToStorage('ig_highlights', hlData);
-    }
-
     dragEl.classList.remove('dragging-item');
     wrap.classList.remove('dragging');
     els.forEach(el => el.classList.remove('drag-over'));
     dragEl = null; dragIdx = -1;
-    renderHighlights(hlData);
+    renderHighlights();
   });
+}
+
+// ── GRID ──
+function renderGrid() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  let pool = allPages.filter(p => new Date(getDate(p,currentDateProp)) <= today);
+  if (showingScheduled) {
+    const sched = allPages.filter(p => new Date(getDate(p,currentDateProp)) > today);
+    pool = [...pool, ...sched];
+  }
+  const pinned   = pinnedIds.map(id => pool.find(p => p.id===id)).filter(Boolean);
+  const unpinned = pool.filter(p => !pinnedIds.includes(p.id));
+  const pages    = [...pinned, ...unpinned];
+
+  const grid = document.getElementById('igGrid');
+  grid.innerHTML = '';
+  const total = Math.max(pages.length, 9);
+  const hues  = [25,200,140,310,50,170,260,35,100];
+
+  for (let i = 0; i < total; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'ig-cell';
+
+    if (i < pages.length) {
+      const p         = pages[i];
+      const imgs      = getAllImgs(p);
+      const date      = getDate(p, currentDateProp);
+      const isPinned  = pinnedIds.includes(p.id);
+      const isSched   = new Date(date) > today;
+      if (isSched) cell.style.opacity = '.65';
+
+      const im = document.createElement('img');
+      im.alt=''; im.loading='lazy';
+      if (imgs.length) { im.src=imgs[0]; }
+      else { im.style.display='none'; cell.style.background=`hsl(${hues[i%hues.length]},22%,82%)`; }
+      cell.appendChild(im);
+
+      // carousel
+      if (imgs.length > 1) {
+        let idx = 0;
+        const dotsWrap = document.createElement('div');
+        dotsWrap.className = 'cell-dots';
+        imgs.forEach((_,di) => {
+          const dot = document.createElement('div');
+          dot.className = 'cell-dot'+(di===0?' active':'');
+          dotsWrap.appendChild(dot);
+        });
+        cell.appendChild(dotsWrap);
+        const badge = document.createElement('div');
+        badge.className = 'multi-badge';
+        badge.innerHTML = `<svg viewBox="0 0 24 24"><rect x="0" y="6" width="17" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/><path d="M2 4h15a2 2 0 0 1 2 2v13" stroke="#fff" stroke-width="2" fill="none"/></svg>`;
+        cell.appendChild(badge);
+        const prev = document.createElement('button');
+        prev.className='cell-arrow prev'; prev.textContent='‹';
+        const next = document.createElement('button');
+        next.className='cell-arrow next'; next.textContent='›';
+        function goTo(ni) {
+          idx=(ni+imgs.length)%imgs.length; im.src=imgs[idx];
+          dotsWrap.querySelectorAll('.cell-dot').forEach((d,di)=>d.classList.toggle('active',di===idx));
+        }
+        prev.onclick = e => { e.stopPropagation(); goTo(idx-1); };
+        next.onclick = e => { e.stopPropagation(); goTo(idx+1); };
+        cell.appendChild(prev);
+        cell.appendChild(next);
+      }
+
+      if (isPinned) {
+        const pb = document.createElement('div');
+        pb.className='pin-badge'; pb.textContent='📌';
+        cell.appendChild(pb);
+      }
+      const pinBtn = document.createElement('button');
+      pinBtn.className = 'pin-btn'+(isPinned?' pinned':'');
+      pinBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2l2.5 6.5H21l-5.5 4 2 6.5L12 15l-5.5 4 2-6.5L3 8.5h6.5z"/></svg>`;
+      pinBtn.onclick = e => {
+        e.stopPropagation();
+        if (!pinMode && !isPinned) return;
+        togglePin(p.id);
+      };
+      cell.appendChild(pinBtn);
+
+      const ov = document.createElement('div');
+      ov.className='overlay';
+      ov.innerHTML=`<div class="overlay-date">${fmtShort(date)}${isSched?' 🕐':''}</div>`;
+      cell.appendChild(ov);
+    } else {
+      cell.classList.add('empty');
+    }
+    grid.appendChild(cell);
+  }
 }
 
 // ── PROFILE EDITOR ──
 function openProfileEditor() {
-  document.getElementById('editHandle').value    = document.getElementById('igHandle').textContent;
-  document.getElementById('editName').value      = document.getElementById('igName').textContent;
-  document.getElementById('editBio').value       = document.getElementById('igBio').innerText;
-  const wEl = document.getElementById('igWebsite');
-  document.getElementById('editWebsite').value   = wEl.style.display==='none'?'':wEl.href;
-  document.getElementById('editFollowers').value = document.getElementById('igFollowers').textContent;
-  document.getElementById('editFollowing').value = document.getElementById('igFollowing').textContent;
-  document.getElementById('editPublished').value = document.getElementById('postCount').textContent;
-  const img = document.getElementById('avatarInner').querySelector('img');
-  document.getElementById('editAvatar').value    = img?img.src:'';
-  buildHlRows('editHlList', hlData);
-  document.getElementById('editAddHlBtn').onclick = () => {
-    hlData.push({emoji:'✨',label:'Nuevo'}); buildHlRows('editHlList',hlData);
-  };
-  document.getElementById('profileOverlay').style.display='flex';
+  const prof = load('ig_profile', {});
+  document.getElementById('editHandle').value    = prof.handle    || document.getElementById('igHandle').textContent || '';
+  document.getElementById('editName').value      = prof.name      || document.getElementById('igName').textContent   || '';
+  document.getElementById('editBio').value       = prof.bio       || document.getElementById('igBio').innerText      || '';
+  document.getElementById('editWebsite').value   = prof.website   || '';
+  document.getElementById('editAvatar').value    = prof.avatar    || '';
+  document.getElementById('editFollowers').value = prof.followers || document.getElementById('igFollowers').textContent || '';
+  document.getElementById('editFollowing').value = prof.following || document.getElementById('igFollowing').textContent || '';
+  document.getElementById('editPublished').value = prof.published || document.getElementById('postCount').textContent  || '';
+  buildHlRows('editHlList');
+  document.getElementById('profileOverlay').style.display = 'flex';
 }
-
+document.getElementById('editAvatarFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => document.getElementById('editAvatar').value = ev.target.result;
+  r.readAsDataURL(f);
+});
 function saveProfileEditor() {
-  applyProfile({
-    handle:    document.getElementById('editHandle').value.trim()||'handle',
+  const prof = {
+    handle:    document.getElementById('editHandle').value.trim()    || 'handle',
     name:      document.getElementById('editName').value.trim(),
     bio:       document.getElementById('editBio').value.trim(),
     website:   document.getElementById('editWebsite').value.trim(),
     avatar:    document.getElementById('editAvatar').value.trim(),
-    followers: document.getElementById('editFollowers').value.trim()||'—',
-    following: document.getElementById('editFollowing').value.trim()||'—',
-    posts:     document.getElementById('editPublished').value.trim()||'—',
-  });
-  renderHighlights(hlData);
+    followers: document.getElementById('editFollowers').value.trim() || '—',
+    following: document.getElementById('editFollowing').value.trim() || '—',
+    published: document.getElementById('editPublished').value.trim() || '—',
+  };
+  save('ig_profile', prof);
+  save('ig_highlights', hlData);
+  applyProfile({ ...prof, posts: prof.published });
+  renderHighlights();
   closeProfileEditor();
-  saveToStorage('ig_profile', {
-    handle:    document.getElementById('editHandle').value.trim()||'handle',
-    name:      document.getElementById('editName').value.trim(),
-    bio:       document.getElementById('editBio').value.trim(),
-    website:   document.getElementById('editWebsite').value.trim(),
-    avatar:    document.getElementById('editAvatar').value.trim(),
-    followers: document.getElementById('editFollowers').value.trim()||'—',
-    following: document.getElementById('editFollowing').value.trim()||'—',
-    published: document.getElementById('editPublished').value.trim()||'—',
-  });
-  saveToStorage('ig_highlights', hlData);
 }
-function closeProfileEditor() { document.getElementById('profileOverlay').style.display='none'; }
+function closeProfileEditor() {
+  document.getElementById('profileOverlay').style.display = 'none';
+}
 
+// ── SHOW STATUS ──
 function showStatus(loading, errMsg) {
-  document.getElementById('config').style.display='none';
+  document.getElementById('config').style.display = 'none';
   const s = document.getElementById('status');
-  s.style.display='block';
+  s.style.display = 'block';
   s.innerHTML = loading
     ? `<div class="spinner"></div>`
     : `<p style="color:#c0392b;font-size:13px">❌ ${errMsg}</p>
        <button onclick="document.getElementById('status').style.display='none';document.getElementById('config').style.display='block';"
          style="margin-top:12px;padding:8px 16px;border:1px solid #ddd;border-radius:8px;cursor:pointer;font-size:12px">← Reintentar</button>`;
 }
+
+// ── AUTO-CONNECT on load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const creds = load('ig_creds', null);
+  if (creds?.token && creds?.dbId) {
+    document.getElementById('token').value    = creds.token;
+    document.getElementById('dbId').value     = creds.dbId;
+    document.getElementById('dateProp').value = creds.dateP || 'Publication Date';
+    setTimeout(() => document.getElementById('loadBtn').click(), 100);
+  }
+});
 </script>
 </body>
 </html>
