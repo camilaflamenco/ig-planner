@@ -83,6 +83,13 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .top-btn:hover { border-color:#1a1a1a; color:#1a1a1a; }
 .top-btn.active { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
 
+/* pin mode button hint */
+#pinHint {
+  width:260px; text-align:center; font-size:10px; color:#8b6f5e;
+  margin-bottom:10px; display:none;
+  background:#fff8f4; border-radius:8px; padding:6px;
+}
+
 /* ── PHONE ── */
 .phone-shell {
   width:260px; background:#fff; border-radius:42px;
@@ -103,44 +110,37 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .ig-topbar-icons { display:flex; gap:14px; }
 .ig-topbar-icons svg { width:22px; height:22px; fill:none; stroke:#111; stroke-width:1.8; cursor:pointer; }
 
-.profile-section { padding:10px 14px 0; }
-.profile-row { display:flex; align-items:center; gap:16px; margin-bottom:10px; }
-.avatar-big { width:68px; height:68px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); padding:2.5px; }
+.profile-section { padding:8px 14px 0; }
+.profile-row { display:flex; align-items:center; gap:14px; margin-bottom:8px; }
+
+/* smaller avatar */
+.avatar-big { width:52px; height:52px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); padding:2px; }
 .avatar-inner { width:100%; height:100%; border-radius:50%; background:#fff; padding:2px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .avatar-inner img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
-.avatar-letter { font-size:24px; font-weight:700; color:#111; }
+.avatar-letter { font-size:18px; font-weight:700; color:#111; }
+
+/* smaller lighter stats */
 .stats-ig { display:flex; flex:1; justify-content:space-around; }
 .stat { text-align:center; }
-.stat-num { font-size:14px; font-weight:800; display:block; color:#111; }
-.stat-lbl { font-size:10px; color:#555; }
+.stat-num { font-size:12px; font-weight:400; display:block; color:#111; }
+.stat-lbl { font-size:9px; color:#888; }
 
 .bio-ig { font-size:8.5px; line-height:1.3; color:#111; margin-bottom:4px; }
 .bio-ig strong { display:block; font-weight:700; font-size:9.5px; margin-bottom:1px; }
 .bio-ig a { color:#0095f6; text-decoration:none; }
 .bio-link { display:block; font-size:8.5px; color:#0095f6; font-weight:600; margin-bottom:6px; text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
-.action-row { display:flex; gap:6px; margin-bottom:8px; }
+.action-row { display:flex; gap:6px; margin-bottom:10px; }
 .btn-follow { flex:1; background:#0095f6; color:#fff; border:none; border-radius:8px; padding:6px 0; font-size:12px; font-weight:700; cursor:pointer; }
 .btn-msg    { flex:1; background:#efefef; color:#111; border:none; border-radius:8px; padding:6px 0; font-size:12px; font-weight:700; cursor:pointer; }
-
-/* similar accounts */
-.similar-wrap { margin-bottom:10px; }
-.similar-title { font-size:9px; font-weight:700; color:#111; display:flex; justify-content:space-between; margin-bottom:6px; }
-.similar-title span { color:#0095f6; font-weight:400; cursor:pointer; }
-.similar-row { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
-.similar-row::-webkit-scrollbar { display:none; }
-.sim-item { flex-shrink:0; text-align:center; width:56px; }
-.sim-av { width:38px; height:38px; border-radius:50%; margin:0 auto 3px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:#fff; }
-.sim-handle { font-size:8px; color:#111; margin-bottom:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.sim-follow { background:#efefef; border:none; border-radius:5px; font-size:8px; font-weight:700; padding:3px 6px; cursor:pointer; color:#111; }
 
 .highlights-ig { display:flex; gap:10px; padding:0 0 10px; overflow-x:auto; scrollbar-width:none; }
 .highlights-ig::-webkit-scrollbar { display:none; }
 .hl-item { text-align:center; flex-shrink:0; }
-.hl-ring { width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743); padding:2px; margin:0 auto 3px; }
+.hl-ring { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743); padding:2px; margin:0 auto 3px; }
 .hl-inner-ig { width:100%; height:100%; border-radius:50%; background:#e8e0d8; display:flex; align-items:center; justify-content:center; border:2px solid #fff; overflow:hidden; }
-.hl-emoji { font-size:20px; }
-.hl-label-ig { font-size:9px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:52px; }
+.hl-emoji { font-size:18px; }
+.hl-label-ig { font-size:9px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:48px; }
 
 /* 4-tab bar */
 .tabs { display:flex; border-top:1px solid #dbdbdb; border-bottom:1px solid #dbdbdb; margin-bottom:2px; }
@@ -163,6 +163,8 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 }
 .ig-cell:hover .overlay { opacity:1; }
 .overlay-date { font-size:8px; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.6); }
+
+/* carousel */
 .cell-arrow {
   position:absolute; top:50%; transform:translateY(-50%);
   background:rgba(0,0,0,.45); border:none; border-radius:50%;
@@ -180,6 +182,30 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .multi-badge { position:absolute; top:5px; right:5px; z-index:4; background:rgba(0,0,0,.5); border-radius:4px; padding:2px 4px; }
 .multi-badge svg { width:9px; height:9px; fill:#fff; display:block; }
 .ig-cell.empty { background:#ece7e2; }
+
+/* pin button — shows on hover */
+.pin-btn {
+  position:absolute; bottom:5px; right:5px; z-index:6;
+  background:rgba(0,0,0,.5); border:none; border-radius:50%;
+  width:18px; height:18px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; opacity:0; transition:opacity .2s; padding:0;
+}
+.ig-cell:hover .pin-btn { opacity:1; }
+.pin-btn svg { width:10px; height:10px; fill:#fff; }
+.pin-btn.pinned { opacity:1 !important; background:rgba(255,200,0,.85); }
+.pin-btn.pinned svg { fill:#111; }
+
+/* pin indicator badge */
+.pin-badge {
+  position:absolute; top:4px; left:4px; z-index:6;
+  background:rgba(255,200,0,.9); border-radius:50%;
+  width:14px; height:14px; display:flex; align-items:center; justify-content:center;
+  font-size:8px;
+}
+
+/* pin mode — cells pulsing border */
+.pin-mode .ig-cell:not(.empty):not(.pinned-cell) { outline:2px dashed rgba(139,111,94,.4); }
+.pin-mode .ig-cell.pinned-cell { outline:2px solid #f0c040; }
 
 /* ── PROFILE OVERLAY ── */
 #profileOverlay {
@@ -254,8 +280,10 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
   <div>
     <div class="top-btns">
       <button class="top-btn" onclick="openProfileEditor()">✏️ Editar perfil</button>
-      <button class="top-btn" id="toggleBtn" onclick="toggleView()">📅 Ver programados</button>
+      <button class="top-btn" id="toggleBtn" onclick="toggleView()">📅 + Programados</button>
+      <button class="top-btn" id="pinModeBtn" onclick="togglePinMode()">📌 Fijar</button>
     </div>
+    <div id="pinHint">Clic en una imagen para fijarla arriba · Máx. 3 · Clic en 📌 para terminar</div>
 
     <div class="phone-shell">
       <div class="dynamic-island"></div>
@@ -296,14 +324,6 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
           <div class="action-row">
             <button class="btn-follow">Follow</button>
             <button class="btn-msg">Message</button>
-          </div>
-          <div class="similar-wrap">
-            <div class="similar-title">Similar accounts <span>See all</span></div>
-            <div class="similar-row">
-              <div class="sim-item"><div class="sim-av" style="background:linear-gradient(135deg,#a8edea,#fed6e3)"><span>A</span></div><div class="sim-handle">agency</div><button class="sim-follow">Follow</button></div>
-              <div class="sim-item"><div class="sim-av" style="background:linear-gradient(135deg,#ffecd2,#fcb69f)"><span>B</span></div><div class="sim-handle">brand.co</div><button class="sim-follow">Follow</button></div>
-              <div class="sim-item"><div class="sim-av" style="background:linear-gradient(135deg,#d4fc79,#96e6a1)"><span>C</span></div><div class="sim-handle">creator</div><button class="sim-follow">Follow</button></div>
-            </div>
           </div>
           <div class="highlights-ig" id="igHighlights"></div>
         </div>
@@ -371,6 +391,8 @@ const NV = '2022-06-28';
 let allPages = [];
 let currentDateProp = '';
 let showingScheduled = false;
+let pinMode = false;
+let pinnedIds = []; // ordered list of pinned page IDs (max 3)
 
 // ── CLOCK ──
 function tick() {
@@ -400,7 +422,6 @@ let hlData = [
   { emoji:'📸', label:'Feed' },
   { emoji:'🎯', label:'Goals' },
 ];
-
 function buildHlRows(containerId, data) {
   const list = document.getElementById(containerId);
   list.innerHTML = '';
@@ -416,7 +437,7 @@ function buildHlRows(containerId, data) {
   list.querySelectorAll('input').forEach(inp =>
     inp.addEventListener('input', () => { data[+inp.dataset.i][inp.dataset.f] = inp.value; }));
   list.querySelectorAll('.hl-remove').forEach(btn =>
-    btn.addEventListener('click', () => { data.splice(+btn.dataset.i, 1); buildHlRows(containerId, data); }));
+    btn.addEventListener('click', () => { data.splice(+btn.dataset.i,1); buildHlRows(containerId,data); }));
 }
 buildHlRows('hlList', hlData);
 document.getElementById('addHlBtn').onclick = () => {
@@ -428,37 +449,35 @@ function parseBio(text) {
   if (!text) return '';
   return text
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>')
-    .replace(/@([\w.]+)/g, '<a href="https://instagram.com/$1" target="_blank">@$1</a>')
-    .replace(/\n/g, '<br>');
+    .replace(/(https?:\/\/[^\s]+)/g,'<a href="$1" target="_blank">$1</a>')
+    .replace(/@([\w.]+)/g,'<a href="https://instagram.com/$1" target="_blank">@$1</a>')
+    .replace(/\n/g,'<br>');
 }
 
-// ── DATA HELPERS ──
+// ── HELPERS ──
 function fmtShort(d) {
   if (!d) return '';
-  return new Date(d).toLocaleDateString('es-ES', { day:'numeric', month:'short' });
+  return new Date(d).toLocaleDateString('es-ES',{day:'numeric',month:'short'});
 }
 function getDate(page, prop) {
   const f = page.properties[prop];
   if (!f) return '';
-  if (f.type === 'date') return f.date?.start || '';
-  if (f.type === 'created_time') return f.created_time;
+  if (f.type==='date') return f.date?.start||'';
+  if (f.type==='created_time') return f.created_time;
   return '';
 }
 function getAllImgs(page) {
   const imgs = [];
   if (page.cover) {
-    const u = page.cover.type === 'external' ? page.cover.external.url : page.cover.file?.url;
+    const u = page.cover.type==='external' ? page.cover.external.url : page.cover.file?.url;
     if (u) imgs.push(u);
   }
   for (const k in page.properties) {
     const p = page.properties[k];
-    if (p.type === 'files') {
-      p.files?.forEach(f => {
-        const u = f.type === 'external' ? f.external.url : f.file?.url;
-        if (u && !imgs.includes(u)) imgs.push(u);
-      });
-    }
+    if (p.type==='files') p.files?.forEach(f => {
+      const u = f.type==='external' ? f.external.url : f.file?.url;
+      if (u && !imgs.includes(u)) imgs.push(u);
+    });
   }
   if (page._imageBlocks?.length)
     page._imageBlocks.forEach(u => { if (!imgs.includes(u)) imgs.push(u); });
@@ -466,20 +485,20 @@ function getAllImgs(page) {
 }
 function getTitle(page) {
   for (const k in page.properties)
-    if (page.properties[k].type === 'title')
-      return page.properties[k].title?.map(t => t.plain_text).join('') || '';
+    if (page.properties[k].type==='title')
+      return page.properties[k].title?.map(t=>t.plain_text).join('')||'';
   return '';
 }
 
 // ── NOTION API ──
 async function notionQuery(token, dbId) {
   const res = await fetch('/.netlify/functions/notion', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ token, dbId, fetchBlocks: true })
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({token, dbId, fetchBlocks:true})
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data.message || `Error ${res.status}`);
+  if (!res.ok) throw new Error(data.message||`Error ${res.status}`);
   return data;
 }
 
@@ -488,100 +507,95 @@ document.getElementById('loadBtn').onclick = async () => {
   const token     = document.getElementById('token').value.trim();
   const dbId      = document.getElementById('dbId').value.trim().replace(/-/g,'');
   const dateP     = document.getElementById('dateProp').value.trim();
-  const handle    = document.getElementById('cfgHandle').value.trim() || 'handle';
-  const name      = document.getElementById('cfgName').value.trim() || handle;
+  const handle    = document.getElementById('cfgHandle').value.trim()||'handle';
+  const name      = document.getElementById('cfgName').value.trim()||handle;
   const bio       = document.getElementById('cfgBio').value.trim();
   const website   = document.getElementById('cfgWebsite').value.trim();
   const avatar    = document.getElementById('cfgAvatar').value.trim();
   const published = document.getElementById('cfgPublished').value.trim();
-  const followers = document.getElementById('cfgFollowers').value.trim() || '—';
-  const following = document.getElementById('cfgFollowing').value.trim() || '—';
+  const followers = document.getElementById('cfgFollowers').value.trim()||'—';
+  const following = document.getElementById('cfgFollowing').value.trim()||'—';
 
-  if (!token || !dbId) { alert('Ingresá el token y el database ID.'); return; }
+  if (!token||!dbId) { alert('Ingresá el token y el database ID.'); return; }
   showStatus(true);
 
   try {
     const data = await notionQuery(token, dbId);
-
-    allPages = (data.results || [])
+    allPages = (data.results||[])
       .filter(p => !!getDate(p, dateP))
       .sort((a,b) => new Date(getDate(b,dateP)) - new Date(getDate(a,dateP)));
     currentDateProp = dateP;
     showingScheduled = false;
+    pinnedIds = [];
 
     const today = new Date(); today.setHours(0,0,0,0);
-    const publishedPages = allPages.filter(p => new Date(getDate(p, dateP)) <= today);
+    const publishedPages = allPages.filter(p => new Date(getDate(p,dateP)) <= today);
 
-    applyProfile({ handle, name, bio, website, avatar, followers, following,
-      posts: published || publishedPages.length });
+    applyProfile({handle,name,bio,website,avatar,followers,following,
+      posts: published||publishedPages.length});
     renderHighlights(hlData);
-    renderGrid(publishedPages);
+    renderGrid();
 
-    document.getElementById('toggleBtn').textContent = '📅 Ver programados';
+    document.getElementById('toggleBtn').textContent = '📅 + Programados';
     document.getElementById('toggleBtn').classList.remove('active');
     document.getElementById('config').style.display = 'none';
     document.getElementById('status').style.display = 'none';
     document.getElementById('widget').style.display = 'flex';
-
   } catch(e) {
     showStatus(false, e.message);
   }
 };
 
-// ── TOGGLE PUBLISHED / SCHEDULED ──
+// ── TOGGLE: published only ↔ published + scheduled ──
 function toggleView() {
   showingScheduled = !showingScheduled;
   const btn = document.getElementById('toggleBtn');
+  btn.textContent   = showingScheduled ? '✅ Solo publicados' : '📅 + Programados';
+  btn.classList.toggle('active', showingScheduled);
+  renderGrid();
+}
+
+// ── PIN MODE ──
+function togglePinMode() {
+  pinMode = !pinMode;
+  const btn  = document.getElementById('pinModeBtn');
+  const hint = document.getElementById('pinHint');
+  btn.classList.toggle('active', pinMode);
+  btn.textContent = pinMode ? '📌 Listo' : '📌 Fijar';
+  hint.style.display = pinMode ? 'block' : 'none';
+  document.getElementById('igGrid').classList.toggle('pin-mode', pinMode);
+}
+
+function togglePin(pageId) {
+  if (pinnedIds.includes(pageId)) {
+    pinnedIds = pinnedIds.filter(id => id !== pageId);
+  } else {
+    if (pinnedIds.length >= 3) {
+      alert('Máximo 3 posts fijados. Desancla uno primero.');
+      return;
+    }
+    pinnedIds.push(pageId);
+  }
+  renderGrid();
+}
+
+// ── RENDER GRID ──
+function renderGrid() {
   const today = new Date(); today.setHours(0,0,0,0);
 
+  // Base pool: always published. If toggle on, add scheduled too.
+  let pool = allPages.filter(p => new Date(getDate(p, currentDateProp)) <= today);
   if (showingScheduled) {
-    btn.textContent = '✅ Ver publicados';
-    btn.classList.add('active');
-    renderGrid(allPages.filter(p => new Date(getDate(p, currentDateProp)) > today));
-  } else {
-    btn.textContent = '📅 Ver programados';
-    btn.classList.remove('active');
-    renderGrid(allPages.filter(p => new Date(getDate(p, currentDateProp)) <= today));
+    const scheduled = allPages.filter(p => new Date(getDate(p, currentDateProp)) > today);
+    pool = [...pool, ...scheduled];
   }
-}
 
-// ── APPLY PROFILE ──
-function applyProfile({ handle, name, bio, website, avatar, followers, following, posts }) {
-  document.getElementById('igHandle').textContent    = handle;
-  document.getElementById('igName').textContent      = name;
-  document.getElementById('igBio').innerHTML         = parseBio(bio);
-  document.getElementById('igFollowers').textContent = followers;
-  document.getElementById('igFollowing').textContent = following;
-  document.getElementById('postCount').textContent   = posts;
-  const wEl = document.getElementById('igWebsite');
-  if (website) {
-    wEl.textContent = website.replace(/^https?:\/\//, '');
-    wEl.href = website.startsWith('http') ? website : 'https://' + website;
-    wEl.style.display = 'block';
-  } else {
-    wEl.style.display = 'none';
-  }
-  const inner = document.getElementById('avatarInner');
-  inner.innerHTML = avatar
-    ? `<img src="${avatar}" alt="">`
-    : `<span class="avatar-letter">${(handle[0]||'?').toUpperCase()}</span>`;
-}
+  // Pinned first (in pin order), then rest
+  const pinned  = pinnedIds.map(id => pool.find(p => p.id === id)).filter(Boolean);
+  const unpinned = pool.filter(p => !pinnedIds.includes(p.id));
+  const pages   = [...pinned, ...unpinned];
 
-// ── HIGHLIGHTS ──
-function renderHighlights(items) {
-  const wrap = document.getElementById('igHighlights');
-  wrap.innerHTML = '';
-  items.forEach(hl => {
-    const el = document.createElement('div');
-    el.className = 'hl-item';
-    el.innerHTML = `<div class="hl-ring"><div class="hl-inner-ig"><span class="hl-emoji">${hl.emoji}</span></div></div><div class="hl-label-ig">${hl.label}</div>`;
-    wrap.appendChild(el);
-  });
-}
-
-// ── GRID ──
-function renderGrid(pages) {
-  const grid = document.getElementById('igGrid');
+  const grid  = document.getElementById('igGrid');
   grid.innerHTML = '';
   const total = Math.max(pages.length, 9);
   const hues  = [25,200,140,310,50,170,260,35,100];
@@ -594,20 +608,27 @@ function renderGrid(pages) {
       const p    = pages[i];
       const imgs = getAllImgs(p);
       const date = getDate(p, currentDateProp);
-      let idx = 0;
+      const isPinned = pinnedIds.includes(p.id);
+      const isScheduled = new Date(date) > today;
+      if (isPinned) cell.classList.add('pinned-cell');
+
+      // scheduled = slight opacity
+      if (isScheduled) cell.style.opacity = '0.65';
 
       const im = document.createElement('img');
-      im.alt = ''; im.loading = 'lazy';
+      im.alt=''; im.loading='lazy';
       if (imgs.length) { im.src = imgs[0]; }
       else { im.style.display='none'; cell.style.background=`hsl(${hues[i%hues.length]},22%,82%)`; }
       cell.appendChild(im);
 
+      // carousel
       if (imgs.length > 1) {
+        let idx = 0;
         const dotsWrap = document.createElement('div');
         dotsWrap.className = 'cell-dots';
         imgs.forEach((_,di) => {
           const dot = document.createElement('div');
-          dot.className = 'cell-dot' + (di===0?' active':'');
+          dot.className = 'cell-dot'+(di===0?' active':'');
           dotsWrap.appendChild(dot);
         });
         cell.appendChild(dotsWrap);
@@ -618,14 +639,13 @@ function renderGrid(pages) {
         cell.appendChild(badge);
 
         const prev = document.createElement('button');
-        prev.className = 'cell-arrow prev'; prev.textContent = '‹';
+        prev.className='cell-arrow prev'; prev.textContent='‹';
         const next = document.createElement('button');
-        next.className = 'cell-arrow next'; next.textContent = '›';
+        next.className='cell-arrow next'; next.textContent='›';
 
         function goTo(ni) {
-          idx = (ni + imgs.length) % imgs.length;
-          im.src = imgs[idx];
-          dotsWrap.querySelectorAll('.cell-dot').forEach((d,di) => d.classList.toggle('active', di===idx));
+          idx=(ni+imgs.length)%imgs.length; im.src=imgs[idx];
+          dotsWrap.querySelectorAll('.cell-dot').forEach((d,di)=>d.classList.toggle('active',di===idx));
         }
         prev.onclick = e => { e.stopPropagation(); goTo(idx-1); };
         next.onclick = e => { e.stopPropagation(); goTo(idx+1); };
@@ -633,9 +653,29 @@ function renderGrid(pages) {
         cell.appendChild(next);
       }
 
+      // pin badge (shows position number if pinned)
+      if (isPinned) {
+        const pb = document.createElement('div');
+        pb.className = 'pin-badge';
+        pb.textContent = '📌';
+        cell.appendChild(pb);
+      }
+
+      // pin button
+      const pinBtn = document.createElement('button');
+      pinBtn.className = 'pin-btn' + (isPinned?' pinned':'');
+      pinBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2l2.5 6.5H21l-5.5 4 2 6.5L12 15l-5.5 4 2-6.5L3 8.5h6.5z"/></svg>`;
+      pinBtn.onclick = e => {
+        e.stopPropagation();
+        if (!pinMode && !isPinned) return; // only toggle in pinMode or to unpin
+        togglePin(p.id);
+      };
+      cell.appendChild(pinBtn);
+
+      // hover overlay
       const ov = document.createElement('div');
       ov.className = 'overlay';
-      ov.innerHTML = `<div class="overlay-date">${fmtShort(date)}</div>`;
+      ov.innerHTML = `<div class="overlay-date">${fmtShort(date)}${isScheduled?' 🕐':''}</div>`;
       cell.appendChild(ov);
 
     } else {
@@ -645,49 +685,76 @@ function renderGrid(pages) {
   }
 }
 
+// ── APPLY PROFILE ──
+function applyProfile({handle,name,bio,website,avatar,followers,following,posts}) {
+  document.getElementById('igHandle').textContent    = handle;
+  document.getElementById('igName').textContent      = name;
+  document.getElementById('igBio').innerHTML         = parseBio(bio);
+  document.getElementById('igFollowers').textContent = followers;
+  document.getElementById('igFollowing').textContent = following;
+  document.getElementById('postCount').textContent   = posts;
+  const wEl = document.getElementById('igWebsite');
+  if (website) {
+    wEl.textContent = website.replace(/^https?:\/\//,'');
+    wEl.href = website.startsWith('http') ? website : 'https://'+website;
+    wEl.style.display = 'block';
+  } else { wEl.style.display='none'; }
+  const inner = document.getElementById('avatarInner');
+  inner.innerHTML = avatar
+    ? `<img src="${avatar}" alt="">`
+    : `<span class="avatar-letter">${(handle[0]||'?').toUpperCase()}</span>`;
+}
+
+function renderHighlights(items) {
+  const wrap = document.getElementById('igHighlights');
+  wrap.innerHTML = '';
+  items.forEach(hl => {
+    const el = document.createElement('div');
+    el.className='hl-item';
+    el.innerHTML=`<div class="hl-ring"><div class="hl-inner-ig"><span class="hl-emoji">${hl.emoji}</span></div></div><div class="hl-label-ig">${hl.label}</div>`;
+    wrap.appendChild(el);
+  });
+}
+
 // ── PROFILE EDITOR ──
 function openProfileEditor() {
   document.getElementById('editHandle').value    = document.getElementById('igHandle').textContent;
   document.getElementById('editName').value      = document.getElementById('igName').textContent;
   document.getElementById('editBio').value       = document.getElementById('igBio').innerText;
   const wEl = document.getElementById('igWebsite');
-  document.getElementById('editWebsite').value   = wEl.style.display==='none' ? '' : wEl.href;
+  document.getElementById('editWebsite').value   = wEl.style.display==='none'?'':wEl.href;
   document.getElementById('editFollowers').value = document.getElementById('igFollowers').textContent;
   document.getElementById('editFollowing').value = document.getElementById('igFollowing').textContent;
   document.getElementById('editPublished').value = document.getElementById('postCount').textContent;
   const img = document.getElementById('avatarInner').querySelector('img');
-  document.getElementById('editAvatar').value    = img ? img.src : '';
-
+  document.getElementById('editAvatar').value    = img?img.src:'';
   buildHlRows('editHlList', hlData);
   document.getElementById('editAddHlBtn').onclick = () => {
-    hlData.push({ emoji:'✨', label:'Nuevo' }); buildHlRows('editHlList', hlData);
+    hlData.push({emoji:'✨',label:'Nuevo'}); buildHlRows('editHlList',hlData);
   };
-  document.getElementById('profileOverlay').style.display = 'flex';
+  document.getElementById('profileOverlay').style.display='flex';
 }
 
 function saveProfileEditor() {
   applyProfile({
-    handle:    document.getElementById('editHandle').value.trim() || 'handle',
+    handle:    document.getElementById('editHandle').value.trim()||'handle',
     name:      document.getElementById('editName').value.trim(),
     bio:       document.getElementById('editBio').value.trim(),
     website:   document.getElementById('editWebsite').value.trim(),
     avatar:    document.getElementById('editAvatar').value.trim(),
-    followers: document.getElementById('editFollowers').value.trim() || '—',
-    following: document.getElementById('editFollowing').value.trim() || '—',
-    posts:     document.getElementById('editPublished').value.trim() || '—',
+    followers: document.getElementById('editFollowers').value.trim()||'—',
+    following: document.getElementById('editFollowing').value.trim()||'—',
+    posts:     document.getElementById('editPublished').value.trim()||'—',
   });
   renderHighlights(hlData);
   closeProfileEditor();
 }
-
-function closeProfileEditor() {
-  document.getElementById('profileOverlay').style.display = 'none';
-}
+function closeProfileEditor() { document.getElementById('profileOverlay').style.display='none'; }
 
 function showStatus(loading, errMsg) {
-  document.getElementById('config').style.display = 'none';
+  document.getElementById('config').style.display='none';
   const s = document.getElementById('status');
-  s.style.display = 'block';
+  s.style.display='block';
   s.innerHTML = loading
     ? `<div class="spinner"></div>`
     : `<p style="color:#c0392b;font-size:13px">❌ ${errMsg}</p>
