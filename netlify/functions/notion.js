@@ -1,5 +1,4 @@
 exports.handler = async (event) => {
-  // Handle preflight
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -12,34 +11,49 @@ exports.handler = async (event) => {
     };
   }
 
-  try {
-    const { token, dbId } = JSON.parse(event.body);
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  };
 
-    const res = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
+  try {
+    const { token, dbId, fetchBlocks } = JSON.parse(event.body);
+    const notionHeaders = {
+      'Authorization': `Bearer ${token}`,
+      'Notion-Version': '2022-06-28',
+      'Content-Type': 'application/json'
+    };
+
+    // Query the database
+    const dbRes = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Notion-Version': '2022-06-28',
-        'Content-Type': 'application/json'
-      },
+      headers: notionHeaders,
       body: JSON.stringify({ page_size: 100 })
     });
+    const dbData = await dbRes.json();
+    if (!dbRes.ok) throw new Error(dbData.message || `HTTP ${dbRes.status}`);
 
-    const data = await res.json();
+    // Optionally fetch image blocks for each page
+    if (fetchBlocks && dbData.results) {
+      await Promise.all(dbData.results.map(async (page) => {
+        try {
+          const blocksRes = await fetch(`https://api.notion.com/v1/blocks/${page.id}/children?page_size=50`, {
+            headers: notionHeaders
+          });
+          const blocksData = await blocksRes.json();
+          // Extract image URLs from image blocks
+          page._imageBlocks = (blocksData.results || [])
+            .filter(b => b.type === 'image')
+            .map(b => b.image?.type === 'external' ? b.image.external.url : b.image?.file?.url)
+            .filter(Boolean);
+        } catch(e) {
+          page._imageBlocks = [];
+        }
+      }));
+    }
 
-    return {
-      statusCode: res.status,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    };
+    return { statusCode: 200, headers, body: JSON.stringify(dbData) };
   } catch (e) {
-    return {
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ message: e.message })
-    };
+    return { statusCode: 500, headers, body: JSON.stringify({ message: e.message }) };
   }
 };
