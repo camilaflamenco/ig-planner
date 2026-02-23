@@ -17,7 +17,7 @@ exports.handler = async (event) => {
   };
 
   try {
-    const { token, dbId, fetchBlocks, fetchHighlights } = JSON.parse(event.body);
+    const { token, dbId, fetchBlocks, fetchHighlights, highlightsPageName } = JSON.parse(event.body);
     const nh = {
       'Authorization': `Bearer ${token}`,
       'Notion-Version': '2022-06-28',
@@ -53,12 +53,13 @@ exports.handler = async (event) => {
 
     // ── Fetch Highlights page ──
     if (fetchHighlights && dbData.results) {
-      // Find page titled "Highlights" (case-insensitive)
+      // Find highlights page — matches any page whose title CONTAINS the search term
+      const searchTerm = (highlightsPageName || 'highlights').toLowerCase().trim();
       const hlPage = dbData.results.find(p => {
         for (const k in p.properties) {
           if (p.properties[k].type === 'title') {
             const t = p.properties[k].title?.map(t => t.plain_text).join('').trim().toLowerCase();
-            return t === 'highlights';
+            return t.includes(searchTerm) || searchTerm.includes(t);
           }
         }
         return false;
