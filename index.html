@@ -108,10 +108,10 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .stat-lbl { font-size:10px; color:#555; }
 
 /* bio — smaller */
-.bio-ig { font-size:10px; line-height:1.5; color:#111; margin-bottom:6px; }
-.bio-ig strong { display:block; font-weight:700; font-size:11px; margin-bottom:1px; }
+.bio-ig { font-size:8.5px; line-height:1.3; color:#111; margin-bottom:4px; }
+.bio-ig strong { display:block; font-weight:700; font-size:9.5px; margin-bottom:1px; }
 .bio-ig a { color:#0095f6; text-decoration:none; }
-.bio-link { display:block; font-size:10px; color:#0095f6; font-weight:600; margin-bottom:8px; text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.bio-link { display:block; font-size:8.5px; color:#0095f6; font-weight:600; margin-bottom:6px; text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
 .action-row { display:flex; gap:6px; margin-bottom:10px; }
 .btn-follow { flex:1; background:#0095f6; color:#fff; border:none; border-radius:8px; padding:6px 0; font-size:12px; font-weight:700; cursor:pointer; }
@@ -125,10 +125,25 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .hl-emoji { font-size:20px; }
 .hl-label-ig { font-size:9px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:52px; }
 
+/* similar accounts */
+.similar-wrap { margin-bottom:10px; }
+.similar-title { font-size:9px; font-weight:700; color:#111; display:flex; justify-content:space-between; margin-bottom:8px; }
+.similar-title span { color:#0095f6; font-weight:400; cursor:pointer; }
+.similar-row { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
+.similar-row::-webkit-scrollbar { display:none; }
+.sim-item { flex-shrink:0; text-align:center; width:58px; }
+.sim-av { width:40px; height:40px; border-radius:50%; margin:0 auto 3px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:#fff; }
+.sim-handle { font-size:8px; color:#111; margin-bottom:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sim-follow { background:#efefef; border:none; border-radius:5px; font-size:8px; font-weight:700; padding:3px 8px; cursor:pointer; color:#111; }
+.sim-follow:hover { background:#dbdbdb; }
+
+/* 4-tab bar */
 .tabs { display:flex; border-top:1px solid #dbdbdb; border-bottom:1px solid #dbdbdb; margin-bottom:2px; }
-.tab { flex:1; display:flex; align-items:center; justify-content:center; padding:10px 0; cursor:pointer; }
-.tab svg { width:20px; height:20px; fill:none; stroke:#aaa; stroke-width:1.8; }
+.tab { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px 0; cursor:pointer; gap:2px; }
+.tab svg { width:18px; height:18px; fill:none; stroke:#aaa; stroke-width:1.8; }
+.tab span { font-size:7px; color:#aaa; letter-spacing:.3px; text-transform:uppercase; font-weight:600; }
 .tab.active svg { stroke:#111; }
+.tab.active span { color:#111; }
 .tab.active { border-bottom:2px solid #111; margin-bottom:-1px; }
 
 /* ── GRID ── */
@@ -179,16 +194,15 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 
 .ig-cell.empty { background:#ece7e2; }
 
-/* ── UPCOMING ── */
-.upcoming { background:#fff; border-radius:16px; padding:20px; width:220px; box-shadow:0 4px 16px rgba(0,0,0,.07); max-height:600px; overflow-y:auto; flex-shrink:0; }
-.upcoming::-webkit-scrollbar { display:none; }
-.upcoming h3 { font-size:12px; font-weight:800; color:#1a1a1a; margin-bottom:14px; text-transform:uppercase; letter-spacing:.6px; }
-.up-item { display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid #f4f0ec; }
-.up-item:last-child { border-bottom:none; }
-.up-thumb { width:42px; height:52px; border-radius:6px; background:#e8e0d8; flex-shrink:0; overflow:hidden; }
-.up-thumb img { width:100%; height:100%; object-fit:cover; }
-.up-date  { font-size:10px; color:#c89b7b; font-weight:700; margin-bottom:2px; }
-.up-title { font-size:11px; color:#1a1a1a; font-weight:600; line-height:1.3; }
+/* ── TOP BUTTONS ── */
+.top-btns { display:flex; gap:8px; margin-bottom:14px; width:260px; }
+.top-btn {
+  flex:1; padding:8px 0; border-radius:10px; font-size:12px; font-weight:700;
+  cursor:pointer; border:1.5px solid #e4e4e4; background:#fff; color:#555;
+  transition:all .2s; text-align:center;
+}
+.top-btn:hover { border-color:#1a1a1a; color:#1a1a1a; }
+.top-btn.active { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
 
 /* ── PROFILE OVERLAY ── */
 #profileOverlay {
@@ -261,6 +275,10 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 <!-- WIDGET -->
 <div id="widget">
   <div>
+    <div class="top-btns">
+      <button class="top-btn" onclick="openProfileEditor()">✏️ Editar perfil</button>
+      <button class="top-btn" id="toggleBtn" onclick="toggleView()">📅 Ver programados</button>
+    </div>
     <div class="phone-shell">
       <div class="dynamic-island"></div>
       <div class="screen">
@@ -307,20 +325,47 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
             <button class="btn-follow">Follow</button>
             <button class="btn-msg">Message</button>
           </div>
+
+          <!-- Similar accounts -->
+          <div class="similar-wrap">
+            <div class="similar-title">Similar accounts <span>See all</span></div>
+            <div class="similar-row">
+              <div class="sim-item"><div class="sim-av" style="background:linear-gradient(135deg,#a8edea,#fed6e3)"><span>A</span></div><div class="sim-handle">agency</div><button class="sim-follow">Follow</button></div>
+              <div class="sim-item"><div class="sim-av" style="background:linear-gradient(135deg,#ffecd2,#fcb69f)"><span>B</span></div><div class="sim-handle">brand.co</div><button class="sim-follow">Follow</button></div>
+              <div class="sim-item"><div class="sim-av" style="background:linear-gradient(135deg,#d4fc79,#96e6a1)"><span>C</span></div><div class="sim-handle">creator</div><button class="sim-follow">Follow</button></div>
+            </div>
+          </div>
+
           <div class="highlights-ig" id="igHighlights"></div>
         </div>
 
         <div class="tabs">
-          <div class="tab active"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx=".5"/><rect x="14" y="3" width="7" height="7" rx=".5"/><rect x="3" y="14" width="7" height="7" rx=".5"/><rect x="14" y="14" width="7" height="7" rx=".5"/></svg></div>
-          <div class="tab"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/></svg></div>
-          <div class="tab"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7" stroke-linecap="round" stroke-width="2.5"/></svg></div>
+          <!-- Posts -->
+          <div class="tab active">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx=".5"/><rect x="14" y="3" width="7" height="7" rx=".5"/><rect x="3" y="14" width="7" height="7" rx=".5"/><rect x="14" y="14" width="7" height="7" rx=".5"/></svg>
+            <span>Posts</span>
+          </div>
+          <!-- Reels -->
+          <div class="tab">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="12" cy="12" r="3"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="2" x2="9" y2="9"/><line x1="15" y1="2" x2="15" y2="9"/></svg>
+            <span>Reels</span>
+          </div>
+          <!-- Reposts / Collab -->
+          <div class="tab">
+            <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            <span>Reposts</span>
+          </div>
+          <!-- Tagged -->
+          <div class="tab">
+            <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7" stroke-linecap="round" stroke-width="2.5"/></svg>
+            <span>Tagged</span>
+          </div>
         </div>
 
         <div class="ig-grid" id="igGrid"></div>
       </div>
     </div>
   </div>
-  <div class="upcoming" id="upcomingPanel"><h3>📅 Próximos</h3></div>
 </div>
 
 <!-- PROFILE EDITOR OVERLAY -->
@@ -386,7 +431,27 @@ document.getElementById('editAvatarFile').addEventListener('change', e => {
 });
 
 // ── HIGHLIGHTS ──
-let hlData = [
+let allPages = [];
+let currentDateProp = '';
+let showingScheduled = false;
+
+function toggleView() {
+  showingScheduled = !showingScheduled;
+  const btn = document.getElementById('toggleBtn');
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  if (showingScheduled) {
+    btn.textContent = '✅ Ver publicados';
+    btn.classList.add('active');
+    const scheduled = allPages.filter(p => new Date(getDate(p, currentDateProp)) > today);
+    renderGrid(scheduled, currentDateProp);
+  } else {
+    btn.textContent = '📅 Ver programados';
+    btn.classList.remove('active');
+    const published = allPages.filter(p => new Date(getDate(p, currentDateProp)) <= today);
+    renderGrid(published, currentDateProp);
+  }
+}
   { emoji:'⭐', label:'Highlights' },
   { emoji:'📸', label:'Feed' },
   { emoji:'🎯', label:'Goals' },
@@ -500,15 +565,19 @@ document.getElementById('loadBtn').onclick = async () => {
 
   try {
     const data  = await notionQuery(token, dbId);
-    const pages = (data.results || [])
+    allPages = (data.results || [])
       .filter(p => !!getDate(p, dateP))
       .sort((a,b) => new Date(getDate(b,dateP)) - new Date(getDate(a,dateP)));
+    currentDateProp = dateP;
+
+    const today = new Date(); today.setHours(0,0,0,0);
+    const published = allPages.filter(p => new Date(getDate(p, dateP)) <= today);
 
     applyProfile({ handle, name, bio, website, avatar, followers, following,
-      posts: published || pages.length });
+      posts: published || published.length });
     renderHighlights(hlData);
-    renderGrid(pages, dateP);
-    renderUpcoming(pages, dateP);
+    renderGrid(published, dateP);
+    renderUpcoming(allPages, dateP);
 
     document.getElementById('config').style.display = 'none';
     document.getElementById('status').style.display = 'none';
@@ -633,31 +702,7 @@ function renderGrid(pages, dateP) {
   }
 }
 
-// ── UPCOMING ──
-function renderUpcoming(pages, dateP) {
-  const panel = document.getElementById('upcomingPanel');
-  panel.innerHTML = '<h3>📅 Próximos</h3>';
-  const today = new Date(); today.setHours(0,0,0,0);
-  const list  = pages
-    .filter(p => new Date(getDate(p,dateP)) >= today)
-    .sort((a,b) => new Date(getDate(a,dateP)) - new Date(getDate(b,dateP)))
-    .slice(0,12);
 
-  if (!list.length) {
-    panel.innerHTML += '<p style="font-size:12px;color:#bbb;margin-top:8px">No hay posts futuros.</p>';
-    return;
-  }
-  list.forEach(p => {
-    const imgs = getAllImgs(p);
-    const date = getDate(p, dateP);
-    const item = document.createElement('div');
-    item.className = 'up-item';
-    item.innerHTML = `
-      <div class="up-thumb">${imgs.length ? `<img src="${imgs[0]}" alt="" loading="lazy">` : ''}</div>
-      <div><div class="up-date">${fmtFull(date)}</div><div class="up-title">${getTitle(p)}</div></div>`;
-    panel.appendChild(item);
-  });
-}
 
 // ── PROFILE EDITOR OVERLAY ──
 function openProfileEditor() {
