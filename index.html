@@ -146,14 +146,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .bio-link svg { flex-shrink:0; }
 
 /* followers preview */
-.followers-preview { display:flex; align-items:center; gap:7px; margin-bottom:10px; }
-.fp-avatars { display:flex; }
-.fp-avatar { width:18px; height:18px; border-radius:50%; border:1.5px solid #fff;
   background:#ddd; margin-left:-5px; overflow:hidden; }
-.fp-avatar:first-child { margin-left:0; }
-.fp-avatar img { width:100%; height:100%; object-fit:cover; }
-.fp-text { font-size:10px; color:#111; line-height:1.35; }
-.fp-text strong { font-weight:600; }
 
 /* action buttons — 3 cols */
 .action-row { display:flex; gap:6px; margin-bottom:14px; }
@@ -173,13 +166,13 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 }
 
 .highlights-ig {
-  display:flex; justify-content:space-between; padding:0 14px 12px;
+  display:flex; justify-content:flex-start; gap:16px; padding:0 14px 12px;
   overflow-x:auto; scrollbar-width:none;
   user-select:none; -webkit-user-select:none; cursor:grab;
 }
 .highlights-ig::-webkit-scrollbar { display:none; }
 .highlights-ig.dragging { cursor:grabbing; }
-.hl-item { text-align:center; flex:1; transition:transform .15s, opacity .15s; }
+.hl-item { text-align:center; flex:0 0 58px; width:58px; transition:transform .15s, opacity .15s; }
 .hl-item.dragging-item { opacity:.5; transform:scale(.95); }
 .hl-item.drag-over { transform:scale(1.08); }
 .hl-ring { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743); padding:2.5px; margin:0 auto 4px; }
@@ -241,15 +234,16 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
   width:18px; height:18px; display:flex; align-items:center; justify-content:center;
   cursor:pointer; opacity:0; transition:opacity .2s; padding:0;
 }
-.ig-cell:hover .pin-btn { opacity:1; }
+/* Only show pin button on hover when pin-mode is active (class added to grid) */
+.pin-mode-active .ig-cell:hover .pin-btn { opacity:1; }
 .pin-btn svg { width:10px; height:10px; fill:#fff; filter: drop-shadow(0 0 2px rgba(0,0,0,.7)); }
-.pin-btn.pinned { opacity:1 !important; background:transparent; }
+.pin-btn.pinned { opacity:1 !important; }
 .pin-btn.pinned svg { fill:#fff; filter: drop-shadow(0 0 3px rgba(0,0,0,.9)) drop-shadow(0 0 1px rgba(0,0,0,1)); }
 .pin-badge {
-  position:absolute; top:4px; left:4px; z-index:6;
-  width:14px; height:14px; display:flex; align-items:center; justify-content:center;
-  font-size:9px; filter: drop-shadow(0 0 2px rgba(0,0,0,.8));
+  position:absolute; top:6px; left:6px; z-index:6;
+  width:16px; height:16px; display:flex; align-items:center; justify-content:center;
 }
+.pin-badge svg { width:12px; height:12px; fill:#fff; filter: drop-shadow(0 0 2px rgba(0,0,0,.6)); }
 
 /* ── PROFILE OVERLAY ── */
 #profileOverlay {
@@ -359,12 +353,6 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
             <span id="igWebsiteText"></span>
           </a>
 
-          <!-- Followers preview -->
-          <div class="followers-preview" id="followersPreview" style="display:none">
-            <div class="fp-avatars" id="fpAvatars"></div>
-            <div class="fp-text" id="fpText"></div>
-          </div>
-
           <!-- 3 action buttons -->
           <div class="action-row">
             <button class="btn-following">Siguiendo
@@ -436,10 +424,6 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
       <div><label>Seguidores</label><input type="text" id="editFollowers" placeholder="2.4k"></div>
       <div><label>Siguiendo</label><input type="text" id="editFollowing" placeholder="312"></div>
     </div>
-    <label>Seguidores en común (nombres, separados por coma)</label>
-    <input type="text" id="editFpNames" placeholder="juliif, maria.pac">
-    <label>Avatares seguidores (URLs, separadas por coma)</label>
-    <input type="text" id="editFpAvatars" placeholder="https://...">
     <div class="section-title" style="margin-top:4px;">⭕ Highlights</div>
     <div id="editHlList"></div>
     <button class="save-btn" onclick="saveProfileEditor()">Guardar cambios</button>
@@ -490,13 +474,9 @@ function tick() {
 }
 tick(); setInterval(tick, 10000);
 
-// ── HIGHLIGHTS — fixed 4 with image upload ──
+// ── HIGHLIGHTS — up to 5, add/remove ──
 let hlData = load('ig_highlights', [
   { label:'Story 1', img:null },
-  { label:'Story 2', img:null },
-  { label:'Story 3', img:null },
-  { label:'Story 4', img:null },
-  { label:'Story 5', img:null },
 ]);
 
 function buildHlRows(containerId) {
@@ -539,9 +519,35 @@ function buildHlRows(containerId) {
     uploadBtn.onclick = () => fileInp.click();
     thumb.onclick = () => fileInp.click();
 
-    row.append(thumb, inp, uploadBtn, fileInp);
+    // Remove button
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'avatar-upload-btn';
+    removeBtn.textContent = '✕'; removeBtn.title = 'Eliminar';
+    removeBtn.style.cssText = 'padding:6px 8px;color:#c0392b;border-color:#e4e4e4;';
+    removeBtn.onclick = () => {
+      hlData.splice(i, 1);
+      save('ig_highlights', hlData);
+      buildHlRows(containerId);
+      renderHighlights();
+    };
+
+    row.append(thumb, inp, uploadBtn, removeBtn, fileInp);
     list.appendChild(row);
   });
+
+  // Add button (max 5)
+  if (hlData.length < 5) {
+    const addBtn = document.createElement('button');
+    addBtn.className = 'add-hl-btn';
+    addBtn.textContent = '+ Agregar highlight';
+    addBtn.onclick = () => {
+      hlData.push({ label: `Story ${hlData.length + 1}`, img: null });
+      save('ig_highlights', hlData);
+      buildHlRows(containerId);
+      renderHighlights();
+    };
+    list.appendChild(addBtn);
+  }
 }
 
 // ── BIO PARSER ──
@@ -630,8 +636,6 @@ function showWidget(creds, pages) {
     followers: prof.followers || '—',
     following: prof.following || '—',
     posts:     prof.published || publishedCount(),
-    fpNames:   prof.fpNames   || '',
-    fpAvatars: prof.fpAvatars || '',
   });
   renderHighlights();
   renderGrid();
@@ -720,6 +724,7 @@ function togglePinMode() {
   btn.classList.toggle('active', pinMode);
   btn.textContent = pinMode ? 'Listo' : 'Fijar';
   document.getElementById('pinHint').style.display = pinMode ? 'block' : 'none';
+  document.getElementById('igGrid').classList.toggle('pin-mode-active', pinMode);
 }
 function togglePin(pageId) {
   if (pinnedIds.includes(pageId)) {
@@ -733,7 +738,7 @@ function togglePin(pageId) {
 }
 
 // ── APPLY PROFILE ──
-function applyProfile({handle,name,category,bio,website,avatar,followers,following,posts,fpNames,fpAvatars}) {
+function applyProfile({handle,name,category,bio,website,avatar,followers,following,posts}) {
   document.getElementById('igHandle').textContent    = handle;
   document.getElementById('igName').textContent      = name || '';
   document.getElementById('igCategory').textContent  = category || '';
@@ -759,23 +764,6 @@ function applyProfile({handle,name,category,bio,website,avatar,followers,followi
     : `<span class="avatar-letter">${(handle[0]||'?').toUpperCase()}</span>`;
 
   // Followers preview
-  const fpRow = document.getElementById('followersPreview');
-  const fpAvEl = document.getElementById('fpAvatars');
-  const fpTxtEl = document.getElementById('fpText');
-  if (fpNames) {
-    const names = fpNames.split(',').map(s=>s.trim()).filter(Boolean);
-    const avatarList = (fpAvatars||'').split(',').map(s=>s.trim()).filter(Boolean);
-    const show = names.slice(0,2);
-    const rest = Math.max(0, parseInt(followers?.replace(/\D/g,''))||0) - show.length;
-    fpAvEl.innerHTML = show.map((n,i) =>
-      `<div class="fp-avatar">${avatarList[i] ? `<img src="${avatarList[i]}" alt="">` : ''}</div>`
-    ).join('');
-    const restStr = rest > 0 ? ` y <strong>${rest.toLocaleString('es')} más</strong>` : '';
-    fpTxtEl.innerHTML = `<strong>${show.join(', ')}</strong>${restStr} siguen esta cuenta`;
-    fpRow.style.display = 'flex';
-  } else {
-    fpRow.style.display = 'none';
-  }
 }
 
 // ── HIGHLIGHTS ──
@@ -903,7 +891,8 @@ function renderGrid() {
 
       if (isPinned) {
         const pb = document.createElement('div');
-        pb.className='pin-badge'; pb.textContent='📌';
+        pb.className='pin-badge';
+        pb.innerHTML=`<svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.4 6.3H21l-5.7 4.1 2.2 6.6L12 15.2l-5.5 3.8 2.2-6.6L3 8.3h6.6z"/></svg>`;
         cell.appendChild(pb);
       }
       const pinBtn = document.createElement('button');
@@ -939,8 +928,6 @@ function openProfileEditor() {
   document.getElementById('editFollowers').value = prof.followers || document.getElementById('igFollowers').textContent || '';
   document.getElementById('editFollowing').value = prof.following || document.getElementById('igFollowing').textContent || '';
   document.getElementById('editPublished').value = prof.published || document.getElementById('postCount').textContent  || '';
-  document.getElementById('editFpNames').value   = prof.fpNames   || '';
-  document.getElementById('editFpAvatars').value = prof.fpAvatars || '';
   buildHlRows('editHlList');
   document.getElementById('profileOverlay').style.display = 'flex';
 }
@@ -961,8 +948,6 @@ function saveProfileEditor() {
     followers: document.getElementById('editFollowers').value.trim() || '—',
     following: document.getElementById('editFollowing').value.trim() || '—',
     published: document.getElementById('editPublished').value.trim() || '—',
-    fpNames:   document.getElementById('editFpNames').value.trim(),
-    fpAvatars: document.getElementById('editFpAvatars').value.trim(),
   };
   save('ig_profile', prof);
   save('ig_highlights', hlData);
