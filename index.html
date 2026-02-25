@@ -66,15 +66,24 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 @keyframes spin { to { transform:rotate(360deg); } }
 
 /* ── WIDGET ── */
-#widget { display:none; align-items:flex-start; justify-content:center; }
+#widget { display:none; align-items:flex-start; justify-content:center; width:100%; overflow:hidden; }
 
-/* ── TOP BUTTONS 2x2 ── */
+
+/* ── PHONE ── */
+:root { --phone-w: 260px; }
+.phone-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+  /* scale set via JS */
+}
 .top-btns {
   display:grid; grid-template-columns:1fr 1fr;
-  gap:6px; margin-bottom:14px; width:var(--phone-w, 260px);
+  gap:6px; margin-bottom:14px; width:260px;
 }
 .top-btn {
-  padding:7px 0; border-radius:7px; font-size:10px; font-weight:700;
+  padding:7px 0; border-radius:999px; font-size:10px; font-weight:700;
   cursor:pointer; border:1.5px solid #b0b0b0; background:transparent; color:#b0b0b0;
   transition:all .2s; text-align:center; white-space:nowrap;
   text-transform:uppercase; letter-spacing:.6px;
@@ -83,18 +92,14 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .top-btn.active { border-color:#1a1a1a; color:#1a1a1a; background:transparent; }
 
 #pinHint {
-  width:var(--phone-w, 260px); text-align:center; font-size:10px; color:#8b6f5e;
+  width:260px; text-align:center; font-size:10px; color:#8b6f5e;
   margin-top:-6px; margin-bottom:10px; display:none;
   background:#fff8f4; border-radius:8px; padding:6px;
 }
-
-/* ── PHONE ── */
-:root { --phone-w: 260px; }
 .phone-shell {
-  width: var(--phone-w); background:#fff; border-radius:42px;
+  width:260px; background:#fff; border-radius:42px;
   box-shadow: 0 0 0 9px #111, 0 28px 56px rgba(0,0,0,.28);
   position:relative; overflow:hidden;
-  transition: width .3s ease;
 }
 .dynamic-island { position:absolute; top:10px; left:50%; transform:translateX(-50%); width:72px; height:20px; background:#111; border-radius:20px; z-index:20; }
 .screen { height:600px; overflow-y:scroll; overflow-x:hidden; scrollbar-width:none; background:#ffffff; width:100%; }
@@ -248,14 +253,14 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 
 <!-- WIDGET -->
 <div id="widget">
-  <div>
+  <div class="phone-wrap" id="phoneWrap">
     <div class="top-btns">
-      <button class="top-btn" onclick="openProfileEditor()">✏️ Editar perfil</button>
-      <button class="top-btn" id="toggleBtn" onclick="toggleView()">📅 + Programados</button>
-      <button class="top-btn" id="pinModeBtn" onclick="togglePinMode()">📌 Fijar</button>
-      <button class="top-btn" id="refreshBtn" onclick="refreshData()">↺ Refresh</button>
+      <button class="top-btn" onclick="openProfileEditor()">Editar perfil</button>
+      <button class="top-btn" id="toggleBtn" onclick="toggleView()">Ver programados</button>
+      <button class="top-btn" id="pinModeBtn" onclick="togglePinMode()">Fijar</button>
+      <button class="top-btn" id="refreshBtn" onclick="refreshData()">Refrescar</button>
     </div>
-    <div id="pinHint">Clic en una imagen para fijarla arriba · Máx. 3 · Clic en 📌 para terminar</div>
+    <div id="pinHint">Clic en una imagen para fijarla arriba · Máx. 3 · Clic en FIJAR para terminar</div>
 
     <div class="phone-shell">
       <div class="dynamic-island"></div>
@@ -380,22 +385,27 @@ let pinnedIds = [];
 function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
 function load(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch(e) { return def; } }
 
-// ── RESPONSIVE PHONE WIDTH ──
+// ── PROPORTIONAL SCALE (zoom) ──
 (function() {
-  const MIN_W = 260, MAX_W = 420;
-  function updatePhoneWidth() {
-    const available = Math.min(window.innerWidth - 48, MAX_W);
-    const w = Math.max(MIN_W, available);
-    document.documentElement.style.setProperty('--phone-w', w + 'px');
-    // Scale border-radius slightly
-    const shell = document.querySelector('.phone-shell');
-    if (shell) shell.style.borderRadius = Math.round(42 * (w / MIN_W)) + 'px';
+  const BASE_W = 278; // 260px phone + 9px border each side
+  const BASE_H = 760; // approx total height of phone-wrap (buttons + phone)
+  function scalePhone() {
+    const widgetEl = document.getElementById('widget');
+    const wrap = document.getElementById('phoneWrap');
+    if (!wrap || !widgetEl || widgetEl.style.display === 'none') return;
+    const available = widgetEl.offsetWidth || window.innerWidth;
+    const padding = 32;
+    const scale = Math.min(2.2, Math.max(1, (available - padding) / BASE_W));
+    wrap.style.transform = `scale(${scale})`;
+    wrap.style.transformOrigin = 'top center';
+    // Reserve height so parent doesn't collapse (transform doesn't affect flow)
+    widgetEl.style.minHeight = Math.round(BASE_H * scale) + 'px';
   }
-  updatePhoneWidth();
-  window.addEventListener('resize', updatePhoneWidth);
+  window.addEventListener('resize', scalePhone);
   if (window.ResizeObserver) {
-    new ResizeObserver(updatePhoneWidth).observe(document.body);
+    new ResizeObserver(scalePhone).observe(document.body);
   }
+  window._scalePhone = scalePhone;
 })();
 
 // ── CLOCK ──
@@ -548,11 +558,12 @@ function showWidget(creds, pages) {
   });
   renderHighlights();
   renderGrid();
-  document.getElementById('toggleBtn').textContent = '📅 + Programados';
+  document.getElementById('toggleBtn').textContent = 'Ver programados';
   document.getElementById('toggleBtn').classList.remove('active');
   document.getElementById('config').style.display = 'none';
   document.getElementById('status').style.display = 'none';
   document.getElementById('widget').style.display = 'flex';
+  setTimeout(() => window._scalePhone && window._scalePhone(), 50);
 }
 
 // ── CONNECT ──
@@ -568,7 +579,7 @@ document.getElementById('loadBtn').onclick = async () => {
     showWidget({ dateP: cached.dateP || dateP }, cached.pages);
     // Show subtle "actualizando" indicator
     const btn = document.getElementById('refreshBtn');
-    btn.textContent = '↻ Actualizando…'; btn.style.opacity = '.5';
+    btn.textContent = 'Actualizando…'; btn.style.opacity = '.5';
     // Background refresh
     try {
       const data = await notionQuery(token, dbId, { fetchBlocks: true, blocksLimit: 12 });
@@ -578,7 +589,7 @@ document.getElementById('loadBtn').onclick = async () => {
       allPages = freshPages; currentDateProp = dateP;
       renderGrid();
     } catch(e) { /* keep showing cache silently */ }
-    btn.textContent = '↺ Refresh'; btn.style.opacity = '1';
+    btn.textContent = 'Refrescar'; btn.style.opacity = '1';
     return;
   }
 
@@ -605,7 +616,7 @@ async function refreshData() {
   const creds = load('ig_creds', null);
   if (!creds?.token || !creds?.dbId) return;
   const btn = document.getElementById('refreshBtn');
-  btn.textContent = '↻ Actualizando…'; btn.style.opacity = '.5';
+  btn.textContent = 'Actualizando…'; btn.style.opacity = '.5';
   try {
     const data = await notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 });
     const pages = applyPages(data.results, creds.dateP);
@@ -613,14 +624,14 @@ async function refreshData() {
     allPages = pages; currentDateProp = creds.dateP;
     renderGrid();
   } catch(e) { alert('Error al recargar: ' + e.message); }
-  btn.textContent = '↺ Refresh'; btn.style.opacity = '1';
+  btn.textContent = 'Refrescar'; btn.style.opacity = '1';
 }
 
 // ── TOGGLE ──
 function toggleView() {
   showingScheduled = !showingScheduled;
   const btn = document.getElementById('toggleBtn');
-  btn.textContent = showingScheduled ? '✅ Solo publicados' : '📅 + Programados';
+  btn.textContent = showingScheduled ? 'Ver publicados' : 'Ver programados';
   btn.classList.toggle('active', showingScheduled);
   renderGrid();
 }
@@ -630,7 +641,7 @@ function togglePinMode() {
   pinMode = !pinMode;
   const btn = document.getElementById('pinModeBtn');
   btn.classList.toggle('active', pinMode);
-  btn.textContent = pinMode ? '📌 Listo' : '📌 Fijar';
+  btn.textContent = pinMode ? 'Listo' : 'Fijar';
   document.getElementById('pinHint').style.display = pinMode ? 'block' : 'none';
 }
 function togglePin(pageId) {
@@ -880,7 +891,7 @@ window.addEventListener('DOMContentLoaded', () => {
       showWidget({ dateP: cached.dateP || creds.dateP }, cached.pages);
       // Silent background refresh
       const btn = document.getElementById('refreshBtn');
-      btn.textContent = '↻ Actualizando…'; btn.style.opacity = '.5';
+      btn.textContent = 'Actualizando…'; btn.style.opacity = '.5';
       notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 })
         .then(data => {
           const pages = applyPages(data.results, creds.dateP);
@@ -889,7 +900,7 @@ window.addEventListener('DOMContentLoaded', () => {
           renderGrid();
         })
         .catch(() => {})
-        .finally(() => { btn.textContent = '↺ Refresh'; btn.style.opacity = '1'; });
+        .finally(() => { btn.textContent = 'Refrescar'; btn.style.opacity = '1'; });
     } else {
       setTimeout(() => document.getElementById('loadBtn').click(), 100);
     }
