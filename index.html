@@ -71,38 +71,41 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 /* ── TOP BUTTONS 2x2 ── */
 .top-btns {
   display:grid; grid-template-columns:1fr 1fr;
-  gap:8px; margin-bottom:14px; width:260px;
+  gap:6px; margin-bottom:14px; width:var(--phone-w, 260px);
 }
 .top-btn {
-  padding:8px 0; border-radius:10px; font-size:11px; font-weight:700;
-  cursor:pointer; border:1.5px solid #e4e4e4; background:#fff; color:#555;
+  padding:7px 0; border-radius:7px; font-size:10px; font-weight:700;
+  cursor:pointer; border:1.5px solid #b0b0b0; background:transparent; color:#b0b0b0;
   transition:all .2s; text-align:center; white-space:nowrap;
+  text-transform:uppercase; letter-spacing:.6px;
 }
 .top-btn:hover { border-color:#1a1a1a; color:#1a1a1a; }
-.top-btn.active { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
+.top-btn.active { border-color:#1a1a1a; color:#1a1a1a; background:transparent; }
 
 #pinHint {
-  width:260px; text-align:center; font-size:10px; color:#8b6f5e;
+  width:var(--phone-w, 260px); text-align:center; font-size:10px; color:#8b6f5e;
   margin-top:-6px; margin-bottom:10px; display:none;
   background:#fff8f4; border-radius:8px; padding:6px;
 }
 
 /* ── PHONE ── */
+:root { --phone-w: 260px; }
 .phone-shell {
-  width:260px; background:#fff; border-radius:42px;
+  width: var(--phone-w); background:#fff; border-radius:42px;
   box-shadow: 0 0 0 9px #111, 0 28px 56px rgba(0,0,0,.28);
   position:relative; overflow:hidden;
+  transition: width .3s ease;
 }
 .dynamic-island { position:absolute; top:10px; left:50%; transform:translateX(-50%); width:72px; height:20px; background:#111; border-radius:20px; z-index:20; }
-.screen { height:600px; overflow-y:scroll; overflow-x:hidden; scrollbar-width:none; }
+.screen { height:600px; overflow-y:scroll; overflow-x:hidden; scrollbar-width:none; background:#ffffff; width:100%; }
 .screen::-webkit-scrollbar { display:none; }
 
-.status-bar { padding:16px 18px 4px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:#fff; z-index:10; }
+.status-bar { padding:16px 18px 4px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:#ffffff; z-index:10; }
 .time { font-weight:700; font-size:12px; color:#111; }
 .status-icons { display:flex; gap:4px; align-items:center; }
 .status-icons svg { width:14px; height:14px; }
 
-.ig-topbar { padding:4px 14px 8px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:32px; background:#fff; z-index:9; }
+.ig-topbar { padding:4px 14px 8px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:32px; background:#ffffff; z-index:9; }
 .ig-handle-text { font-size:16px; font-weight:800; letter-spacing:-.3px; }
 .ig-topbar-icons { display:flex; gap:12px; align-items:center; }
 
@@ -127,7 +130,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .btn-msg    { flex:1; background:#efefef; color:#111; border:none; border-radius:8px; padding:6px 0; font-size:12px; font-weight:700; cursor:pointer; }
 
 .highlights-ig {
-  display:flex; gap:10px; padding:0 0 10px;
+  display:flex; gap:8px; padding:0 0 8px;
   overflow-x:auto; scrollbar-width:none;
   user-select:none; -webkit-user-select:none; cursor:grab;
 }
@@ -136,19 +139,23 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .hl-item { text-align:center; flex-shrink:0; transition:transform .15s, opacity .15s; }
 .hl-item.dragging-item { opacity:.5; transform:scale(.95); }
 .hl-item.drag-over { transform:scale(1.08); }
-.hl-ring { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743); padding:2px; margin:0 auto 3px; }
+.hl-ring { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743); padding:2px; margin:0 auto 2px; }
 .hl-inner-ig { width:100%; height:100%; border-radius:50%; background:#e8e0d8; display:flex; align-items:center; justify-content:center; border:2px solid #fff; overflow:hidden; }
-.hl-emoji { font-size:18px; }
-.hl-label-ig { font-size:9px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:48px; }
+.hl-emoji { font-size:13px; }
+.hl-label-ig { font-size:8px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:36px; }
 
 /* 4-tab bar */
 .tabs { display:flex; border-top:1px solid #dbdbdb; border-bottom:1px solid #dbdbdb; margin-bottom:2px; }
 .tab { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px 0; cursor:pointer; gap:2px; }
-.tab svg { width:18px; height:18px; fill:none; stroke:#aaa; stroke-width:1.8; }
+.tab svg { width:18px; height:18px; }
 .tab span { font-size:7px; color:#aaa; letter-spacing:.3px; text-transform:uppercase; font-weight:600; }
-.tab.active svg { stroke:#111; }
 .tab.active span { color:#111; }
 .tab.active { border-bottom:2px solid #111; margin-bottom:-1px; }
+/* Active state for each icon type */
+.tab.active:nth-child(1) svg circle { fill:#111; }
+.tab.active:nth-child(2) svg rect, .tab.active:nth-child(2) svg polygon { stroke:#111; fill:#111; }
+.tab.active:nth-child(3) svg path { stroke:#111; }
+.tab.active:nth-child(4) svg rect, .tab.active:nth-child(4) svg circle, .tab.active:nth-child(4) svg path { stroke:#111; }
 
 /* ── GRID ── */
 .ig-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
@@ -179,21 +186,26 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .multi-badge { position:absolute; top:5px; right:5px; z-index:4; background:rgba(0,0,0,.5); border-radius:4px; padding:2px 4px; }
 .multi-badge svg { width:9px; height:9px; fill:#fff; display:block; }
 .ig-cell.empty { background:#ece7e2; }
+.ig-cell.skeleton {
+  background: linear-gradient(90deg, #ece7e2 25%, #e2dbd5 50%, #ece7e2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
 .pin-btn {
   position:absolute; bottom:5px; right:5px; z-index:6;
-  background:rgba(0,0,0,.5); border:none; border-radius:50%;
+  background:transparent; border:none; border-radius:50%;
   width:18px; height:18px; display:flex; align-items:center; justify-content:center;
   cursor:pointer; opacity:0; transition:opacity .2s; padding:0;
 }
 .ig-cell:hover .pin-btn { opacity:1; }
-.pin-btn svg { width:10px; height:10px; fill:#fff; }
-.pin-btn.pinned { opacity:1 !important; background:rgba(255,200,0,.85); }
-.pin-btn.pinned svg { fill:#111; }
+.pin-btn svg { width:10px; height:10px; fill:#fff; filter: drop-shadow(0 0 2px rgba(0,0,0,.7)); }
+.pin-btn.pinned { opacity:1 !important; background:transparent; }
+.pin-btn.pinned svg { fill:#fff; filter: drop-shadow(0 0 3px rgba(0,0,0,.9)) drop-shadow(0 0 1px rgba(0,0,0,1)); }
 .pin-badge {
   position:absolute; top:4px; left:4px; z-index:6;
-  background:rgba(255,200,0,.9); border-radius:50%;
   width:14px; height:14px; display:flex; align-items:center; justify-content:center;
-  font-size:8px;
+  font-size:9px; filter: drop-shadow(0 0 2px rgba(0,0,0,.8));
 }
 
 /* ── PROFILE OVERLAY ── */
@@ -297,19 +309,23 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 
         <div class="tabs">
           <div class="tab active">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx=".5"/><rect x="14" y="3" width="7" height="7" rx=".5"/><rect x="3" y="14" width="7" height="7" rx=".5"/><rect x="14" y="14" width="7" height="7" rx=".5"/></svg>
+            <!-- Grid/dots icon like screenshot -->
+            <svg viewBox="0 0 24 24"><circle cx="5" cy="5" r="1.5" fill="#aaa"/><circle cx="12" cy="5" r="1.5" fill="#aaa"/><circle cx="19" cy="5" r="1.5" fill="#aaa"/><circle cx="5" cy="12" r="1.5" fill="#aaa"/><circle cx="12" cy="12" r="1.5" fill="#aaa"/><circle cx="19" cy="12" r="1.5" fill="#aaa"/><circle cx="5" cy="19" r="1.5" fill="#aaa"/><circle cx="12" cy="19" r="1.5" fill="#aaa"/><circle cx="19" cy="19" r="1.5" fill="#aaa"/></svg>
             <span>Posts</span>
           </div>
           <div class="tab">
-            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="12" cy="12" r="3"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="2" x2="9" y2="9"/><line x1="15" y1="2" x2="15" y2="9"/></svg>
+            <!-- Rounded square with play triangle - like screenshot -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10,8 16,12 10,16" fill="#aaa" stroke="none"/></svg>
             <span>Reels</span>
           </div>
           <div class="tab">
-            <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            <!-- Two arrows forming a cycle - like screenshot -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 4v6h6"/><path d="M22.5 20v-6h-6"/><path d="M20.5 9A9 9 0 0 0 4.5 6.5L1.5 10M22.5 14l-3 3.5A9 9 0 0 1 3.5 15"/></svg>
             <span>Reposts</span>
           </div>
           <div class="tab">
-            <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7" stroke-linecap="round" stroke-width="2.5"/></svg>
+            <!-- Person with outer ring - like screenshot -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="10" r="3"/><path d="M6.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
             <span>Tagged</span>
           </div>
         </div>
@@ -364,6 +380,24 @@ let pinnedIds = [];
 function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
 function load(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch(e) { return def; } }
 
+// ── RESPONSIVE PHONE WIDTH ──
+(function() {
+  const MIN_W = 260, MAX_W = 420;
+  function updatePhoneWidth() {
+    const available = Math.min(window.innerWidth - 48, MAX_W);
+    const w = Math.max(MIN_W, available);
+    document.documentElement.style.setProperty('--phone-w', w + 'px');
+    // Scale border-radius slightly
+    const shell = document.querySelector('.phone-shell');
+    if (shell) shell.style.borderRadius = Math.round(42 * (w / MIN_W)) + 'px';
+  }
+  updatePhoneWidth();
+  window.addEventListener('resize', updatePhoneWidth);
+  if (window.ResizeObserver) {
+    new ResizeObserver(updatePhoneWidth).observe(document.body);
+  }
+})();
+
 // ── CLOCK ──
 function tick() {
   const n = new Date();
@@ -378,6 +412,7 @@ let hlData = load('ig_highlights', [
   { label:'Story 2', img:null },
   { label:'Story 3', img:null },
   { label:'Story 4', img:null },
+  { label:'Story 5', img:null },
 ]);
 
 function buildHlRows(containerId) {
@@ -472,15 +507,52 @@ function getTitle(page) {
 }
 
 // ── NOTION API ──
-async function notionQuery(token, dbId) {
+async function notionQuery(token, dbId, opts = {}) {
   const res = await fetch('/.netlify/functions/notion', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ token, dbId, fetchBlocks: true })
+    body: JSON.stringify({
+      token, dbId,
+      fetchBlocks: opts.fetchBlocks ?? true,
+      fetchHighlights: opts.fetchHighlights,
+      highlightsPageName: opts.highlightsPageName,
+      blocksLimit: opts.blocksLimit ?? 12,
+      pageSize: opts.pageSize ?? 50
+    })
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message||`Error ${res.status}`);
   return data;
+}
+
+function applyPages(results, dateP) {
+  return (results||[])
+    .filter(p => !!getDate(p, dateP))
+    .sort((a,b) => new Date(getDate(b,dateP)) - new Date(getDate(a,dateP)));
+}
+
+function showWidget(creds, pages) {
+  allPages = pages;
+  currentDateProp = creds.dateP;
+  pinnedIds = load('ig_pinned', []);
+  const prof = load('ig_profile', {});
+  applyProfile({
+    handle:    prof.handle    || 'handle',
+    name:      prof.name      || prof.handle || 'handle',
+    bio:       prof.bio       || '',
+    website:   prof.website   || '',
+    avatar:    prof.avatar    || '',
+    followers: prof.followers || '—',
+    following: prof.following || '—',
+    posts:     prof.published || publishedCount(),
+  });
+  renderHighlights();
+  renderGrid();
+  document.getElementById('toggleBtn').textContent = '📅 + Programados';
+  document.getElementById('toggleBtn').classList.remove('active');
+  document.getElementById('config').style.display = 'none';
+  document.getElementById('status').style.display = 'none';
+  document.getElementById('widget').style.display = 'flex';
 }
 
 // ── CONNECT ──
@@ -489,38 +561,35 @@ document.getElementById('loadBtn').onclick = async () => {
   const dbId  = document.getElementById('dbId').value.trim().replace(/-/g,'');
   const dateP = document.getElementById('dateProp').value.trim();
   if (!token||!dbId) { alert('Ingresá el token y el database ID.'); return; }
+
+  // Show cached pages instantly if available
+  const cached = load('ig_pages_cache', null);
+  if (cached?.pages?.length) {
+    showWidget({ dateP: cached.dateP || dateP }, cached.pages);
+    // Show subtle "actualizando" indicator
+    const btn = document.getElementById('refreshBtn');
+    btn.textContent = '↻ Actualizando…'; btn.style.opacity = '.5';
+    // Background refresh
+    try {
+      const data = await notionQuery(token, dbId, { fetchBlocks: true, blocksLimit: 12 });
+      const freshPages = applyPages(data.results, dateP);
+      save('ig_creds', { token, dbId, dateP });
+      save('ig_pages_cache', { pages: freshPages, dateP, ts: Date.now() });
+      allPages = freshPages; currentDateProp = dateP;
+      renderGrid();
+    } catch(e) { /* keep showing cache silently */ }
+    btn.textContent = '↺ Refresh'; btn.style.opacity = '1';
+    return;
+  }
+
+  // First time: show spinner
   showStatus(true);
   try {
-    const data = await notionQuery(token, dbId);
-    allPages = (data.results||[])
-      .filter(p => !!getDate(p, dateP))
-      .sort((a,b) => new Date(getDate(b,dateP)) - new Date(getDate(a,dateP)));
-    currentDateProp = dateP;
-    showingScheduled = false;
-    pinnedIds = load('ig_pinned', []);
-
+    const data = await notionQuery(token, dbId, { fetchBlocks: true, blocksLimit: 12 });
+    const pages = applyPages(data.results, dateP);
     save('ig_creds', { token, dbId, dateP });
-
-    // Restore saved profile
-    const prof = load('ig_profile', {});
-    applyProfile({
-      handle:    prof.handle    || 'handle',
-      name:      prof.name      || prof.handle || 'handle',
-      bio:       prof.bio       || '',
-      website:   prof.website   || '',
-      avatar:    prof.avatar    || '',
-      followers: prof.followers || '—',
-      following: prof.following || '—',
-      posts:     prof.published || publishedCount(),
-    });
-    renderHighlights();
-    renderGrid();
-
-    document.getElementById('toggleBtn').textContent = '📅 + Programados';
-    document.getElementById('toggleBtn').classList.remove('active');
-    document.getElementById('config').style.display = 'none';
-    document.getElementById('status').style.display = 'none';
-    document.getElementById('widget').style.display = 'flex';
+    save('ig_pages_cache', { pages, dateP, ts: Date.now() });
+    showWidget({ dateP }, pages);
   } catch(e) {
     showStatus(false, e.message);
   }
@@ -536,13 +605,12 @@ async function refreshData() {
   const creds = load('ig_creds', null);
   if (!creds?.token || !creds?.dbId) return;
   const btn = document.getElementById('refreshBtn');
-  btn.textContent = '↻'; btn.style.opacity = '.5';
+  btn.textContent = '↻ Actualizando…'; btn.style.opacity = '.5';
   try {
-    const data = await notionQuery(creds.token, creds.dbId);
-    allPages = (data.results||[])
-      .filter(p => !!getDate(p, creds.dateP))
-      .sort((a,b) => new Date(getDate(b,creds.dateP)) - new Date(getDate(a,creds.dateP)));
-    currentDateProp = creds.dateP;
+    const data = await notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 });
+    const pages = applyPages(data.results, creds.dateP);
+    save('ig_pages_cache', { pages, dateP: creds.dateP, ts: Date.now() });
+    allPages = pages; currentDateProp = creds.dateP;
     renderGrid();
   } catch(e) { alert('Error al recargar: ' + e.message); }
   btn.textContent = '↺ Refresh'; btn.style.opacity = '1';
@@ -739,7 +807,7 @@ function renderGrid() {
       ov.innerHTML=`<div class="overlay-date">${fmtShort(date)}${isSched?' 🕐':''}</div>`;
       cell.appendChild(ov);
     } else {
-      cell.classList.add('empty');
+      cell.classList.add('skeleton');
     }
     grid.appendChild(cell);
   }
@@ -805,7 +873,26 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('token').value    = creds.token;
     document.getElementById('dbId').value     = creds.dbId;
     document.getElementById('dateProp').value = creds.dateP || 'Publication Date';
-    setTimeout(() => document.getElementById('loadBtn').click(), 100);
+
+    // Try to show cached pages instantly (no spinner for returning users)
+    const cached = load('ig_pages_cache', null);
+    if (cached?.pages?.length) {
+      showWidget({ dateP: cached.dateP || creds.dateP }, cached.pages);
+      // Silent background refresh
+      const btn = document.getElementById('refreshBtn');
+      btn.textContent = '↻ Actualizando…'; btn.style.opacity = '.5';
+      notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 })
+        .then(data => {
+          const pages = applyPages(data.results, creds.dateP);
+          save('ig_pages_cache', { pages, dateP: creds.dateP, ts: Date.now() });
+          allPages = pages; currentDateProp = creds.dateP;
+          renderGrid();
+        })
+        .catch(() => {})
+        .finally(() => { btn.textContent = '↺ Refresh'; btn.style.opacity = '1'; });
+    } else {
+      setTimeout(() => document.getElementById('loadBtn').click(), 100);
+    }
   }
 });
 </script>
