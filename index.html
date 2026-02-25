@@ -117,7 +117,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 /* ── PROFILE ── */
 .profile-section { padding:10px 14px 0; }
 
-/* row 1: avatar + stats */
+/* row 1: avatar + (name + stats) */
 .profile-row { display:flex; align-items:center; gap:16px; margin-bottom:10px; }
 .avatar-big { width:76px; height:76px; border-radius:50%; flex-shrink:0;
   background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7); padding:2.5px; }
@@ -125,13 +125,12 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
   display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .avatar-inner img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
 .avatar-letter { font-size:22px; font-weight:700; color:#111; }
-.stats-ig { display:flex; flex:1; justify-content:space-around; }
+.profile-right { display:flex; flex-direction:column; flex:1; gap:6px; }
+.ig-name { font-size:13px; font-weight:700; color:#111; }
+.stats-ig { display:flex; justify-content:space-between; }
 .stat { text-align:center; cursor:default; }
-.stat-num { font-size:16px; font-weight:700; display:block; color:#111; line-height:1.2; }
+.stat-num { font-size:14px; font-weight:700; display:block; color:#111; line-height:1.2; }
 .stat-lbl { font-size:10px; color:#111; }
-
-/* name + category + bio */
-.ig-name { font-size:13px; font-weight:700; color:#111; margin-bottom:1px; }
 .ig-category { font-size:11px; color:#888; margin-bottom:4px; }
 .ig-bio-text { font-size:11px; line-height:1.45; color:#111; margin-bottom:4px; }
 .ig-bio-text a { color:#0095f6; text-decoration:none; }
@@ -329,22 +328,24 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
         </div>
 
         <div class="profile-section">
-          <!-- Row: avatar + stats -->
+          <!-- Row: avatar + (name + stats) -->
           <div class="profile-row">
             <div class="avatar-big">
               <div class="avatar-inner" id="avatarInner">
                 <span class="avatar-letter" id="avatarLetter">?</span>
               </div>
             </div>
-            <div class="stats-ig">
-              <div class="stat"><span class="stat-num" id="postCount">—</span><span class="stat-lbl">publicaciones</span></div>
-              <div class="stat"><span class="stat-num" id="igFollowers">—</span><span class="stat-lbl">seguidores</span></div>
-              <div class="stat"><span class="stat-num" id="igFollowing">—</span><span class="stat-lbl">seguidos</span></div>
+            <div class="profile-right">
+              <div class="ig-name" id="igName"></div>
+              <div class="stats-ig">
+                <div class="stat"><span class="stat-num" id="postCount">—</span><span class="stat-lbl">publicaciones</span></div>
+                <div class="stat"><span class="stat-num" id="igFollowers">—</span><span class="stat-lbl">seguidores</span></div>
+                <div class="stat"><span class="stat-num" id="igFollowing">—</span><span class="stat-lbl">seguidos</span></div>
+              </div>
             </div>
           </div>
 
-          <!-- Name + category + bio -->
-          <div class="ig-name" id="igName"></div>
+          <!-- Category + bio -->
           <div class="ig-category" id="igCategory"></div>
           <div class="ig-bio-text" id="igBio"></div>
 
