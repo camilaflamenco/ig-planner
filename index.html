@@ -617,10 +617,29 @@ async function notionQuery(token, dbId, opts = {}) {
   return data;
 }
 
+function detectDateProp(results, preferred) {
+  if (results.length && results.some(p => !!getDate(p, preferred))) return preferred;
+  const counts = {};
+  for (const page of results) {
+    for (const [k, v] of Object.entries(page.properties||{})) {
+      if (v.type === 'date' && v.date?.start) counts[k] = (counts[k]||0) + 1;
+    }
+  }
+  const best = Object.entries(counts).sort((a,b) => b[1]-a[1])[0];
+  return best ? best[0] : preferred;
+}
+
 function applyPages(results, dateP) {
-  return (results||[])
-    .filter(p => !!getDate(p, dateP))
-    .sort((a,b) => new Date(getDate(b,dateP)) - new Date(getDate(a,dateP)));
+  const resolved = detectDateProp(results, dateP);
+  if (resolved !== dateP) {
+    console.warn('[ig-widget] Date prop "' + dateP + '" not found, auto-detected: "' + resolved + '"');
+    const el = document.getElementById('dateProp');
+    if (el) el.value = resolved;
+    currentDateProp = resolved;
+  }
+  const filtered = (results||[]).filter(p => !!getDate(p, resolved));
+  console.log('[ig-widget] Pages from Notion: ' + (results||[]).length + ', with date (' + resolved + '): ' + filtered.length);
+  return filtered.sort((a,b) => new Date(getDate(b,resolved)) - new Date(getDate(a,resolved)));
 }
 
 function showWidget(creds, pages) {
