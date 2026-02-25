@@ -111,7 +111,8 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .status-icons svg { width:14px; height:14px; }
 
 .ig-topbar { padding:4px 14px 8px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:32px; background:#ffffff; z-index:9; }
-.ig-handle-text { font-size:20px; font-weight:800; letter-spacing:-.3px; }
+.ig-handle-text { font-size:15px; font-weight:600; letter-spacing:-.2px; }
+.ig-topbar-left { display:flex; align-items:center; gap:8px; }
 .ig-topbar-icons { display:flex; gap:12px; align-items:center; }
 
 /* ── PROFILE ── */
@@ -127,8 +128,8 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .avatar-letter { font-size:22px; font-weight:700; color:#111; }
 .profile-right { display:flex; flex-direction:column; flex:1; gap:6px; }
 .ig-name { font-size:13px; font-weight:700; color:#111; }
-.stats-ig { display:flex; justify-content:space-between; }
-.stat { text-align:center; cursor:default; }
+.stats-ig { display:flex; gap:20px; justify-content:flex-start; }
+.stat { text-align:left; cursor:default; }
 .stat-num { font-size:14px; font-weight:700; display:block; color:#111; line-height:1.2; }
 .stat-lbl { font-size:10px; color:#111; }
 .ig-category { font-size:11px; color:#888; margin-bottom:4px; }
@@ -313,7 +314,10 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
         </div>
 
         <div class="ig-topbar">
-          <span class="ig-handle-text" id="igHandle">handle</span>
+          <div class="ig-topbar-left">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            <span class="ig-handle-text" id="igHandle">handle</span>
+          </div>
           <div class="ig-topbar-icons">
             <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:#111;stroke-width:1.8;">
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
