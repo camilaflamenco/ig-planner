@@ -716,6 +716,12 @@ function toggleView() {
   const btn = document.getElementById('toggleBtn');
   btn.textContent = showingScheduled ? 'Ver publicados' : 'Ver programados';
   btn.classList.toggle('active', showingScheduled);
+  // Update post count to reflect current view
+  const today = new Date(); today.setHours(0,0,0,0);
+  const count = showingScheduled
+    ? allPages.length
+    : allPages.filter(p => new Date(getDate(p,currentDateProp)) <= today).length;
+  document.getElementById('postCount').textContent = count;
   renderGrid();
 }
 
@@ -830,10 +836,14 @@ function renderHighlights() {
 // ── GRID ──
 function renderGrid() {
   const today = new Date(); today.setHours(0,0,0,0);
-  let pool = allPages.filter(p => new Date(getDate(p,currentDateProp)) <= today);
+
+  let pool;
   if (showingScheduled) {
-    const sched = allPages.filter(p => new Date(getDate(p,currentDateProp)) > today);
-    pool = [...pool, ...sched];
+    // All pages with a date assigned (published + scheduled)
+    pool = allPages; // already filtered to only dated pages by applyPages
+  } else {
+    // Only published (date <= today)
+    pool = allPages.filter(p => new Date(getDate(p,currentDateProp)) <= today);
   }
   const pinned   = pinnedIds.map(id => pool.find(p => p.id===id)).filter(Boolean);
   const unpinned = pool.filter(p => !pinnedIds.includes(p.id));
