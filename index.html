@@ -17,50 +17,85 @@ body {
 
 /* ── CONFIG ── */
 #config {
-  background:#fff; border-radius:20px; padding:36px 32px;
-  max-width:380px; width:100%;
-  box-shadow: 0 4px 32px rgba(0,0,0,.07);
-  text-align: center;
+  background:#FFFFFF; border-radius:24px; padding:44px 40px 36px;
+  max-width:460px; width:100%;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,.04), 0 20px 48px -8px rgba(0,0,0,.08);
+}
+.notion-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:#F0EDE6; border-radius:100px; padding:4px 12px 4px 8px;
+  font-size:11px; font-weight:600; letter-spacing:.05em; color:#7C6F5B;
+  text-transform:uppercase; margin-bottom:16px;
 }
 #config h2 {
-  font-size:20px; font-weight:700; margin-bottom:8px; color:#1a1a1a;
-  letter-spacing:-.3px;
+  font-family:'Fraunces', serif;
+  font-size:28px; font-weight:700; color:#1A1A1A;
+  line-height:1.2; margin-bottom:8px; letter-spacing:normal;
+  text-align:left;
 }
-#config > p { font-size:12px; color:#b2af9e; margin-bottom:28px; line-height:1.6; }
-.section-title {
-  font-size:10px; font-weight:800; color:#b2af9e;
-  text-transform:uppercase; letter-spacing:.8px;
-  margin:20px 0 12px; padding-bottom:6px;
-  border-bottom:1px solid #f0ede0;
+#config > p.subtitle {
+  font-size:14px; color:#9E9E9E; line-height:1.5; margin-bottom:24px;
+  text-align:left;
 }
-label { display:block; font-size:10px; font-weight:700; color:#b2af9e; margin-bottom:4px; text-transform:uppercase; letter-spacing:.5px; text-align:left; }
+.config-steps {
+  display:flex; align-items:center; gap:6px; margin-bottom:24px;
+}
+.config-step {
+  height:4px; border-radius:100px; background:#F0EDE6; flex:1; transition:background .3s;
+}
+.config-step.active { background:linear-gradient(90deg,#f7f099,#d4a83d); }
+.config-step-label { font-size:11px; color:#C8C4BC; font-weight:500; white-space:nowrap; }
+.help-link {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:13px; color:#6B8FD4; text-decoration:none; font-weight:500;
+  background:#EEF2FB; border-radius:8px; padding:8px 12px;
+  margin-bottom:28px; transition:background .15s;
+}
+.help-link:hover { background:#E3EAFA; }
+label {
+  display:flex; align-items:center; gap:6px;
+  font-size:11px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; color:#B0A99A; margin-bottom:8px;
+}
+label .dot { width:5px; height:5px; border-radius:50%; background:#E8E2D9; }
+.input-wrap { position:relative; }
+.input-wrap input { padding-right:44px; }
+.eye-btn {
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  background:none; border:none; cursor:pointer; color:#C0BAB0; padding:0; display:flex;
+}
+.eye-btn:hover { color:#7C6F5B; }
 input, textarea {
-  width:100%; border:1.5px solid #e8e4d8; border-radius:10px;
-  padding:10px 13px; font-size:13px; color:#1a1a1a;
-  margin-bottom:13px; outline:none; transition:border-color .2s; font-family:inherit;
-  background:#fafaf7;
+  width:100%; border:1.5px solid #EBEBEB; border-radius:12px;
+  padding:13px 16px; font-size:14px; color:#1A1A1A;
+  margin-bottom:20px; outline:none; transition:border-color .15s, background .15s, box-shadow .15s;
+  font-family:inherit; background:#FAFAFA;
+}
+input::placeholder { color:#C8C4BC; }
+input:focus, textarea:focus {
+  border-color:#D4B954; background:#fff;
+  box-shadow:0 0 0 3px rgba(212,185,84,.12);
 }
 textarea { resize:vertical; min-height:56px; }
-input:focus, textarea:focus { border-color:#d96233; }
+.config-divider { height:1px; background:#F0EDE6; margin:4px 0 24px; }
 .stats-row { display:flex; gap:8px; }
 .stats-row > div { flex:1; }
 .add-hl-btn {
   background:none; border:1.5px dashed #d5a9ca; border-radius:8px;
   color:#d5a9ca; font-size:12px; padding:7px; width:100%;
-  cursor:pointer; margin-bottom:13px; transition:all .2s;
+  cursor:pointer; margin-bottom:20px; transition:all .2s;
 }
 .add-hl-btn:hover { border-color:#d96233; color:#d96233; }
 #loadBtn {
-  width:100%; background:#f7f099; color:#98742b; border:none;
-  border-radius:999px; padding:13px; font-size:13px; font-weight:700;
-  cursor:pointer; transition:opacity .2s; margin-top:4px;
-  letter-spacing:.4px; text-transform:uppercase;
+  width:100%; background:linear-gradient(135deg,#f7f099 0%,#d4a83d 100%); color:#7A5F00; border:none;
+  border-radius:100px; padding:16px; font-size:13px; font-weight:700;
+  cursor:pointer; letter-spacing:.1em; text-transform:uppercase;
+  box-shadow:0 4px 14px rgba(212,185,84,.35); margin-bottom:20px;
+  transition:transform .15s, box-shadow .15s, filter .15s;
 }
-#loadBtn:hover { opacity:.85; }
-.hint { font-size:11px; color:#b2af9e; margin-top:16px; text-align:center; line-height:1.7; }
-.hint a { color:#92a3d1; text-decoration:none; }
-.hint a:hover { text-decoration:underline; }
-.avatar-upload-row { display:flex; gap:8px; align-items:flex-start; margin-bottom:13px; }
+#loadBtn:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(212,185,84,.45); filter:brightness(1.04); }
+#loadBtn:active { transform:translateY(0); }
+.avatar-upload-row { display:flex; gap:8px; align-items:flex-start; margin-bottom:20px; }
 .avatar-upload-row input { margin-bottom:0; flex:1; }
 .avatar-upload-btn {
   flex-shrink:0; background:#ffffff; border:1.5px solid #e4e4e4;
@@ -68,6 +103,25 @@ input:focus, textarea:focus { border-color:#d96233; }
   white-space:nowrap; transition:all .2s; color:#555;
 }
 .avatar-upload-btn:hover { border-color:#8b6f5e; color:#8b6f5e; }
+.section-title {
+  font-size:10px; font-weight:800; color:#b2af9e;
+  text-transform:uppercase; letter-spacing:.8px;
+  margin:20px 0 12px; padding-bottom:6px;
+  border-bottom:1px solid #f0ede0;
+}
+
+
+/* ── DISCONNECT BTN ── */
+#disconnectBtn {
+  display:block; margin:20px auto 0;
+  background:none; border:none; cursor:pointer;
+  font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
+  color:#b2af9e; font-family:inherit;
+  padding:8px 16px; border-radius:100px;
+  border:1.5px solid #e8e4d8;
+  transition:all .2s;
+}
+#disconnectBtn:hover { color:#5a1631; border-color:#5a1631; }
 
 /* ── STATUS ── */
 #status { display:none; text-align:center; padding:20px; font-size:13px; color:#888; }
@@ -326,17 +380,61 @@ body.dark-mode .tab span { color: #555; }
 
 <!-- CONFIG -->
 <div id="config">
-  <h2 style="font-family:'Fraunces', serif;">Widget Planner para Notion</h2>
-  <p>Conectá tu database de Notion para ver tu feed.</p>
-  <p style="font-size:11px; margin-bottom:14px; text-align:center;"><a href="https://www.millieflame.com/instruccioneswidget" target="_blank" style="color:#92a3d1; text-decoration:none; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">¿Dónde encuentro esta información? →</a></p>
-  <label>Token de integración</label>
-  <input type="password" id="token" placeholder="ntn_xxxxxxxxxxxx">
-  <label>ID de la base de datos</label>
-  <input type="text" id="dbId" placeholder="">
-  <label>Propiedad de fecha</label>
-  <input type="text" id="dateProp" value="Publication Date">
-  <button id="loadBtn">Conectar</button>
-  <p style="margin-top:16px; font-size:11px;"><a href="https://www.millieflame.com" target="_blank" style="color:#b2af9e; text-decoration:none; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; letter-spacing:.4px;">www.millieflame.com</a></p>
+
+  <div class="notion-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C6F5B" stroke-width="1.5">
+      <rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/>
+    </svg>
+    Conectar Notion
+  </div>
+
+  <h2>Widget Planner<br/>para Notion</h2>
+  <p class="subtitle">Vinculá tu base de datos para visualizar tu feed personalizado.</p>
+
+  <div class="config-steps">
+    <div class="config-step active"></div>
+    <div class="config-step"></div>
+    <div class="config-step"></div>
+    <span class="config-step-label">Paso 1 de 3</span>
+  </div>
+
+  <a href="https://www.millieflame.com/instruccioneswidget" target="_blank" class="help-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/>
+    </svg>
+    ¿Dónde encuentro esta información?
+  </a>
+
+  <div>
+    <label><span class="dot"></span> Token de Integración</label>
+    <div class="input-wrap">
+      <input type="password" id="token" placeholder="ntn_xxxxxxxxxxxx" />
+      <button class="eye-btn" onclick="toggleToken()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <label><span class="dot"></span> ID de la Base de Datos</label>
+    <input type="text" id="dbId" placeholder="" />
+  </div>
+
+  <div>
+    <label><span class="dot"></span> Propiedad de Fecha</label>
+    <input type="text" id="dateProp" value="Publication Date" />
+  </div>
+
+  <div class="config-divider"></div>
+
+  <button id="loadBtn">Conectar →</button>
+
+  <div style="text-align:center;">
+    <a href="https://www.millieflame.com" target="_blank" style="font-size:12px; color:#C8C4BC; text-decoration:none; letter-spacing:.02em; font-weight:500; transition:color .15s;">www.millieflame.com</a>
+  </div>
+
 </div>
 
 <!-- STATUS -->
@@ -462,6 +560,10 @@ body.dark-mode .tab span { color: #555; }
       </div>
     </div>
   </div>
+  <button id="disconnectBtn" onclick="disconnectWidget()">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:5px;"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+    Desconectar widget
+  </button>
 </div>
 
 <!-- PROFILE EDITOR OVERLAY -->
@@ -1114,6 +1216,20 @@ function toggleDarkMode() {
   btn.innerHTML = isDark
     ? '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" style="width:13px;height:13px;vertical-align:middle;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/></svg>'
     : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+}
+function toggleToken() {
+  const input = document.getElementById("token");
+  input.type = input.type === "password" ? "text" : "password";
+}
+
+// ── DISCONNECT ──
+function disconnectWidget() {
+  if (!confirm('¿Desconectar el widget? Se borrarán las credenciales guardadas.')) return;
+  localStorage.removeItem('ig_creds');
+  localStorage.removeItem('ig_pages_cache');
+  localStorage.removeItem('ig_pinned');
+  localStorage.removeItem('ig_profile');
+  location.reload();
 }
 </script>
 </body>
