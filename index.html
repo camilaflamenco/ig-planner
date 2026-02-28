@@ -8,7 +8,7 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
-  font-family: 'Fraunces', serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: #f8f6df;
   min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
@@ -88,6 +88,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
   cursor:pointer; border:1.5px solid #98742b; background:transparent; color:#98742b;
   transition:all .2s; text-align:center; white-space:nowrap;
   text-transform:uppercase; letter-spacing:.6px;
+  font-family: 'Fraunces', serif;
 }
 .top-btn:hover { opacity:.75; }
 .top-btn.active { opacity:1; font-weight:900; }
@@ -103,7 +104,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
   position:relative; overflow:hidden;
 }
 .dynamic-island { position:absolute; top:13px; left:50%; transform:translateX(-50%); width:96px; height:26px; background:#111; border-radius:20px; z-index:20; }
-.screen { height:820px; overflow-y:scroll; overflow-x:hidden; scrollbar-width:none; background:#ffffff; width:100%; }
+.screen { height:820px; overflow-y:scroll; overflow-x:hidden; scrollbar-width:none; background:#ffffff; width:100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .screen::-webkit-scrollbar { display:none; }
 
 .status-bar { padding:16px 18px 4px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:#ffffff; z-index:10; }
@@ -302,7 +303,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
     </div>
     <div id="pinHint">Clic en una imagen para fijarla arriba · Máx. 3 · Clic en FIJAR para terminar</div>
 
-    <div style="width:380px; text-align:center; font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; margin-top:0; margin-bottom:14px;"><a href="https://www.millieflame.com" target="_blank" style="color:#b2af9e; text-decoration:none;">www.millieflame.com</a></div>
+    <div style="width:380px; text-align:center; font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; margin-top:0; margin-bottom:14px; font-family:'Fraunces', serif;"><a href="https://www.millieflame.com" target="_blank" style="color:#b2af9e; text-decoration:none;">www.millieflame.com</a></div>
 
     <div class="phone-shell">
       <div class="dynamic-island"></div>
