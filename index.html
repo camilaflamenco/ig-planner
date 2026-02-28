@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IG Planner Widget</title>
+<title>Widget Planner para Notion</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #f8f6df;
+  background: #ffffff;
   min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
   padding: 24px; gap: 28px; flex-wrap: wrap;
@@ -17,45 +17,53 @@ body {
 
 /* ── CONFIG ── */
 #config {
-  background:#fff; border-radius:16px; padding:28px;
-  max-width:360px; width:100%;
-  box-shadow: 0 4px 24px rgba(0,0,0,.08);
+  background:#fff; border-radius:20px; padding:36px 32px;
+  max-width:380px; width:100%;
+  box-shadow: 0 4px 32px rgba(0,0,0,.07);
+  text-align: center;
 }
-#config h2 { font-size:17px; font-weight:700; margin-bottom:4px; }
-#config > p { font-size:12px; color:#888; margin-bottom:20px; line-height:1.5; }
+#config h2 {
+  font-size:20px; font-weight:700; margin-bottom:8px; color:#1a1a1a;
+  letter-spacing:-.3px;
+}
+#config > p { font-size:12px; color:#b2af9e; margin-bottom:28px; line-height:1.6; }
 .section-title {
-  font-size:11px; font-weight:800; color:#1a1a1a;
-  text-transform:uppercase; letter-spacing:.6px;
-  margin:20px 0 12px; padding-bottom:6px; border-bottom:1px solid #f0f0f0;
+  font-size:10px; font-weight:800; color:#b2af9e;
+  text-transform:uppercase; letter-spacing:.8px;
+  margin:20px 0 12px; padding-bottom:6px;
+  border-bottom:1px solid #f0ede0;
 }
-label { display:block; font-size:11px; font-weight:700; color:#555; margin-bottom:3px; text-transform:uppercase; letter-spacing:.5px; }
+label { display:block; font-size:10px; font-weight:700; color:#b2af9e; margin-bottom:4px; text-transform:uppercase; letter-spacing:.5px; text-align:left; }
 input, textarea {
-  width:100%; border:1.5px solid #e4e4e4; border-radius:8px;
-  padding:9px 11px; font-size:13px; color:#1a1a1a;
+  width:100%; border:1.5px solid #e8e4d8; border-radius:10px;
+  padding:10px 13px; font-size:13px; color:#1a1a1a;
   margin-bottom:13px; outline:none; transition:border-color .2s; font-family:inherit;
+  background:#fafaf7;
 }
 textarea { resize:vertical; min-height:56px; }
-input:focus, textarea:focus { border-color:#8b6f5e; }
+input:focus, textarea:focus { border-color:#d96233; }
 .stats-row { display:flex; gap:8px; }
 .stats-row > div { flex:1; }
 .add-hl-btn {
-  background:none; border:1.5px dashed #ddd; border-radius:8px;
-  color:#aaa; font-size:12px; padding:7px; width:100%;
+  background:none; border:1.5px dashed #d5a9ca; border-radius:8px;
+  color:#d5a9ca; font-size:12px; padding:7px; width:100%;
   cursor:pointer; margin-bottom:13px; transition:all .2s;
 }
-.add-hl-btn:hover { border-color:#8b6f5e; color:#8b6f5e; }
+.add-hl-btn:hover { border-color:#d96233; color:#d96233; }
 #loadBtn {
-  width:100%; background:#1a1a1a; color:#fff; border:none;
-  border-radius:8px; padding:12px; font-size:14px; font-weight:600;
+  width:100%; background:#f7f099; color:#98742b; border:none;
+  border-radius:999px; padding:13px; font-size:13px; font-weight:700;
   cursor:pointer; transition:opacity .2s; margin-top:4px;
+  letter-spacing:.4px; text-transform:uppercase;
 }
-#loadBtn:hover { opacity:.8; }
-.hint { font-size:11px; color:#bbb; margin-top:14px; text-align:center; line-height:1.6; }
-.hint a { color:#8b6f5e; }
+#loadBtn:hover { opacity:.85; }
+.hint { font-size:11px; color:#b2af9e; margin-top:16px; text-align:center; line-height:1.7; }
+.hint a { color:#92a3d1; text-decoration:none; }
+.hint a:hover { text-decoration:underline; }
 .avatar-upload-row { display:flex; gap:8px; align-items:flex-start; margin-bottom:13px; }
 .avatar-upload-row input { margin-bottom:0; flex:1; }
 .avatar-upload-btn {
-  flex-shrink:0; background:#f8f6df; border:1.5px solid #e4e4e4;
+  flex-shrink:0; background:#ffffff; border:1.5px solid #e4e4e4;
   border-radius:8px; padding:9px 10px; font-size:12px; cursor:pointer;
   white-space:nowrap; transition:all .2s; color:#555;
 }
@@ -67,7 +75,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 @keyframes spin { to { transform:rotate(360deg); } }
 
 /* ── WIDGET ── */
-#widget { display:none; align-items:flex-start; justify-content:center; width:100%; overflow:hidden; }
+#widget { display:none; align-items:flex-start; justify-content:center; width:100%; overflow:hidden; background:#ffffff; }
 
 
 /* ── PHONE ── */
@@ -88,7 +96,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
   cursor:pointer; border:1.5px solid #98742b; background:transparent; color:#98742b;
   transition:all .2s; text-align:center; white-space:nowrap;
   text-transform:uppercase; letter-spacing:.6px;
-  font-family: 'Fraunces', serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 .top-btn:hover { opacity:.75; }
 .top-btn.active { opacity:1; font-weight:900; }
@@ -132,7 +140,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 .ig-name { font-size:13px; font-weight:700; color:#111; }
 .stats-ig { display:flex; gap:20px; justify-content:flex-start; }
 .stat { text-align:left; cursor:default; }
-.stat-num { font-size:14px; font-weight:700; display:block; color:#111; line-height:1.2; }
+.stat-num { font-size:14px; font-weight:500; display:block; color:#111; line-height:1.2; }
 .stat-lbl { font-size:10px; color:#111; }
 .ig-category { font-size:11px; color:#888; margin-bottom:4px; }
 .ig-bio-text { font-size:11px; line-height:1.45; color:#111; margin-bottom:4px; }
@@ -277,16 +285,15 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
 
 <!-- CONFIG -->
 <div id="config">
-  <h2>📱 IG Planner Widget</h2>
+  <h2 style="font-family:'Fraunces', serif;">Widget Planner para Notion</h2>
   <p>Conectá tu database de Notion para ver tu feed.</p>
-  <label>Integration Token</label>
+  <label>Token de integración</label>
   <input type="password" id="token" placeholder="ntn_xxxxxxxxxxxx">
-  <label>Database ID</label>
+  <label>ID de la base de datos</label>
   <input type="text" id="dbId" placeholder="10ca47eb27c980c98ed9f7016b79b6ea">
   <label>Propiedad de fecha</label>
   <input type="text" id="dateProp" value="Publication Date">
-  <button id="loadBtn">Conectar y ver →</button>
-  <p class="hint">El token se usa solo para llamar a Notion directamente.<br><a href="https://www.notion.so/my-integrations" target="_blank">Crear integración →</a></p>
+  <button id="loadBtn">Conectar</button>
 </div>
 
 <!-- STATUS -->
@@ -303,7 +310,7 @@ input:focus, textarea:focus { border-color:#8b6f5e; }
     </div>
     <div id="pinHint">Clic en una imagen para fijarla arriba · Máx. 3 · Clic en FIJAR para terminar</div>
 
-    <div style="width:380px; text-align:center; font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; margin-top:0; margin-bottom:14px; font-family:'Fraunces', serif;"><a href="https://www.millieflame.com" target="_blank" style="color:#b2af9e; text-decoration:none;">www.millieflame.com</a></div>
+    <div style="width:380px; text-align:center; font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; margin-top:0; margin-bottom:20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; "><a href="https://www.millieflame.com" target="_blank" style="color:#b2af9e; text-decoration:none;">www.millieflame.com</a></div>
 
     <div class="phone-shell">
       <div class="dynamic-island"></div>
