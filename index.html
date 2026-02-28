@@ -89,8 +89,9 @@ input:focus, textarea:focus { border-color:#d96233; }
 }
 .top-btns {
   display:grid; grid-template-columns:1fr 1fr;
-  gap:6px; margin-bottom:28px; width:380px;
+  gap:6px; margin-bottom:6px; width:380px;
 }
+.top-btns-3 { grid-template-columns:1fr 1fr 1fr; margin-bottom:28px; }
 .top-btn {
   padding:8px 0; border-radius:999px; font-size:11px; font-weight:700;
   cursor:pointer; border:1.5px solid #98742b; background:transparent; color:#98742b;
@@ -279,6 +280,30 @@ input:focus, textarea:focus { border-color:#d96233; }
 .editor-header h3 { font-size:16px; font-weight:700; }
 .close-btn { background:none; border:none; font-size:24px; cursor:pointer; color:#aaa; line-height:1; }
 .save-btn { width:100%; background:#1a1a1a; color:#fff; border:none; border-radius:8px; padding:11px; font-size:14px; font-weight:600; cursor:pointer; }
+
+/* ── DARK MODE ── */
+body.dark-mode { background: #111; }
+body.dark-mode #widget { background: #111; }
+body.dark-mode .phone-wrap .top-btn { background: transparent; }
+body.dark-mode .phone-shell { background: #1a1a1a; border-color: #333; }
+body.dark-mode .screen { background: #000; }
+body.dark-mode .status-bar { background: #000; color: #fff; }
+body.dark-mode .ig-topbar { background: #000; }
+body.dark-mode .ig-name { color: #fff; }
+body.dark-mode .ig-handle-text { color: #fff; }
+body.dark-mode .ig-category { color: #aaa; }
+body.dark-mode .ig-bio-text { color: #eee; }
+body.dark-mode .ig-website a { color: #6aabff; }
+body.dark-mode .stat-num { color: #fff; }
+body.dark-mode .stat-lbl { color: #aaa; }
+body.dark-mode .ig-actions button { background: #262626; color: #fff; }
+body.dark-mode .hl-ring { background: #333; }
+body.dark-mode .hl-inner-ig { background: #1a1a1a; }
+body.dark-mode .hl-label { color: #ccc; }
+body.dark-mode .ig-grid { background: #000; }
+body.dark-mode .overlay { background: linear-gradient(transparent, rgba(0,0,0,.7)); }
+body.dark-mode .dynamic-island { background: #000; }
+body.dark-mode #pinHint { background: #1a1a1a; color: #d5a9ca; }
 </style>
 </head>
 <body>
@@ -307,7 +332,10 @@ input:focus, textarea:focus { border-color:#d96233; }
     <div class="top-btns">
       <button class="top-btn" style="border-color:#d96233;color:#d96233;" onclick="openProfileEditor()">Editar perfil</button>
       <button class="top-btn" id="toggleBtn" style="border-color:#92a3d1;color:#92a3d1;" onclick="toggleView()">Ver programados</button>
+    </div>
+    <div class="top-btns top-btns-3">
       <button class="top-btn" id="pinModeBtn" style="border-color:#d5a9ca;color:#d5a9ca;" onclick="togglePinMode()">Fijar</button>
+      <button class="top-btn" id="darkModeBtn" style="border-color:#b2af9e;color:#b2af9e;" onclick="toggleDarkMode()">Modo oscuro</button>
       <button class="top-btn" id="refreshBtn" onclick="refreshData()"><svg style="width:11px;height:11px;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Actualizar</button>
     </div>
     <div id="pinHint">Clic en una imagen para fijarla arriba · Máx. 3 · Clic en FIJAR para terminar</div>
@@ -1054,6 +1082,15 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
+// ── DARK MODE ──
+function toggleDarkMode() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  const btn = document.getElementById('darkModeBtn');
+  btn.textContent = isDark ? 'Modo claro' : 'Modo oscuro';
+  btn.style.borderColor = isDark ? '#f7f099' : '#b2af9e';
+  btn.style.color = isDark ? '#f7f099' : '#b2af9e';
+}
 </script>
 </body>
 </html>
