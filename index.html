@@ -113,7 +113,7 @@ textarea { resize:vertical; min-height:56px; }
 
 /* ── DISCONNECT BTN ── */
 #disconnectBtn {
-  display:block; margin:20px auto 0;
+  display:block; margin:16px auto 0; width:380px;
   background:none; border:none; cursor:pointer;
   font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
   color:#b2af9e; font-family:inherit;
@@ -458,6 +458,7 @@ body.dark-mode .tab span { color: #555; }
       </div>
     </div>
     <div id="pinHint">Clic en una imagen para fijarla arriba · Máx. 3 · Clic en FIJAR para terminar</div>
+    <div id="phoneShellWrap">
 
 
     <div class="phone-shell">
@@ -559,11 +560,12 @@ body.dark-mode .tab span { color: #555; }
         <div class="ig-grid" id="igGrid"></div>
       </div>
     </div>
+    </div><!-- /phoneShellWrap -->
+    <button id="disconnectBtn" onclick="disconnectWidget()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:5px;"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Desconectar widget
+    </button>
   </div>
-  <button id="disconnectBtn" onclick="disconnectWidget()">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:5px;"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-    Desconectar widget
-  </button>
 </div>
 
 <!-- PROFILE EDITOR OVERLAY -->
