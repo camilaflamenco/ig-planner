@@ -294,6 +294,7 @@ input:focus, textarea:focus { border-color:#d96233; }
   <label>Propiedad de fecha</label>
   <input type="text" id="dateProp" value="Publication Date">
   <button id="loadBtn">Conectar</button>
+  <p style="margin-top:16px; font-size:11px;"><a href="https://www.millieflame.com" target="_blank" style="color:#b2af9e; text-decoration:none; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; letter-spacing:.4px;">www.millieflame.com</a></p>
 </div>
 
 <!-- STATUS -->
@@ -707,7 +708,7 @@ document.getElementById('loadBtn').onclick = async () => {
       allPages = freshPages; currentDateProp = dateP;
       renderGrid();
     } catch(e) { /* keep showing cache silently */ }
-    btn.textContent = 'Refrescar'; btn.style.opacity = '1';
+    btn.innerHTML = '<svg style="width:11px;height:11px;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Actualizar'; btn.style.opacity = '1';
     return;
   }
 
@@ -742,7 +743,7 @@ async function refreshData() {
     allPages = pages; currentDateProp = creds.dateP;
     renderGrid();
   } catch(e) { alert('Error al recargar: ' + e.message); }
-  btn.textContent = 'Refrescar'; btn.style.opacity = '1';
+  btn.innerHTML = '<svg style="width:11px;height:11px;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Actualizar'; btn.style.opacity = '1';
 }
 
 // ── TOGGLE ──
@@ -1047,7 +1048,7 @@ window.addEventListener('DOMContentLoaded', () => {
           renderGrid();
         })
         .catch(() => {})
-        .finally(() => { btn.textContent = 'Refrescar'; btn.style.opacity = '1'; });
+        .finally(() => { btn.innerHTML = '<svg style="width:11px;height:11px;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Actualizar'; btn.style.opacity = '1'; });
     } else {
       setTimeout(() => document.getElementById('loadBtn').click(), 100);
     }
