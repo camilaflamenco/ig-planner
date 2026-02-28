@@ -565,6 +565,11 @@ body.dark-mode .tab span { color: #555; }
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:5px;"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
       Desconectar widget
     </button>
+    <div id="disconnectConfirm" style="display:none; align-items:center; justify-content:center; gap:10px; width:380px; margin:16px auto 0;">
+      <span style="font-size:11px; color:#b2af9e; font-weight:500;">¿Confirmar desconexión?</span>
+      <button onclick="confirmDisconnect()" style="font-size:11px; font-weight:700; padding:6px 14px; border-radius:100px; border:1.5px solid #5a1631; color:#5a1631; background:none; cursor:pointer; font-family:inherit; letter-spacing:.04em;">Sí, salir</button>
+      <button onclick="cancelDisconnect()" style="font-size:11px; font-weight:700; padding:6px 14px; border-radius:100px; border:1.5px solid #e8e4d8; color:#b2af9e; background:none; cursor:pointer; font-family:inherit; letter-spacing:.04em;">Cancelar</button>
+    </div>
   </div>
 </div>
 
@@ -1226,12 +1231,21 @@ function toggleToken() {
 
 // ── DISCONNECT ──
 function disconnectWidget() {
-  if (!confirm('¿Desconectar el widget? Se borrarán las credenciales guardadas.')) return;
+  const btn = document.getElementById('disconnectBtn');
+  const confirm = document.getElementById('disconnectConfirm');
+  btn.style.display = 'none';
+  confirm.style.display = 'flex';
+}
+function confirmDisconnect() {
   localStorage.removeItem('ig_creds');
   localStorage.removeItem('ig_pages_cache');
   localStorage.removeItem('ig_pinned');
   localStorage.removeItem('ig_profile');
   location.reload();
+}
+function cancelDisconnect() {
+  document.getElementById('disconnectBtn').style.display = 'block';
+  document.getElementById('disconnectConfirm').style.display = 'none';
 }
 </script>
 </body>
