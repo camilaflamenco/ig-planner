@@ -25,39 +25,77 @@ exports.handler = async (event) => {
 
   try {
     const { token, dbId, fetchBlocks, fetchHighlights, highlightsPageName,
-            blocksLimit = 12,   // only fetch blocks for first N pages
-            pageSize = 50       // reduced from 100
+            blocksLimit = 12,
+            pageSize = 100
           } = JSON.parse(event.body);
+
+    // ── Headers for new API version ──
     const nh = {
       'Authorization': `Bearer ${token}`,
-      'Notion-Version': '2022-06-28',
+      'Notion-Version': '2025-09-03',
       'Content-Type': 'application/json'
     };
 
-    // ── Query main database — paginate to get ALL results ──
+    // ── Step 1: Get data_source_id from database ──
+    // New API requires querying data_sources instead of databases directly
+    let dataSourceId = null;
+    try {
+      const dbInfoRes = await fetchWithTimeout(
+        `https://api.notion.com/v1/databases/${dbId}`,
+        { method: 'GET', headers: nh },
+        5000
+      );
+      const dbInfo = await dbInfoRes.json();
+      // The new API returns data_sources array; use the first one
+      if (dbInfo.data_sources && dbInfo.data_sources.length > 0) {
+        dataSourceId = dbInfo.data_sources[0].id;
+      }
+    } catch (e) {
+      // If this fails, fall back to old endpoint
+      dataSourceId = null;
+    }
+
+    // ── Step 2: Query using data_source_id (new) or database_id (fallback) ──
     let allResults = [];
     let cursor = undefined;
     let hasMore = true;
+
     while (hasMore) {
-      const body = { page_size: 100 };
+      const body = { page_size: pageSize };
       if (cursor) body.start_cursor = cursor;
-      const dbRes = await fetchWithTimeout(`https://api.notion.com/v1/databases/${dbId}/query`, {
-        method: 'POST', headers: nh,
-        body: JSON.stringify(body)
-      }, 8000);
-      const dbData = await dbRes.json();
-      if (!dbRes.ok) throw new Error(dbData.message || `HTTP ${dbRes.status}`);
-      allResults = allResults.concat(dbData.results || []);
-      hasMore = dbData.has_more;
-      cursor = dbData.next_cursor;
+
+      let queryRes, queryData;
+
+      if (dataSourceId) {
+        // New endpoint: PATCH /v1/data_sources/:data_source_id/query
+        queryRes = await fetchWithTimeout(
+          `https://api.notion.com/v1/data_sources/${dataSourceId}/query`,
+          { method: 'PATCH', headers: nh, body: JSON.stringify(body) },
+          8000
+        );
+      } else {
+        // Fallback: old endpoint for backwards compatibility
+        queryRes = await fetchWithTimeout(
+          `https://api.notion.com/v1/databases/${dbId}/query`,
+          { method: 'POST', headers: nh, body: JSON.stringify(body) },
+          8000
+        );
+      }
+
+      queryData = await queryRes.json();
+      if (!queryRes.ok) throw new Error(queryData.message || `HTTP ${queryRes.status}`);
+
+      allResults = allResults.concat(queryData.results || []);
+      hasMore = queryData.has_more;
+      cursor = queryData.next_cursor;
     }
+
     const dbData = { results: allResults };
 
-    // ── Fetch image blocks — only for first `blocksLimit` pages, with timeout ──
+    // ── Fetch image blocks — only for first `blocksLimit` pages ──
     if (fetchBlocks && dbData.results) {
-      // Pages with cover/file already have images — skip block fetch for those
       const needsBlocks = dbData.results.filter(page => {
-        if (page.cover) return false; // already has cover image
+        if (page.cover) return false;
         for (const k in page.properties) {
           if (page.properties[k].type === 'files' && page.properties[k].files?.length) return false;
         }
@@ -86,7 +124,6 @@ exports.handler = async (event) => {
 
     // ── Fetch Highlights page ──
     if (fetchHighlights && dbData.results) {
-      // Find highlights page — matches any page whose title CONTAINS the search term
       const searchTerm = (highlightsPageName || 'highlights').toLowerCase().trim();
       const hlPage = dbData.results.find(p => {
         for (const k in p.properties) {
@@ -102,20 +139,17 @@ exports.handler = async (event) => {
         try {
           const r = await fetch(`https://api.notion.com/v1/blocks/${hlPage.id}/children?page_size=100`, { headers: nh });
           const d = await r.json();
-
           dbData._highlights = (d.results || [])
             .filter(b => b.type === 'image')
             .map(b => {
               const isExt = b.image?.type === 'external';
               const url   = isExt ? b.image.external.url : b.image?.file?.url;
-              // Try to get caption as label, fallback to filename from URL
               const caption = b.image?.caption?.map(c => c.plain_text).join('').trim();
               let label = caption;
               if (!label && url) {
                 try {
                   const path = new URL(url).pathname;
                   const raw  = decodeURIComponent(path.split('/').pop()).replace(/\.[^.]+$/, '');
-                  // Clean up S3-style names like "My-Photo-123456789"
                   label = raw.replace(/[-_]/g, ' ').replace(/\s+\d{5,}$/, '').trim();
                 } catch { label = 'Story'; }
               }
@@ -124,7 +158,7 @@ exports.handler = async (event) => {
             .filter(Boolean);
         } catch { dbData._highlights = []; }
       } else {
-        dbData._highlights = null; // signal: no Highlights page found
+        dbData._highlights = null;
       }
     }
 
