@@ -89,9 +89,15 @@ input:focus, textarea:focus { border-color:#d96233; }
 }
 .top-btns {
   display:grid; grid-template-columns:1fr 1fr;
-  gap:6px; margin-bottom:6px; width:380px;
+  gap:6px; margin-bottom:28px; width:380px;
 }
-.top-btns-3 { grid-template-columns:1fr 1fr 1fr; margin-bottom:28px; }
+/* A cell that holds two mini buttons side by side */
+.top-btn-split {
+  display:flex; gap:6px;
+}
+.top-btn-split .top-btn {
+  flex:1;
+}
 .top-btn {
   padding:8px 0; border-radius:999px; font-size:11px; font-weight:700;
   cursor:pointer; border:1.5px solid #98742b; background:transparent; color:#98742b;
@@ -341,11 +347,15 @@ body.dark-mode .tab span { color: #555; }
     <div class="top-btns">
       <button class="top-btn" style="border-color:#d96233;color:#d96233;" onclick="openProfileEditor()">Editar perfil</button>
       <button class="top-btn" id="toggleBtn" style="border-color:#92a3d1;color:#92a3d1;" onclick="toggleView()">Ver programados</button>
-    </div>
-    <div class="top-btns top-btns-3">
       <button class="top-btn" id="pinModeBtn" style="border-color:#d5a9ca;color:#d5a9ca;" onclick="togglePinMode()">Fijar</button>
-      <button class="top-btn" id="darkModeBtn" style="border-color:#b2af9e;color:#b2af9e;" onclick="toggleDarkMode()">Modo oscuro</button>
-      <button class="top-btn" id="refreshBtn" onclick="refreshData()"><svg style="width:11px;height:11px;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Actualizar</button>
+      <div class="top-btn-split">
+        <button class="top-btn" id="darkModeBtn" style="border-color:#b2af9e;color:#b2af9e;" onclick="toggleDarkMode()" title="Modo oscuro">
+          <svg id="darkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="top-btn" id="refreshBtn" onclick="refreshData()" title="Actualizar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </button>
+      </div>
     </div>
     <div id="pinHint">Clic en una imagen para fijarla arriba · Máx. 3 · Clic en FIJAR para terminar</div>
 
@@ -735,7 +745,7 @@ document.getElementById('loadBtn').onclick = async () => {
     showWidget({ dateP: cached.dateP || dateP }, cached.pages);
     // Show subtle "actualizando" indicator
     const btn = document.getElementById('refreshBtn');
-    btn.textContent = 'Actualizando…'; btn.style.opacity = '.5';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;animation:spin .8s linear infinite;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'; btn.style.opacity = '.5';
     // Background refresh
     try {
       const data = await notionQuery(token, dbId, { fetchBlocks: true, blocksLimit: 12 });
@@ -745,7 +755,7 @@ document.getElementById('loadBtn').onclick = async () => {
       allPages = freshPages; currentDateProp = dateP;
       renderGrid();
     } catch(e) { /* keep showing cache silently */ }
-    btn.innerHTML = '<svg style="width:11px;height:11px;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Actualizar'; btn.style.opacity = '1';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'; btn.style.opacity = '1';
     return;
   }
 
@@ -772,7 +782,7 @@ async function refreshData() {
   const creds = load('ig_creds', null);
   if (!creds?.token || !creds?.dbId) return;
   const btn = document.getElementById('refreshBtn');
-  btn.textContent = 'Actualizando…'; btn.style.opacity = '.5';
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;animation:spin .8s linear infinite;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'; btn.style.opacity = '.5';
   try {
     const data = await notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 });
     const pages = applyPages(data.results, creds.dateP);
@@ -780,7 +790,7 @@ async function refreshData() {
     allPages = pages; currentDateProp = creds.dateP;
     renderGrid();
   } catch(e) { alert('Error al recargar: ' + e.message); }
-  btn.innerHTML = '<svg style="width:11px;height:11px;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Actualizar'; btn.style.opacity = '1';
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'; btn.style.opacity = '1';
 }
 
 // ── TOGGLE ──
@@ -1076,7 +1086,7 @@ window.addEventListener('DOMContentLoaded', () => {
       showWidget({ dateP: cached.dateP || creds.dateP }, cached.pages);
       // Silent background refresh
       const btn = document.getElementById('refreshBtn');
-      btn.textContent = 'Actualizando…'; btn.style.opacity = '.5';
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;animation:spin .8s linear infinite;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'; btn.style.opacity = '.5';
       notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 })
         .then(data => {
           const pages = applyPages(data.results, creds.dateP);
@@ -1085,7 +1095,7 @@ window.addEventListener('DOMContentLoaded', () => {
           renderGrid();
         })
         .catch(() => {})
-        .finally(() => { btn.innerHTML = '<svg style="width:11px;height:11px;vertical-align:middle;margin-right:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Actualizar'; btn.style.opacity = '1'; });
+        .finally(() => { btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'; btn.style.opacity = '1'; });
     } else {
       setTimeout(() => document.getElementById('loadBtn').click(), 100);
     }
@@ -1096,9 +1106,12 @@ window.addEventListener('DOMContentLoaded', () => {
 function toggleDarkMode() {
   const isDark = document.body.classList.toggle('dark-mode');
   const btn = document.getElementById('darkModeBtn');
-  btn.textContent = isDark ? 'Modo claro' : 'Modo oscuro';
   btn.style.borderColor = isDark ? '#f7f099' : '#b2af9e';
   btn.style.color = isDark ? '#f7f099' : '#b2af9e';
+  // Swap moon ↔ sun
+  btn.innerHTML = isDark
+    ? '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" style="width:13px;height:13px;vertical-align:middle;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
 }
 </script>
 </body>
