@@ -1179,6 +1179,9 @@ function showStatus(loading, errMsg) {
 
 // ── AUTO-CONNECT on load ──
 window.addEventListener('DOMContentLoaded', () => {
+  // Check for share link first — if found, auto-connect and stop
+  if (checkShareLink()) return;
+
   const creds = load('ig_creds', null);
   if (creds?.token && creds?.dbId) {
     document.getElementById('token').value    = creds.token;
@@ -1254,8 +1257,9 @@ function copyShareLink() {
   };
 
   const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  // Use hash to avoid Notion stripping query params
   const base = window.location.origin + window.location.pathname;
-  const shareUrl = base + '?share=' + encoded;
+  const shareUrl = base + '#share=' + encoded;
 
   navigator.clipboard.writeText(shareUrl).then(() => {
     const btn = document.getElementById('shareLinkBtn');
@@ -1275,22 +1279,26 @@ function copyShareLink() {
 
 // ── AUTO-LOAD FROM SHARE LINK ──
 function checkShareLink() {
+  // Check both ?share= query param and #share= hash (Notion sometimes strips params)
   const params = new URLSearchParams(window.location.search);
-  const shareData = params.get('share');
+  const hash = window.location.hash.replace('#share=','');
+  const shareData = params.get('share') || (window.location.hash.startsWith('#share=') ? hash : null);
   if (!shareData) return false;
 
   try {
     const data = JSON.parse(decodeURIComponent(escape(atob(shareData))));
     if (!data.t || !data.d) return false;
 
-    // Save to local storage under this widget's id
-    save('ig_creds', { token: data.t, dbId: data.d, dateP: data.dp });
+    // Save locally so future loads work without the share param
+    save('ig_creds', { token: data.t, dbId: data.d, dateP: data.dp || 'Publication Date' });
     if (data.p) save('ig_profile', data.p);
 
-    // Auto connect
     autoConnectFromShare(data);
     return true;
-  } catch(e) { return false; }
+  } catch(e) { 
+    console.error('Share link error:', e);
+    return false; 
+  }
 }
 
 async function autoConnectFromShare(data) {
