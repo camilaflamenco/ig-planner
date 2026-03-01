@@ -37,7 +37,14 @@ body {
   font-size:14px; color:#9E9E9E; line-height:1.5; margin-bottom:24px;
   text-align:left;
 }
-
+.config-steps {
+  display:flex; align-items:center; gap:6px; margin-bottom:24px;
+}
+.config-step {
+  height:4px; border-radius:100px; background:#F0EDE6; flex:1; transition:background .3s;
+}
+.config-step.active { background:linear-gradient(90deg,#f7f099,#d4a83d); }
+.config-step-label { font-size:11px; color:#C8C4BC; font-weight:500; white-space:nowrap; }
 .help-link {
   display:inline-flex; align-items:center; gap:6px;
   font-size:13px; color:#6B8FD4; text-decoration:none; font-weight:500;
@@ -384,6 +391,13 @@ body.dark-mode .tab span { color: #555; }
   <h2>Widget Planner<br/>para Notion</h2>
   <p class="subtitle">Vinculá tu base de datos para visualizar tu feed personalizado.</p>
 
+  <div class="config-steps">
+    <div class="config-step active"></div>
+    <div class="config-step"></div>
+    <div class="config-step"></div>
+    <span class="config-step-label">Paso 1 de 3</span>
+  </div>
+
   <a href="https://www.millieflame.com/instruccioneswidget" target="_blank" class="help-link">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/>
@@ -602,7 +616,7 @@ let pinMode = false;
 let pinnedIds = [];
 
 // ── STORAGE ──
-function save(k, v) { if (window._disconnecting) return; try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
 function load(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch(e) { return def; } }
 
 // ── PROPORTIONAL SCALE (zoom) ──
@@ -845,7 +859,7 @@ document.getElementById('loadBtn').onclick = async () => {
     btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;animation:spin .8s linear infinite;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'; btn.style.opacity = '.5';
     // Background refresh
     try {
-      const data = await notionQuery(token, dbId, { fetchBlocks: false });
+      const data = await notionQuery(token, dbId, { fetchBlocks: true, blocksLimit: 12 });
       const freshPages = applyPages(data.results, dateP);
       save('ig_creds', { token, dbId, dateP });
       save('ig_pages_cache', { pages: freshPages, dateP, ts: Date.now() });
@@ -859,7 +873,7 @@ document.getElementById('loadBtn').onclick = async () => {
   // First time: show spinner
   showStatus(true);
   try {
-    const data = await notionQuery(token, dbId, { fetchBlocks: false });
+    const data = await notionQuery(token, dbId, { fetchBlocks: true, blocksLimit: 12 });
     const pages = applyPages(data.results, dateP);
     save('ig_creds', { token, dbId, dateP });
     save('ig_pages_cache', { pages, dateP, ts: Date.now() });
@@ -881,7 +895,7 @@ async function refreshData() {
   const btn = document.getElementById('refreshBtn');
   btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;animation:spin .8s linear infinite;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'; btn.style.opacity = '.5';
   try {
-    const data = await notionQuery(creds.token, creds.dbId, { fetchBlocks: false });
+    const data = await notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 });
     const pages = applyPages(data.results, creds.dateP);
     save('ig_pages_cache', { pages, dateP: creds.dateP, ts: Date.now() });
     allPages = pages; currentDateProp = creds.dateP;
@@ -1184,7 +1198,7 @@ window.addEventListener('DOMContentLoaded', () => {
       // Silent background refresh
       const btn = document.getElementById('refreshBtn');
       btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;vertical-align:middle;animation:spin .8s linear infinite;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'; btn.style.opacity = '.5';
-      notionQuery(creds.token, creds.dbId, { fetchBlocks: false })
+      notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 })
         .then(data => {
           const pages = applyPages(data.results, creds.dateP);
           save('ig_pages_cache', { pages, dateP: creds.dateP, ts: Date.now() });
@@ -1223,9 +1237,10 @@ function disconnectWidget() {
   confirm.style.display = 'flex';
 }
 function confirmDisconnect() {
-  window._disconnecting = true; // block any pending saves
-  localStorage.clear();         // nuke everything, not just known keys
-  sessionStorage.clear();
+  localStorage.removeItem('ig_creds');
+  localStorage.removeItem('ig_pages_cache');
+  localStorage.removeItem('ig_pinned');
+  localStorage.removeItem('ig_profile');
   location.reload();
 }
 function cancelDisconnect() {
