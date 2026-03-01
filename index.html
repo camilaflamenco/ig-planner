@@ -7,13 +7,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --gold: #d4b954;
-  --gold-light: #f7f099;
-  --gold-deep: #98742b;
-  --cream: #F0EDE6;
-  --text: #1A1A1A;
-  --muted: #9E9E9E;
-  --border: #EBEBEB;
+  --gold: #98742B;
+  --gold-light: #F7F099;
+  --gold-deep: #5A1631;
+  --cream: #F8F6DF;
+  --text: #253920;
+  --muted: #B2AF9E;
+  --border: #E0DCD0;
   --bg: #ffffff;
   --card-shadow: 0 4px 6px -1px rgba(0,0,0,.04), 0 20px 48px -8px rgba(0,0,0,.10);
 }
@@ -29,7 +29,7 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #F2F0EB;
+  background: #F8F6DF;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -39,7 +39,7 @@ body {
 
 /* ── WIZARD ── */
 #config {
-  background: #fff;
+  background: #ffffff;
   border-radius: 24px;
   padding: 44px 40px 36px;
   max-width: 460px;
@@ -57,7 +57,7 @@ body {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .05em;
-  color: #7C6F5B;
+  color: #5a4a3a;
   text-transform: uppercase;
   margin-bottom: 16px;
 }
@@ -107,7 +107,7 @@ body {
   font-weight: 700;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: #B0A99A;
+  color: #B2AF9E;
   margin-bottom: 8px;
 }
 
@@ -131,7 +131,7 @@ body {
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 12px;
-  color: #7C6F5B;
+  color: #5a4a3a;
   font-weight: 500;
   margin-bottom: 16px;
   font-family: monospace;
@@ -147,7 +147,7 @@ label.field-label {
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: #B0A99A;
+  color: #B2AF9E;
   margin-bottom: 8px;
 }
 
@@ -161,11 +161,11 @@ label.field-label {
   background: none;
   border: none;
   cursor: pointer;
-  color: #C0BAB0;
+  color: #B2AF9E;
   padding: 0;
   display: flex;
 }
-.eye-btn:hover { color: #7C6F5B; }
+.eye-btn:hover { color: #253920; }
 
 input, select {
   width: 100%;
@@ -178,15 +178,15 @@ input, select {
   outline: none;
   transition: border-color .15s, background .15s, box-shadow .15s;
   font-family: inherit;
-  background: #FAFAFA;
+  background: #FDFCF5;
   appearance: none;
   -webkit-appearance: none;
 }
-input::placeholder { color: #C8C4BC; }
+input::placeholder { color: #B2AF9E; }
 input:focus, select:focus {
   border-color: var(--gold);
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(212,185,84,.12);
+  box-shadow: 0 0 0 3px rgba(146,163,209,.20);
 }
 
 select {
@@ -200,7 +200,7 @@ select:disabled { opacity: .5; cursor: default; }
 
 .field-note {
   font-size: 12px;
-  color: #B0A99A;
+  color: #B2AF9E;
   margin-bottom: 20px;
   margin-top: 4px;
   line-height: 1.4;
@@ -219,18 +219,18 @@ select:disabled { opacity: .5; cursor: default; }
   border: 1.5px solid var(--border);
   border-radius: 100px;
   background: transparent;
-  color: #7C6F5B;
+  color: #253920;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all .15s;
 }
-.btn-back:hover { border-color: #B0A99A; }
+.btn-back:hover { border-color: #B2AF9E; }
 
 .btn-next {
   flex: 1;
-  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
-  color: #7A5F00;
+  background: linear-gradient(135deg, #5A1631 0%, #3d0f22 100%);
+  color: #F8F6DF;
   border: none;
   border-radius: 100px;
   padding: 13px;
@@ -239,10 +239,10 @@ select:disabled { opacity: .5; cursor: default; }
   cursor: pointer;
   letter-spacing: .08em;
   text-transform: uppercase;
-  box-shadow: 0 4px 14px rgba(212,185,84,.35);
+  box-shadow: 0 4px 14px rgba(90,22,49,.35);
   transition: transform .15s, box-shadow .15s, filter .15s;
 }
-.btn-next:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212,185,84,.45); filter: brightness(1.04); }
+.btn-next:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(90,22,49,.45); filter: brightness(1.08); }
 .btn-next:disabled { opacity: .5; cursor: default; transform: none; }
 
 .loading-row {
@@ -266,7 +266,7 @@ select:disabled { opacity: .5; cursor: default; }
 
 .step-error {
   font-size: 13px;
-  color: #c0392b;
+  color: #D96233;
   margin-bottom: 12px;
   display: none;
 }
@@ -276,7 +276,7 @@ select:disabled { opacity: .5; cursor: default; }
   display: none;
   text-align: center;
   padding: 40px 24px;
-  background: #fff;
+  background: #ffffff;
   border-radius: 24px;
   box-shadow: var(--card-shadow);
   max-width: 360px;
@@ -344,7 +344,7 @@ select:disabled { opacity: .5; cursor: default; }
   align-items: center;
   gap: 6px;
   padding: 7px 18px;
-  border: 1.5px solid #E0D8CC;
+  border: 1.5px solid #E0DCD0;
   border-radius: 100px;
   background: transparent;
   font-size: 11px;
@@ -355,7 +355,7 @@ select:disabled { opacity: .5; cursor: default; }
   cursor: pointer;
   transition: all .15s;
 }
-.refresh-pill:hover { border-color: #B0A99A; }
+.refresh-pill:hover { border-color: #B2AF9E; }
 .refresh-pill svg { transition: transform .3s; }
 .refresh-pill:active svg { transform: rotate(180deg); }
 
@@ -365,7 +365,7 @@ select:disabled { opacity: .5; cursor: default; }
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 0 14px 12px;
+  padding: 14px 14px 12px;
 }
 
 .pill-btn {
@@ -385,29 +385,29 @@ select:disabled { opacity: .5; cursor: default; }
   transition: all .15s;
   white-space: nowrap;
 }
-.pill-btn:hover { border-color: #B0A99A; color: var(--text); }
+.pill-btn:hover { border-color: #B2AF9E; color: var(--text); }
 .pill-btn.active {
-  background: var(--text);
-  border-color: var(--text);
-  color: #fff;
+  background: #253920;
+  border-color: #253920;
+  color: #F8F6DF;
 }
 .pill-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
-.pill-btn-refresh {
-  width: 30px;
-  height: 30px;
+.pill-btn-icon {
+  width: 32px;
+  height: 32px;
   padding: 0;
   justify-content: center;
 }
-.pill-btn-refresh svg { width: 12px; height: 12px; }
+.pill-btn-icon svg { width: 13px; height: 13px; }
 
 /* Pin hint */
 #pinHint {
   text-align: center;
   font-size: 11px;
-  color: #8b6f5e;
+  color: #5A1631;
   padding: 6px 12px;
-  background: #fff8f4;
-  border-bottom: 1px solid #f3e8e2;
+  background: #F8F6DF;
+  border-bottom: 1px solid #E0DCD0;
   display: none;
 }
 
@@ -563,7 +563,7 @@ select:disabled { opacity: .5; cursor: default; }
 }
 @keyframes shimmer { to { background-position: -200% 0; } }
 
-.ig-cell.pinned-cell { outline: 2.5px solid rgba(255,255,255,0.8); outline-offset: -2px; }
+.ig-cell.pinned-cell { /* no border */ }
 .pin-mode-active .ig-cell { cursor: crosshair; }
 
 /* Widget bottom */
@@ -579,20 +579,20 @@ select:disabled { opacity: .5; cursor: default; }
   background: none;
   border: none;
   font-size: 12px;
-  color: #C0BAB0;
+  color: #B2AF9E;
   cursor: pointer;
   padding: 4px 8px;
   transition: color .15s;
   font-weight: 500;
 }
-.disconnect-btn:hover { color: #c0392b; }
+.disconnect-btn:hover { color: #D96233; }
 
 .disconnect-confirm {
   display: none;
   align-items: center;
   gap: 8px;
   font-size: 12px;
-  color: #c0392b;
+  color: #D96233;
 }
 .disconnect-confirm button {
   padding: 4px 12px;
@@ -600,30 +600,30 @@ select:disabled { opacity: .5; cursor: default; }
   font-size: 12px;
   cursor: pointer;
   font-weight: 600;
-  border: 1.5px solid #c0392b;
+  border: 1.5px solid #D96233;
 }
-.disconnect-confirm .btn-yes { background: #c0392b; color: #fff; }
-.disconnect-confirm .btn-no { background: none; color: #c0392b; }
+.disconnect-confirm .btn-yes { background: #D96233; color: #fff; }
+.disconnect-confirm .btn-no { background: none; color: #D96233; }
 
 /* ── DARK MODE ── */
-body.dark-mode { background: #0f0f0f; }
-body.dark-mode .widget-card { background: #111; }
-body.dark-mode .widget-topbar { background: #111; }
-body.dark-mode .refresh-pill { border-color: #333; color: #eee; }
-body.dark-mode .pill-btn { border-color: #333; color: #555; }
-body.dark-mode .pill-btn:hover { border-color: #666; color: #ccc; }
-body.dark-mode .pill-btn.active { background: #eee; border-color: #eee; color: #111; }
-body.dark-mode .widget-tabs { border-color: #222; }
-body.dark-mode .widget-tab { border-color: #222; color: #555; }
-body.dark-mode .widget-tab.active { color: #eee; border-bottom-color: #eee; }
-body.dark-mode .widget-tab:not(:last-child) { border-right-color: #222; }
-body.dark-mode #pinHint { background: #1a1a1a; border-color: #2a2a2a; color: #a89070; }
-body.dark-mode #igGrid { background: #000; }
-body.dark-mode .ig-cell { background: #1a1a1a; }
-body.dark-mode .widget-bottom { border-color: #222; background: #111; }
-body.dark-mode .disconnect-btn { color: #444; }
-body.dark-mode .widget-dark-btn { color: #666; }
-body.dark-mode #status { background: #111; }
+body.dark-mode { background: #0d0f0b; }
+body.dark-mode .widget-card { background: #111209; }
+body.dark-mode .widget-topbar { background: #111209; }
+body.dark-mode .refresh-pill { border-color: #2a3022; color: #F8F6DF; }
+body.dark-mode .pill-btn { border-color: #333; color: #B2AF9E; }
+body.dark-mode .pill-btn:hover { border-color: #98742B; color: #F8F6DF; }
+body.dark-mode .pill-btn.active { background: #F8F6DF; border-color: #F8F6DF; color: #253920; }
+body.dark-mode .widget-tabs { border-color: #2a3022; }
+body.dark-mode .widget-tab { border-color: #222; color: #B2AF9E; }
+body.dark-mode .widget-tab.active { color: #F8F6DF; border-bottom-color: #F8F6DF; }
+body.dark-mode .widget-tab:not(:last-child) { border-right-color: #2a3022; }
+body.dark-mode #pinHint { background: #1a1f18; border-color: #2a3022; color: #98742B; }
+body.dark-mode #igGrid { background: #0d0f0b; }
+body.dark-mode .ig-cell { background: #1a1f18; }
+body.dark-mode .widget-bottom { border-color: #2a3022; background: #111209; }
+body.dark-mode .disconnect-btn { color: #3a4a38; }
+body.dark-mode .widget-dark-btn { color: #B2AF9E; }
+body.dark-mode #status { background: #111209; }
 
 /* Status retry */
 .retry-btn {
@@ -634,7 +634,7 @@ body.dark-mode #status { background: #111; }
   cursor: pointer;
   font-size: 12px;
   background: none;
-  color: #555;
+  color: #B2AF9E;
 }
 
 </style>
@@ -644,7 +644,7 @@ body.dark-mode #status { background: #111; }
 <!-- ══ WIZARD ══ -->
 <div id="config">
   <div class="notion-badge">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C6F5B" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#253920" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg>
     Widget Planner
   </div>
   <h2>Conectá tu<br>Notion</h2>
@@ -753,21 +753,16 @@ body.dark-mode #status { background: #111; }
 <div id="widget">
   <div class="widget-card">
     <!-- Top bar -->
-    <div class="widget-topbar">
-      <button class="widget-dark-btn" id="darkModeBtn" onclick="toggleDarkMode()" title="Modo noche">
-        <svg id="darkIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Pill button bar -->
+    <div class="widget-pills">
+      <!-- Dark mode -->
+      <button class="pill-btn pill-btn-icon" id="darkModeBtn" onclick="toggleDarkMode()" title="Modo noche">
+        <svg id="darkIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
       </button>
-    </div>
-
-    <!-- Pill button bar -->
-    <div class="widget-pills">
       <!-- FIJAR -->
       <button class="pill-btn" id="pillPin" onclick="togglePinMode()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2l2.4 4.86L20 7.82l-4 3.9.94 5.5L12 14.77l-4.94 2.45L9 11.72 5 7.82l5.6-.96L12 2z"/>
-        </svg>
         Fijar
       </button>
       <!-- VER PUBLICADOS / VER PROGRAMADOS toggle -->
@@ -779,8 +774,8 @@ body.dark-mode #status { background: #111; }
         <span id="pillViewLabel">Publicados</span>
       </button>
       <!-- Refresh -->
-      <button class="pill-btn pill-btn-refresh" id="refreshBtn" onclick="refreshData()" title="Actualizar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <button class="pill-btn pill-btn-icon" id="refreshBtn" onclick="refreshData()" title="Actualizar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;">
           <polyline points="23 4 23 10 17 10"/>
           <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
         </svg>
