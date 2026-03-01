@@ -637,6 +637,177 @@ body.dark-mode #status { background: #111209; }
   color: #B2AF9E;
 }
 
+
+/* ── SUCCESS SCREEN ── */
+#success {
+  display: none;
+  background: #fff;
+  border-radius: 24px;
+  padding: 44px 40px 40px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+}
+
+.success-check {
+  width: 56px;
+  height: 56px;
+  background: #253920;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.success-check svg { color: #F8F6DF; }
+
+#success h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #253920;
+  margin-bottom: 8px;
+}
+
+#success .success-sub {
+  font-size: 14px;
+  color: #B2AF9E;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.success-url-box {
+  background: #F8F6DF;
+  border: 1.5px solid #E0DCD0;
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-family: monospace;
+  font-size: 12px;
+  color: #253920;
+  text-align: left;
+  word-break: break-all;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-copy-link {
+  width: 100%;
+  background: linear-gradient(135deg, #5A1631 0%, #3d0f22 100%);
+  color: #F8F6DF;
+  border: none;
+  border-radius: 100px;
+  padding: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(90,22,49,.35);
+  transition: transform .15s, box-shadow .15s, filter .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-copy-link:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(90,22,49,.45); filter: brightness(1.08); }
+.btn-copy-link.copied { background: #253920; box-shadow: 0 4px 14px rgba(37,57,32,.35); }
+
+.btn-open-widget {
+  width: 100%;
+  background: transparent;
+  color: #253920;
+  border: 1.5px solid #253920;
+  border-radius: 100px;
+  padding: 13px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-open-widget:hover { background: #253920; color: #F8F6DF; }
+
+.success-back {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #B2AF9E;
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: inline-block;
+  transition: color .15s;
+}
+.success-back:hover { color: #253920; }
+
+/* ── WIDGET TOP BAR (mode=widget) ── */
+#widgetBar {
+  display: none;
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 8px;
+}
+
+body:has(#widgetBar[style*="block"]) {
+  align-items: center;
+  flex-direction: column;
+}
+
+body:has(#widgetBar[style*="block"]) #widget {
+  width: 100%;
+  max-width: 420px;
+}
+
+.widget-bar-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #F8F6DF;
+  border: 1.5px solid #E0DCD0;
+  border-radius: 12px;
+  padding: 8px 10px 8px 14px;
+}
+
+.widget-bar-url {
+  flex: 1;
+  font-family: monospace;
+  font-size: 11px;
+  color: #B2AF9E;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.widget-bar-copy {
+  flex-shrink: 0;
+  background: #253920;
+  color: #F8F6DF;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter .15s;
+  white-space: nowrap;
+}
+.widget-bar-copy:hover { filter: brightness(1.2); }
+.widget-bar-copy.copied { background: #98742B; }
+
 </style>
 </head>
 <body>
@@ -743,10 +914,42 @@ body.dark-mode #status { background: #111209; }
   </div>
 </div>
 
+
+<!-- ══ SUCCESS ══ -->
+<div id="success">
+  <div class="success-check">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+  <h2>¡Widget listo!</h2>
+  <p class="success-sub">Tu widget está conectado a Notion.<br>Copiá el enlace para insertarlo donde quieras.</p>
+  <div class="success-url-box" id="successUrl"></div>
+  <div class="success-actions">
+    <button class="btn-copy-link" id="btnCopyLink" onclick="copyWidgetLink()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copiar enlace del widget
+    </button>
+    <button class="btn-open-widget" onclick="openWidget()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Ver widget
+    </button>
+  </div>
+  <button class="success-back" onclick="goBackToConfig()">← Volver a la configuración</button>
+</div>
+
 <!-- ══ STATUS ══ -->
 <div id="status">
   <div class="spinner-lg"></div>
   <p id="statusMsg">Conectando con Notion…</p>
+</div>
+
+<!-- ══ WIDGET BAR (mode=widget only) ══ -->
+<div id="widgetBar">
+  <div class="widget-bar-inner">
+    <span class="widget-bar-url" id="widgetBarUrl"></span>
+    <button class="widget-bar-copy" id="widgetBarCopyBtn" onclick="copyBarLink()">Copiar enlace</button>
+  </div>
 </div>
 
 <!-- ══ WIDGET ══ -->
@@ -1059,13 +1262,13 @@ async function connectWidget() {
   // Save creds
   save('ig_creds', { token: wz.token, dbId: wz.dbId, dateP: wz.dateProp, imgP: wz.imgProp });
 
-  // Connect
-  showStatusScreen('Conectando con Notion…');
+  // Connect — verify credentials then show success
+  showStatusScreen('Verificando conexión con Notion…');
   try {
     const data = await notionQuery(wz.token, wz.dbId, { fetchBlocks: true, blocksLimit: 12 });
     const pages = applyPages(data.results, wz.dateProp);
     save('ig_pages_cache', { pages, dateP: wz.dateProp, imgP: wz.imgProp, ts: Date.now() });
-    showWidget({ dateP: wz.dateProp, imgP: wz.imgProp }, pages);
+    showSuccess();
   } catch(e) {
     showStatusError(e.message);
   }
@@ -1476,11 +1679,136 @@ async function autoConnectFromShare(data) {
   }
 }
 
+
+// ═══════════════════════════════════════════════════
+//  SUCCESS SCREEN
+// ═══════════════════════════════════════════════════
+function getWidgetUrl() {
+  const base = window.location.origin + window.location.pathname;
+  const id = (wz.handle || getWidgetId()).toLowerCase();
+
+  // Read creds — from wizard state or from saved storage
+  const saved = load('ig_creds', null);
+  const token  = wz.token   || saved?.token  || '';
+  const dbId   = wz.dbId    || saved?.dbId   || '';
+  const dateP  = wz.dateProp || saved?.dateP  || '';
+  const imgP   = wz.imgProp  || saved?.imgP   || '';
+
+  if (!token || !dbId) {
+    // No credentials available — return URL without hash (will only work for the owner)
+    return base + '?mode=widget&id=' + encodeURIComponent(id);
+  }
+
+  // Encode credentials into the hash so anyone with the link can view the widget
+  const payload = { t: token, d: dbId, dp: dateP, ip: imgP };
+  const hash = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  return base + '?mode=widget&id=' + encodeURIComponent(id) + '#share=' + hash;
+}
+
+function showSuccess() {
+  document.getElementById('config').style.display = 'none';
+  document.getElementById('status').style.display = 'none';
+  document.getElementById('widget').style.display = 'none';
+  const url = getWidgetUrl();
+  document.getElementById('successUrl').textContent = url;
+  document.getElementById('success').style.display = 'block';
+}
+
+function copyWidgetLink() {
+  const url = getWidgetUrl();
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('btnCopyLink');
+    btn.textContent = '✓ Enlace copiado';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar enlace del widget';
+      btn.classList.remove('copied');
+    }, 2500);
+  }).catch(() => {
+    prompt('Copiá este enlace:', url);
+  });
+}
+
+function openWidget() {
+  window.open(getWidgetUrl(), '_blank');
+}
+
+function goBackToConfig() {
+  document.getElementById('success').style.display = 'none';
+  document.getElementById('config').style.display = 'block';
+  showStep(5);
+}
+
+// ═══════════════════════════════════════════════════
+//  WIDGET BAR (mode=widget)
+// ═══════════════════════════════════════════════════
+function copyBarLink() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('widgetBarCopyBtn');
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copiar enlace';
+      btn.classList.remove('copied');
+    }, 2500);
+  }).catch(() => {
+    prompt('Copiá este enlace:', url);
+  });
+}
+
 // ═══════════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
-  // Show first step
+  // Detect widget mode (?mode=widget)
+  const urlParams = new URLSearchParams(window.location.search);
+  const isWidgetMode = urlParams.get('mode') === 'widget';
+
+  if (isWidgetMode) {
+    // Show widget bar with current URL
+    const bar = document.getElementById('widgetBar');
+    bar.style.display = 'block';
+    document.getElementById('widgetBarUrl').textContent = window.location.href;
+    document.getElementById('config').style.display = 'none';
+
+    // Check for share link first
+    if (checkShareLink()) return;
+
+    // Load from saved creds
+    const creds = load('ig_creds', null);
+    if (creds?.token && creds?.dbId) {
+      const cached = load('ig_pages_cache', null);
+      if (cached?.pages?.length) {
+        showWidget({ dateP: cached.dateP, imgP: cached.imgP || '' }, cached.pages);
+        // Silent background refresh
+        const btn = document.getElementById('refreshBtn');
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;animation:spin .8s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`;
+        btn.style.opacity = '.6';
+        notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 })
+          .then(data => {
+            const pages = applyPages(data.results, creds.dateP);
+            save('ig_pages_cache', { pages, dateP: creds.dateP, imgP: creds.imgP || '', ts: Date.now() });
+            allPages = pages; currentDateProp = creds.dateP; currentImgProp = creds.imgP || '';
+            renderGrid();
+          }).catch(() => {}).finally(() => { btn.innerHTML = origHTML; btn.style.opacity = '1'; });
+      } else {
+        showStatusScreen('Cargando Notion…');
+        notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 })
+          .then(data => {
+            const pages = applyPages(data.results, creds.dateP);
+            save('ig_pages_cache', { pages, dateP: creds.dateP, imgP: creds.imgP || '', ts: Date.now() });
+            showWidget({ dateP: creds.dateP, imgP: creds.imgP || '' }, pages);
+          }).catch(e => showStatusError(e.message));
+      }
+    } else {
+      showStatusError('No se encontraron credenciales guardadas para este widget.');
+    }
+    return;
+  }
+
+  // ── CONFIG MODE (default) ──
   showStep(1);
 
   // Check for share link
@@ -1489,36 +1817,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // Auto-connect if creds stored
   const creds = load('ig_creds', null);
   if (creds?.token && creds?.dbId) {
-    const cached = load('ig_pages_cache', null);
-    if (cached?.pages?.length) {
-      showWidget({ dateP: cached.dateP, imgP: cached.imgP || '' }, cached.pages);
-      // Silent background refresh
-      const btn = document.getElementById('refreshBtn');
-      const origHTML = btn.innerHTML;
-      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;animation:spin .8s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`;
-      btn.style.opacity = '.6';
-      notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 })
-        .then(data => {
-          const pages = applyPages(data.results, creds.dateP);
-          save('ig_pages_cache', { pages, dateP: creds.dateP, imgP: creds.imgP || '', ts: Date.now() });
-          allPages = pages;
-          currentDateProp = creds.dateP;
-          currentImgProp  = creds.imgP || '';
-          renderGrid();
-        })
-        .catch(() => {})
-        .finally(() => { btn.innerHTML = origHTML; btn.style.opacity = '1'; });
-    } else {
-      // No cache, show loading
-      showStatusScreen('Conectando con Notion…');
-      notionQuery(creds.token, creds.dbId, { fetchBlocks: true, blocksLimit: 12 })
-        .then(data => {
-          const pages = applyPages(data.results, creds.dateP);
-          save('ig_pages_cache', { pages, dateP: creds.dateP, imgP: creds.imgP || '', ts: Date.now() });
-          showWidget({ dateP: creds.dateP, imgP: creds.imgP || '' }, pages);
-        })
-        .catch(e => showStatusError(e.message));
-    }
+    // Already configured — show success screen directly
+    wz.handle = getWidgetId();
+    showSuccess();
   }
 });
 </script>
