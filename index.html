@@ -104,17 +104,7 @@ textarea { resize:vertical; min-height:56px; }
 }
 
 
-/* ── DISCONNECT BTN ── */
-#disconnectBtn {
-  display:block; margin:16px auto 0; width:380px;
-  background:none; border:none; cursor:pointer;
-  font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
-  color:#b2af9e; font-family:inherit;
-  padding:8px 16px; border-radius:100px;
-  border:1.5px solid #e8e4d8;
-  transition:all .2s;
-}
-#disconnectBtn:hover { color:#5a1631; border-color:#5a1631; }
+
 
 /* ── STATUS ── */
 #status { display:none; text-align:center; padding:20px; font-size:13px; color:#888; }
@@ -547,10 +537,16 @@ body.dark-mode .tab span { color: #555; }
       </div>
     </div>
     </div><!-- /phoneShellWrap -->
-    <button id="disconnectBtn" onclick="disconnectWidget()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:5px;"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-      Desconectar widget
-    </button>
+    <div style="display:flex; gap:8px; width:380px; margin:16px auto 0;">
+      <button id="shareLinkBtn" onclick="copyShareLink()" style="flex:1; background:none; border:1.5px solid #92a3d1; color:#92a3d1; border-radius:100px; padding:8px; font-size:11px; font-weight:700; cursor:pointer; font-family:inherit; letter-spacing:.05em; text-transform:uppercase; transition:all .2s;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Copiar link
+      </button>
+      <button id="disconnectBtn" onclick="disconnectWidget()" style="flex:1; background:none; border:1.5px solid #e8e4d8; color:#b2af9e; border-radius:100px; padding:8px; font-size:11px; font-weight:700; cursor:pointer; font-family:inherit; letter-spacing:.05em; text-transform:uppercase; transition:all .2s;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Desconectar
+      </button>
+    </div>
     <div id="disconnectConfirm" style="display:none; align-items:center; justify-content:center; gap:10px; width:380px; margin:16px auto 0;">
       <span style="font-size:11px; color:#b2af9e; font-weight:500;">¿Confirmar desconexión?</span>
       <button onclick="confirmDisconnect()" style="font-size:11px; font-weight:700; padding:6px 14px; border-radius:100px; border:1.5px solid #5a1631; color:#5a1631; background:none; cursor:pointer; font-family:inherit; letter-spacing:.04em;">Sí, salir</button>
@@ -1243,6 +1239,71 @@ function cancelDisconnect() {
   document.getElementById('disconnectBtn').style.display = 'block';
   document.getElementById('disconnectConfirm').style.display = 'none';
 }
+
+// ── SHARE LINK ──
+function copyShareLink() {
+  const creds = load('ig_creds', null);
+  const prof  = load('ig_profile', {});
+  if (!creds) return;
+
+  const data = {
+    t: creds.token,
+    d: creds.dbId,
+    dp: creds.dateP,
+    p: prof
+  };
+
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  const base = window.location.origin + window.location.pathname;
+  const shareUrl = base + '?share=' + encoded;
+
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    const btn = document.getElementById('shareLinkBtn');
+    btn.textContent = '✓ Copiado';
+    btn.style.color = '#98742b';
+    btn.style.borderColor = '#98742b';
+    setTimeout(() => {
+      btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Copiar link';
+      btn.style.color = '#92a3d1';
+      btn.style.borderColor = '#92a3d1';
+    }, 2000);
+  }).catch(() => {
+    // Fallback for iframes that block clipboard
+    prompt('Copiá este link:', shareUrl);
+  });
+}
+
+// ── AUTO-LOAD FROM SHARE LINK ──
+function checkShareLink() {
+  const params = new URLSearchParams(window.location.search);
+  const shareData = params.get('share');
+  if (!shareData) return false;
+
+  try {
+    const data = JSON.parse(decodeURIComponent(escape(atob(shareData))));
+    if (!data.t || !data.d) return false;
+
+    // Save to local storage under this widget's id
+    save('ig_creds', { token: data.t, dbId: data.d, dateP: data.dp });
+    if (data.p) save('ig_profile', data.p);
+
+    // Auto connect
+    autoConnectFromShare(data);
+    return true;
+  } catch(e) { return false; }
+}
+
+async function autoConnectFromShare(data) {
+  showStatus(true);
+  try {
+    const query = await notionQuery(data.t, data.d, { fetchBlocks: false });
+    const pages = applyPages(query.results, data.dp);
+    showWidget({ dateP: data.dp }, pages);
+  } catch(e) {
+    showStatus(false, e.message);
+  }
+}
+
 </script>
 </body>
 </html>
