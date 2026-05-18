@@ -126,18 +126,6 @@ body {
   margin-bottom: 20px;
 }
 
-.link-preview {
-  background: var(--cream);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 12px;
-  color: #5a4a3a;
-  font-weight: 500;
-  margin-bottom: 16px;
-  font-family: monospace;
-  letter-spacing: .02em;
-  display: none;
-}
 
 label.field-label {
   display: flex;
@@ -818,8 +806,8 @@ body:has(#widgetBar[style*="block"]) #widget {
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#253920" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg>
     Widget Planner
   </div>
-  <h2>Conectá tu<br>Notion</h2>
-  <p class="subtitle">Seguí los pasos para visualizar tu feed personalizado.</p>
+  <h2>Conecta tu<br>Notion</h2>
+  <p class="subtitle">Sigue los pasos para visualizar tu feed personalizado.</p>
 
   <div class="progress-dots" id="progressDots">
     <div class="dot-step active" id="dot1"></div>
@@ -833,11 +821,10 @@ body:has(#widgetBar[style*="block"]) #widget {
   <div id="step1">
     <div class="step-label">Paso 1 de 5</div>
     <div class="step-title">Tu handle de cuenta</div>
-    <p class="step-hint">Este identificador genera tu link único. Usá tu @handle de Instagram o cualquier nombre sin espacios.</p>
+    <p class="step-hint">Este identificador genera tu link único. Usa tu @handle de Instagram o cualquier nombre sin espacios.</p>
     <label class="field-label">@ Handle</label>
     <input type="text" id="inputHandle" placeholder="millieflame" autocomplete="off" autocapitalize="off" spellcheck="false"/>
-    <div id="linkPreview" class="link-preview"></div>
-    <div class="step-error" id="err1">Ingresá un handle válido (sin espacios ni caracteres especiales).</div>
+<div class="step-error" id="err1">Ingresa un handle válido (sin espacios ni caracteres especiales).</div>
     <div class="wizard-nav">
       <button class="btn-next" onclick="wizardNext(1)">Siguiente →</button>
     </div>
@@ -847,7 +834,7 @@ body:has(#widgetBar[style*="block"]) #widget {
   <div id="step2" style="display:none">
     <div class="step-label">Paso 2 de 5</div>
     <div class="step-title">Token de integración</div>
-    <p class="step-hint">Encontralo en <strong>notion.so/my-integrations</strong>. Empieza con <code>ntn_</code> o <code>secret_</code>.</p>
+    <p class="step-hint">El token es la clave que le da permiso a este widget para leer tu base de datos de Notion. Para obtenerlo: entra a <a href="https://notion.so/my-integrations" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:600;text-decoration:none;">notion.so/my-integrations</a>, crea una integración nueva (o usa una existente) y copia el <strong>Internal Integration Secret</strong>. Asegúrate de que esa integración esté conectada a la base de datos que usarás en el siguiente paso. Empieza con <code>ntn_</code> o <code>secret_</code>.</p>
     <label class="field-label">Token</label>
     <div class="input-wrap">
       <input type="password" id="inputToken" placeholder="ntn_xxxxxxxxxxxxxxxxx" autocomplete="off"/>
@@ -855,7 +842,7 @@ body:has(#widgetBar[style*="block"]) #widget {
         <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
       </button>
     </div>
-    <div class="step-error" id="err2">Ingresá un token válido.</div>
+    <div class="step-error" id="err2">Ingresa un token válido.</div>
     <div class="wizard-nav">
       <button class="btn-back" onclick="wizardBack(2)">← Volver</button>
       <button class="btn-next" onclick="wizardNext(2)">Siguiente →</button>
@@ -866,13 +853,11 @@ body:has(#widgetBar[style*="block"]) #widget {
   <div id="step3" style="display:none">
     <div class="step-label">Paso 3 de 5</div>
     <div class="step-title">Base de datos</div>
-    <p class="step-hint">Seleccioná la base de datos de Notion donde tenés tu contenido.</p>
-    <label class="field-label">Base de datos</label>
-    <div id="dbLoading" class="loading-row" style="display:none"><div class="spinner-sm"></div> Cargando bases de datos…</div>
-    <select id="selectDb" style="display:none; margin-bottom:4px;"><option value="">— Seleccioná —</option></select>
-    <input type="text" id="inputDbManual" placeholder="Pegá el ID de la base de datos" style="display:none;" autocomplete="off"/>
-    <div class="field-note" id="dbNote" style="display:none">Asegurate de haber compartido la base de datos con tu integración.</div>
-    <div class="step-error" id="err3">Seleccioná o ingresá una base de datos.</div>
+    <p class="step-hint">Ingresa el ID de la base de datos de Notion que contiene tus posts. Para encontrarlo: abre la base de datos en Notion, copia la URL y toma el fragmento de 32 caracteres que aparece antes del signo <code>?</code>. Ejemplo: <code>notion.so/Mi-base-<strong>abc123...def456</strong>?v=...</code></p>
+    <label class="field-label">ID de la base de datos</label>
+    <input type="text" id="inputDbManual" placeholder="abc123def456..." autocomplete="off"/>
+    <div class="field-note" id="dbNote">Asegúrate de que tu integración esté conectada a esta base de datos: abre la base en Notion → menú <strong>···</strong> → <strong>Conexiones</strong> → activa tu integración.</div>
+    <div class="step-error" id="err3">Ingresa el ID de la base de datos.</div>
     <div class="wizard-nav">
       <button class="btn-back" onclick="wizardBack(3)">← Volver</button>
       <button class="btn-next" id="btnStep3Next" onclick="wizardNext(3)" disabled>Siguiente →</button>
@@ -883,12 +868,12 @@ body:has(#widgetBar[style*="block"]) #widget {
   <div id="step4" style="display:none">
     <div class="step-label">Paso 4 de 5</div>
     <div class="step-title">Propiedad de imágenes</div>
-    <p class="step-hint">¿Qué propiedad de tu base de datos contiene las imágenes o las URLs de las fotos?</p>
+    <p class="step-hint">El widget usará esta propiedad para obtener las imágenes que mostrará en la grilla. Indica el nombre exacto de la propiedad de tu base de datos que contiene las imágenes o las URLs de las fotos.</p>
     <label class="field-label">Propiedad de imagen</label>
     <div id="imgPropLoading" class="loading-row" style="display:none"><div class="spinner-sm"></div> Cargando propiedades…</div>
-    <select id="selectImgProp" style="display:none; margin-bottom:4px;"><option value="">— Seleccioná —</option></select>
+    <select id="selectImgProp" style="display:none; margin-bottom:4px;"><option value="">— Selecciona —</option></select>
     <input type="text" id="inputImgPropManual" placeholder="Nombre exacto de la propiedad" style="display:none;" autocomplete="off"/>
-    <div class="field-note" id="imgPropNote" style="display:none">Propiedades de tipo archivo o URL. Podés dejarlo vacío y el widget buscará imágenes automáticamente.</div>
+    <div class="field-note" id="imgPropNote" style="display:none">Escribe el nombre tal como aparece en Notion: respeta mayúsculas, minúsculas, acentos y no agregues espacios al inicio ni al final.</div>
     <div class="step-error" id="err4" style="display:none">Error al cargar propiedades.</div>
     <div class="wizard-nav">
       <button class="btn-back" onclick="wizardBack(4)">← Volver</button>
@@ -900,13 +885,13 @@ body:has(#widgetBar[style*="block"]) #widget {
   <div id="step5" style="display:none">
     <div class="step-label">Paso 5 de 5</div>
     <div class="step-title">Propiedad de fecha</div>
-    <p class="step-hint">¿Qué propiedad usás para la fecha de publicación de cada post?</p>
+    <p class="step-hint">El widget usa esta propiedad para ordenar tus posts y distinguir entre <strong>publicados</strong> (fecha pasada) y <strong>programados</strong> (fecha futura). Indica el nombre exacto de la propiedad de tipo fecha que usas para registrar la fecha de publicación de cada post.</p>
     <label class="field-label">Propiedad de fecha</label>
     <div id="datePropLoading" class="loading-row" style="display:none"><div class="spinner-sm"></div> Cargando propiedades…</div>
-    <select id="selectDateProp" style="display:none; margin-bottom:4px;"><option value="">— Seleccioná —</option></select>
+    <select id="selectDateProp" style="display:none; margin-bottom:4px;"><option value="">— Selecciona —</option></select>
     <input type="text" id="inputDatePropManual" placeholder="Ej: Fecha de publicación" style="display:none;" autocomplete="off"/>
     <div class="field-note" id="datePropNote" style="display:none">Propiedades de tipo fecha.</div>
-    <div class="step-error" id="err5">Seleccioná o ingresá una propiedad de fecha.</div>
+    <div class="step-error" id="err5">Selecciona o ingresa una propiedad de fecha.</div>
     <div class="wizard-nav">
       <button class="btn-back" onclick="wizardBack(5)">← Volver</button>
       <button class="btn-next" id="btnConnect" onclick="connectWidget()">Conectar ✓</button>
@@ -923,7 +908,7 @@ body:has(#widgetBar[style*="block"]) #widget {
     </svg>
   </div>
   <h2>¡Widget listo!</h2>
-  <p class="success-sub">Tu widget está conectado a Notion.<br>Copiá el enlace para insertarlo donde quieras.</p>
+  <p class="success-sub">Tu widget está conectado a Notion.<br>Copia el enlace para insertarlo donde quieras.</p>
   <div class="success-url-box" id="successUrl"></div>
   <div class="success-actions">
     <button class="btn-copy-link" id="btnCopyLink" onclick="copyWidgetLink()">
@@ -986,7 +971,7 @@ body:has(#widgetBar[style*="block"]) #widget {
     </div>
 
     <!-- Pin hint -->
-    <div id="pinHint">✦ Tocá una imagen para fijarla (máx 3 posts)</div>
+    <div id="pinHint">✦ Toca una imagen para fijarla (máx 3 posts)</div>
 
     <!-- Grid -->
     <div id="igGrid"></div>
@@ -1078,9 +1063,7 @@ async function wizardNext(step) {
     await loadDatabases();
   }
   else if (step === 3) {
-    const sel = document.getElementById('selectDb');
-    const man = document.getElementById('inputDbManual');
-    const id = (sel.style.display !== 'none' ? sel.value : man.value).trim().replace(/-/g,'');
+    const id = document.getElementById('inputDbManual').value.trim().replace(/-/g,'');
     if (!id) { errEl.style.display = 'block'; return; }
     wz.dbId = id;
     showStep(4);
@@ -1096,66 +1079,13 @@ async function wizardNext(step) {
   }
 }
 
-// Handle input → link preview
-document.getElementById('inputHandle').addEventListener('input', function() {
-  const h = this.value.trim().replace(/^@/, '');
-  const preview = document.getElementById('linkPreview');
-  if (h) {
-    const base = window.location.origin + window.location.pathname;
-    preview.style.display = 'block';
-    preview.textContent = base + '?id=' + encodeURIComponent(h.toLowerCase());
-  } else {
-    preview.style.display = 'none';
-  }
-});
-
-// ── Load databases from Notion ──
-async function loadDatabases() {
-  const dbLoading = document.getElementById('dbLoading');
-  const selDb = document.getElementById('selectDb');
-  const manDb = document.getElementById('inputDbManual');
-  const note  = document.getElementById('dbNote');
+// ── Step 3: manual database ID input ──
+function loadDatabases() {
+  const manDb  = document.getElementById('inputDbManual');
   const nextBtn = document.getElementById('btnStep3Next');
 
-  dbLoading.style.display = 'flex';
-  selDb.style.display = 'none';
-  manDb.style.display = 'none';
-  note.style.display = 'none';
-  nextBtn.disabled = true;
-
-  try {
-    const res = await fetch('/.netlify/functions/notion', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ action: 'listDatabases', token: wz.token })
-    });
-    const data = await res.json();
-
-    if (!res.ok || !data.databases) throw new Error(data.message || 'Error');
-
-    dbLoading.style.display = 'none';
-    selDb.innerHTML = '<option value="">— Seleccioná —</option>';
-    data.databases.forEach(db => {
-      const opt = document.createElement('option');
-      opt.value = db.id;
-      opt.textContent = db.title || db.id;
-      selDb.appendChild(opt);
-    });
-    selDb.style.display = 'block';
-    note.style.display = 'block';
-
-    selDb.addEventListener('change', () => {
-      nextBtn.disabled = !selDb.value;
-    });
-  } catch(e) {
-    // Fallback to manual input
-    dbLoading.style.display = 'none';
-    manDb.style.display = 'block';
-    note.style.display = 'block';
-    note.textContent = 'No se pudo obtener la lista automáticamente. Pegá el ID de tu base de datos (se encuentra en la URL de Notion).';
-    nextBtn.disabled = false;
-    manDb.addEventListener('input', () => { nextBtn.disabled = !manDb.value.trim(); });
-  }
+  nextBtn.disabled = !manDb.value.trim();
+  manDb.addEventListener('input', () => { nextBtn.disabled = !manDb.value.trim(); });
 }
 
 // ── Load properties from Notion ──
@@ -1198,9 +1128,9 @@ async function loadProperties(forStep) {
     manEl.style.display = 'block';
     noteEl.style.display = 'block';
     if (isImg) {
-      noteEl.textContent = 'Escribí el nombre exactamente como aparece en tu base de datos (o dejá vacío para detección automática).';
+      noteEl.textContent = 'Escribe el nombre tal como aparece en Notion: respeta mayúsculas, minúsculas, acentos y no agregues espacios al inicio ni al final.';
     } else {
-      noteEl.textContent = 'Escribí el nombre exactamente como aparece en tu base de datos.';
+      noteEl.textContent = 'Escribe el nombre tal como aparece en Notion: respeta mayúsculas, minúsculas, acentos y no agregues espacios al inicio ni al final.';
     }
   }
 }
@@ -1224,7 +1154,7 @@ function showPropertyDropdown(forStep, props) {
   } else {
     filtered = props.filter(p => ['date','created_time','last_edited_time'].includes(p.type));
     if (!filtered.length) filtered = props;
-    sel.innerHTML = '<option value="">— Seleccioná —</option>';
+    sel.innerHTML = '<option value="">— Selecciona —</option>';
   }
 
   filtered.forEach(p => {
@@ -1237,7 +1167,7 @@ function showPropertyDropdown(forStep, props) {
   sel.style.display = 'block';
   note.style.display = 'block';
   if (isImg) {
-    note.textContent = 'Propiedades de tipo archivo o URL. Podés dejar "Auto-detectar".';
+    note.textContent = 'Propiedades de tipo archivo o URL. Puedes dejar "Auto-detectar".';
   } else {
     note.textContent = 'Propiedades de tipo fecha.';
   }
@@ -1725,7 +1655,7 @@ function copyWidgetLink() {
       btn.classList.remove('copied');
     }, 2500);
   }).catch(() => {
-    prompt('Copiá este enlace:', url);
+    prompt('Copia este enlace:', url);
   });
 }
 
@@ -1753,7 +1683,7 @@ function copyBarLink() {
       btn.classList.remove('copied');
     }, 2500);
   }).catch(() => {
-    prompt('Copiá este enlace:', url);
+    prompt('Copia este enlace:', url);
   });
 }
 
