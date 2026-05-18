@@ -1332,13 +1332,13 @@ function showWidget(creds, pages) {
 //  GRID
 // ═══════════════════════════════════════════════════
 function renderGrid() {
-  const today = new Date(); today.setHours(0,0,0,0);
+  const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD en hora local
 
   let pool;
   if (showingScheduled) {
-    pool = allPages.filter(p => new Date(getDate(p, currentDateProp)) > today);
+    pool = allPages; // todos los posts con fecha asignada
   } else {
-    pool = allPages.filter(p => new Date(getDate(p, currentDateProp)) <= today);
+    pool = allPages.filter(p => getDate(p, currentDateProp).substring(0, 10) <= todayStr);
   }
 
   const pinned   = pinnedIds.map(id => pool.find(p => p.id === id)).filter(Boolean);
@@ -1354,7 +1354,7 @@ function renderGrid() {
     const imgs     = getAllImgs(p, currentImgProp);
     const date     = getDate(p, currentDateProp);
     const isPinned = pinnedIds.includes(p.id);
-    const isSched  = new Date(date) > today;
+    const isSched  = date.substring(0, 10) > todayStr;
     const title    = getTitle(p);
 
     const cell = document.createElement('div');
